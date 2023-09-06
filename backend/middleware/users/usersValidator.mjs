@@ -19,7 +19,6 @@ export const addUserValidator = [
     })
     .trim()
     .custom(async (value) => {
-      console.log(value);
       try {
         const userName = await User.findOne({ username: value });
         if (userName) {
@@ -53,7 +52,6 @@ export const addUserValidator = [
 export const addUserValidationHandler = (req, res, next) => {
   const errors = validationResult(req);
   const mappedError = errors.mapped();
-  console.log(mappedError);
 
   if (Object.keys(mappedError).length === 0) {
     next();
