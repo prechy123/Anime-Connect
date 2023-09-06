@@ -2,7 +2,7 @@ import { check, validationResult } from "express-validator";
 import User from "../../models/userModel.mjs";
 
 export const addUserValidator = [
-  check("username")
+  check("userName")
     .isLength({ min: 1 })
     .withMessage("Username is required")
     .isAlpha("en-US", { ignore: "_-" })
