@@ -19,12 +19,12 @@ const postSchema = new Schema(
         ref: "User",
       },
     ],
-    // comment: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Comment",
-    //   },
-    // ],
+    comment: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
   },
   {
     timestamps: true,
