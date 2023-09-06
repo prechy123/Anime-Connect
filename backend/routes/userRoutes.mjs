@@ -12,5 +12,6 @@ router.post(
   addUserValidationHandler,
   createUser
 );
+router.post("/signin", signupSigninLimiter, )
 
 export default router;
