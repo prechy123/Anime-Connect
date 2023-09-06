@@ -1,4 +1,4 @@
-import { check } from "express-validator";
+import { check, validationResult } from "express-validator";
 import User from "../../models/userModel.mjs";
 
 export const addUserValidator = [
@@ -46,3 +46,17 @@ export const addUserValidator = [
     min: 6,
   }),
 ];
+
+export const addUserValidationHandler = (req, res, next) => {
+  const errors = validationResult(req);
+  const mappedError = errors.mapped();
+
+  if (Object.keys(mappedError).length === 0) {
+    next();
+  } else {
+    const errorMsg = Object.values(mappedError).map((error) => error.msg);
+    res.status(400).json({
+      error: errorMsg,
+    });
+  }
+};
