@@ -1,5 +1,8 @@
-import User from "../models/userModel.mjs";
 import bcrypt from "bcrypt";
+
+//mongoose-model
+import User from "../models/userModel.mjs";
+
 
 export const createUser = async (req, res) => {
   const { username, fullname, email, password } = req.body;
@@ -25,3 +28,7 @@ export const createUser = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
+export const signin = async (req, res) => {
+
+}

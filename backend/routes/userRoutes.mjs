@@ -1,10 +1,16 @@
 import express from "express";
+
+//middleware-limiter
 import { signupSigninLimiter } from "../middleware/limiter/limiter.mjs";
+
+//middleware-validator
 import {
   addUserValidationHandler,
   addUserValidator,
 } from "../middleware/users/usersValidator.mjs";
-import { createUser } from "../controllers/userController.mjs";
+
+//controller
+import { createUser, signin } from "../controllers/userController.mjs";
 
 //middleware
 import requestIp from "request-ip";
@@ -25,7 +31,8 @@ router.post(
   "/signin",
   signupSigninLimiter,
   requestIp.mw(),
-  useragent.express()
+  useragent.express(),
+  signin
 );
 
 export default router;
