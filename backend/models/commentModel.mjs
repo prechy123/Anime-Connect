@@ -8,11 +8,11 @@ const commentSchema = Schema(
       trim: true,
       required: true,
     },
-    userId: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    postId: {
+    post: {
       type: Schema.Types.ObjectId,
       ref: "Post",
     },

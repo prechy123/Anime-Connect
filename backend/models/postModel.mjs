@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const postSchema = new Schema(
   {
-    userId: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -19,7 +19,7 @@ const postSchema = new Schema(
         ref: "User",
       },
     ],
-    comment: [
+    comments: [
       {
         type: Schema.Types.ObjectId,
         ref: "Comment",
