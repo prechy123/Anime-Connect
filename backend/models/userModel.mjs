@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-    userName: {
+    username: {
       type: String,
       required: true,
       unique: true,
       trim: true,
     },
-    fullName: {
+    fullname: {
       type: String,
       required: true,
       trim: true,
@@ -24,7 +24,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    profilePictureUrl: {
+    profilepictureurl: {
       type: String,
     },
     followers: [
