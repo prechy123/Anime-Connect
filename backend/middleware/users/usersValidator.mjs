@@ -7,17 +7,19 @@ export const addUserValidator = [
     .withMessage("Username is required")
     .isAlpha("en-US", { ignore: "_-" })
     .withMessage("Username can only contain alphabet whit _ and -")
-    // .custom((value) => {
-    //   switch (true) {
-    //     case value.length <= 4:
-    //       throw new Error("Username must be at least 5 characters long");
-    //     case value.length > 20:
-    //       throw new Error("Username can not be more that 20 characters long");
-    //   }
-    // })
+    .custom((value) => {
+      switch (true) {
+        case value.length <= 4:
+          throw new Error("Username must be at least 5 characters long");
+        case value.length > 20:
+          throw new Error("Username can not be more that 20 characters long");
+        default:
+          return true;
+      }
+    })
     .trim()
     .custom(async (value) => {
-        console.log(value)
+      console.log(value);
       try {
         const userName = await User.findOne({ username: value });
         if (userName) {
@@ -51,7 +53,7 @@ export const addUserValidator = [
 export const addUserValidationHandler = (req, res, next) => {
   const errors = validationResult(req);
   const mappedError = errors.mapped();
-  console.log(mappedError)
+  console.log(mappedError);
 
   if (Object.keys(mappedError).length === 0) {
     next();
