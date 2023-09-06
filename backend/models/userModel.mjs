@@ -27,6 +27,18 @@ const userSchema = new Schema(
     profilePicture: {
       type: String,
     },
+    followers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    following: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     location: {
       type: String,
       default: "",
@@ -49,6 +61,6 @@ const userSchema = new Schema(
 
 userSchema.index({ fullName: "text" });
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 
 export default User;
