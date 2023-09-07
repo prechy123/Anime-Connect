@@ -1,7 +1,7 @@
 import getContextData from "../../utils/getContextData.mjs";
 import Log from "../../models/logModel.mjs";
 
-const saveLogInfo = async (req, res, next) => {
+const saveLogInfo = async (req, message, type) => {
   try {
     const ip = req.clientIp;
     const useragent = req.useragent;
@@ -16,13 +16,12 @@ const saveLogInfo = async (req, res, next) => {
       platform,
     } = getContextData(ip, useragent);
     const context = `IP: ${ipaddress}, CITY: ${city}, COUNTRY: ${country}, DEVICETYPE: ${deviceType}, BROWSER: ${browser}, VERSION: ${version}, OS: ${os}, PLATFORM: ${platform}`;
-
+    const email = req.body.email;
     const newLog = new Log({
-      email: req.body.email,
+      email,
       context,
-      message: "User is attempting logging in",
-      type: "sign in",
-      level: "Login information",
+      message,
+      type,
     });
     await newLog.save();
     next();

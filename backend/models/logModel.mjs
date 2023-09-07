@@ -8,7 +8,6 @@ const logSchema = new Schema({
   context: { type: String, set: encryptField, get: decryptField },
   message: { type: String, required: true },
   type: { type: String, required: true },
-  level: { type: String, required: true },
   Timestamp: {
     type: Date,
     required: true,

@@ -33,7 +33,6 @@ router.post(
   signupSigninLimiter,
   requestIp.mw(),
   useragent.express(),
-  saveLogInfo,
   signin
 );
 
