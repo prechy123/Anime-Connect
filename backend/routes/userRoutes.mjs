@@ -10,7 +10,7 @@ import {
 } from "../middleware/users/usersValidator.mjs";
 
 //controller
-import { createUser, signin } from "../controllers/userController.mjs";
+import { createUser, getUserLogs, signin } from "../controllers/userController.mjs";
 
 //middleware
 import requestIp from "request-ip";
@@ -19,6 +19,7 @@ import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
 
 const router = express.Router();
 
+//post routes
 router.post(
   "/signup",
   signupSigninLimiter,
@@ -35,5 +36,9 @@ router.post(
   useragent.express(),
   signin
 );
+
+
+//get routes
+router.get("/getlogs", getUserLogs)
 
 export default router;

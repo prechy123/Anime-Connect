@@ -10,10 +10,10 @@ const encryptData = (data) => {
   }).toString();
 };
 
-const decryptData = (encryptData) => {
-  return CryptoJS.AES.decrypt(encryptData, key, {
+const decryptData = (encryptedData) => {
+  return CryptoJS.AES.decrypt(encryptedData, key, {
     iv: iv,
-  }).toString(CryptoJS.enc.Utf16);
+  }).toString(CryptoJS.enc.Utf8);
 };
 
 export const encryptField = (value) => encryptData(value);

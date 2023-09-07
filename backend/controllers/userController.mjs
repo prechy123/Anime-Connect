@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 import User from "../models/userModel.mjs";
 import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
 import Token from "../models/tokenModel.mjs";
+import Log from "../models/logModel.mjs";
+
 
 export const createUser = async (req, res) => {
   const { username, fullname, email, password } = req.body;
@@ -40,7 +42,10 @@ export const signin = async (req, res) => {
       await saveLogInfo(req, "Email address does not exit", "Sign in");
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
 
     if (!isPasswordCorrect) {
       await saveLogInfo(req, "User enterred incorrect password", "sign in");
@@ -78,5 +83,14 @@ export const signin = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+export const getUserLogs = async (req, res) => {
+  try {
+    const logger = await Log.findOne({});
+    res.status(200).json({ messsage: logger.context });
+  } catch (err) {
+    res.status(500).json({ err: err.message });
   }
 };
