@@ -35,15 +35,13 @@ export const signin = async (req, res) => {
   await saveLogInfo(req, "User is attempting to sign in", "Sign in");
   try {
     const { email, password } = req.body;
-    const existingUser = User.findOne({ email: email });
+    const existingUser = await User.findOne({ email: email });
     if (!existingUser) {
       await saveLogInfo(req, "Email address does not exit", "Sign in");
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      existingUser.password
-    );
+    const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
+
     if (!isPasswordCorrect) {
       await saveLogInfo(req, "User enterred incorrect password", "sign in");
       return res.status(400).json({ message: "Incorrect password" });

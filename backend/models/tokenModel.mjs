@@ -5,7 +5,7 @@ const tokenSchema = Schema({
   user: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: User,
+    ref: "User",
   },
   //since the output of the tokens are strings
   accessToken: {

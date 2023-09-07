@@ -24,10 +24,8 @@ const saveLogInfo = async (req, message, type) => {
       type,
     });
     await newLog.save();
-    next();
   } catch (err) {
     console.log(err);
-    next();
   }
 };
 
