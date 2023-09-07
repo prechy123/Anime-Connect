@@ -23,7 +23,7 @@ export const createUser = async (req, res) => {
     if (newUser.isNew) {
       throw new Error("Failed to create account");
     }
-    res.status(200).json({message: "Added successfully"})
+    res.status(200).json({message: "Account created successfully"})
   } catch(err) {
     res.status(400).json({ message: err.message });
   }

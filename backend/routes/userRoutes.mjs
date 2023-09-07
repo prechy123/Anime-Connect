@@ -15,6 +15,7 @@ import { createUser, signin } from "../controllers/userController.mjs";
 //middleware
 import requestIp from "request-ip";
 import useragent from "express-useragent";
+import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
 
 const router = express.Router();
 
@@ -25,13 +26,14 @@ router.post(
   addUserValidationHandler,
   createUser
 );
-//added client ip addredd to request object as req.clientIp
+//added client ip address to request object as req.clientIp
 //added useragent to keep track of browsers and device
 router.post(
   "/signin",
   signupSigninLimiter,
   requestIp.mw(),
   useragent.express(),
+  saveLogInfo,
   signin
 );
 
