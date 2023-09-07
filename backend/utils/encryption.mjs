@@ -4,13 +4,13 @@ const key = process.env.CRYPTO_KEY;
 
 const iv = CryptoJS.lib.WordArray.random(16);
 
-export const encryptData = (data) => {
+const encryptData = (data) => {
   return CryptoJS.AES.encrypt(data, key, {
     iv: iv,
   }).toString();
 };
 
-export const decryptData = (encryptData) => {
+const decryptData = (encryptData) => {
   return CryptoJS.AES.decrypt(encryptData, key, {
     iv: iv,
   }).toString(CryptoJS.enc.Utf16);
