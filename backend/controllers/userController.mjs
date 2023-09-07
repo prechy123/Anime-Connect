@@ -63,6 +63,7 @@ export const signin = async (req, res) => {
       refreshToken,
     });
     newToken.save();
+    await saveLogInfo(req, "Account logged in successfully", "Sign in");
     res.status(200).json({
       accessToken,
       refreshToken,
