@@ -584,26 +584,6 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.m-5 {
-  margin: 1.25rem;
-}
-
-.flex {
-  display: flex;
-}
-
-.w-40 {
-  width: 10rem;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
-.gap-2 {
-  gap: 0.5rem;
-}
-
 .input {
   border-width: 1px;
   --tw-border-opacity: 1;
