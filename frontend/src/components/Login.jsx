@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { siginAction } from "../redux/actions/authenticationAction";
 
 function Login() {
+  const dispatch = useDispatch()
+  const qwerty = useSelector(state => state)
+  console.log(qwerty)
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -9,11 +14,12 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:4000/users/signin", form);
-      if (!response) {
-        console.log(response.data)
-      }
-      console.log(response.data);
+      dispatch(siginAction(form))
+      // const response = await axios.post("http://127.0.0.1:4000/users/signin", form);
+      // if (!response) {
+      //   console.log(response.data)
+      // }
+      // console.log(response.data);
 
       //   .post("http://localhost:4000/users/signin", form)
       //   .then((response) => {
