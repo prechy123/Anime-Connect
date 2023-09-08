@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { siginAction } from "../redux/actions/authenticationAction";
+import { Link } from "react-router-dom";
 
 function Login() {
   const dispatch = useDispatch()
-  const qwerty = useSelector(state => state)
-  console.log(qwerty)
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -29,8 +28,11 @@ function Login() {
       console.log(err.message);
     }
   };
+  const {successMessage} = useSelector(state => state.auth)
+  console.log(successMessage)
   return (
     <div>
+      <h2>Don't have an account <Link to={"/signup"} className=" underline">Sign up</Link></h2>
       <form className="form" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email"> Email Address: </label>
