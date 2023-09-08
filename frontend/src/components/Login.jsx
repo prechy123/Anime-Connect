@@ -15,12 +15,6 @@ function Login() {
     e.preventDefault();
     try {
       dispatch(siginAction(form))
-      // const response = await axios.post("http://127.0.0.1:4000/users/signin", form);
-      // if (!response) {
-      //   console.log(response.data)
-      // }
-      // console.log(response.data);
-
       //   .post("http://localhost:4000/users/signin", form)
       //   .then((response) => {
       //     console.log(response.message);

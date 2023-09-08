@@ -22,11 +22,11 @@ const authReducer = (state = initialState, action) => {
     case types.SIGNIN_SUCCESS:
       return {
         ...state,
-        userData: null,
-        refreshToken: null,
-        accessToken: null,
+        userData: payload.user || null,
+        refreshToken: payload.refreshToken || null,
+        accessToken: payload.accessToken || null,
         signInError: null,
-        signUpError: [],
+        successMessage: payload || null
       };
     default:
       return state;
