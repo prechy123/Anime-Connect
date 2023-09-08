@@ -2,3 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.input {
+    @apply focus:border-b-4 hover:border-r-4 border border-black outline-none p-1
+}
+.button {
+    @apply  hover:bg-black hover:text-white transition-all ease-in duration-500 border border-black 
+}

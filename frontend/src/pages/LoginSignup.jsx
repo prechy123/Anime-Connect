@@ -1,9 +1,12 @@
 import React from "react";
+import Signup from "../components/Signup";
+import Login from "../components/Login";
 
 function LoginSignup() {
   return (
     <section>
-      <h1 className="bg-red-400">hello world</h1>
+      <Signup />
+      <Login />
     </section>
   );
 }
