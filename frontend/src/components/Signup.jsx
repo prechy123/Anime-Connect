@@ -1,23 +1,73 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 function Signup() {
+  const [form, setForm] = useState({
+    username: "",
+    fullname: "",
+    email: "",
+    password: "",
+  });
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://127.0.0.1:4000/users/signup", form)
+      console.log(response.data.message)
+      setForm({
+        username: "",
+        fullname: "",
+        email: "",
+        password: "",
+      });
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data)
+      }
+      console.log(err);
+    }
+    
+  }
   return (
-    <form className="m-5 flex flex-col gap-2 w-40">
+    <form className="form" onSubmit={handleSubmit}>
       <div>
         <label htmlFor="username"> Username: </label>
-        <input type="text" id="username" className="input"/>
+        <input
+          type="text"
+          id="username"
+          value={form.username}
+          className="input"
+          onChange={(e) => setForm({ ...form, username: e.target.value })}
+        />
       </div>
       <div>
         <label htmlFor="fullname"> Full Name: </label>
-        <input type="text" id="fullname" className="input"/>
+        <input
+          type="text"
+          id="fullname"
+          value={form.fullname}
+          className="input"
+          onChange={(e) => setForm({ ...form, fullname: e.target.value })}
+        />
       </div>
       <div>
         <label htmlFor="email"> Email Address: </label>
-        <input type="text" id="email" className="input"/>
+        <input
+          type="email"
+          id="email"
+          value={form.email}
+          className="input"
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+        />
       </div>
       <div>
         <label htmlFor="password">Password: </label>
-        <input type="text" id="password" className="input"/>
+        <input
+          type="password"
+          id="password"
+          value={form.password}
+          className="input"
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
+        />
       </div>
       <button className="button">Sign up</button>
     </form>

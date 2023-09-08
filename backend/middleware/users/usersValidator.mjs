@@ -5,7 +5,7 @@ export const addUserValidator = [
   check("username")
     .isLength({ min: 1 })
     .withMessage("Username is required")
-    .isAlpha("en-US", { ignore: "_-" })
+    .isAlpha("en-US", { ignore: "_-1234567890" })
     .withMessage("Username can only contain alphabet whit _ and -")
     .custom((value) => {
       switch (true) {

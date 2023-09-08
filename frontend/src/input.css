@@ -8,3 +8,6 @@
 .button {
     @apply  hover:bg-black hover:text-white transition-all ease-in duration-500 border border-black 
 }
+.form {
+    @apply m-5 flex flex-col gap-2 w-40
+}
