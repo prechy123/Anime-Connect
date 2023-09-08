@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate()
   const [form, setForm] = useState({
     username: "",
     fullname: "",
@@ -23,6 +24,7 @@ function Signup() {
         email: "",
         password: "",
       });
+      navigate("/signin");
     } catch (err) {
       if (err.response) {
         console.log(err.response.data);
@@ -33,17 +35,20 @@ function Signup() {
   return (
     <div>
       <h2>
-        Have an account, then <Link to={"/signin"} className=" underline">Log in</Link>
+        Have an account, then{" "}
+        <Link to={"/signin"} className=" underline">
+          Log in
+        </Link>
       </h2>
       <form className="form" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username"> Username: </label>
+      <div>
+          <label htmlFor="email"> Email Address: </label>
           <input
-            type="text"
-            id="username"
-            value={form.username}
+            type="email"
+            id="email"
+            value={form.email}
             className="input"
-            onChange={(e) => setForm({ ...form, username: e.target.value })}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
           />
         </div>
         <div>
@@ -57,15 +62,17 @@ function Signup() {
           />
         </div>
         <div>
-          <label htmlFor="email"> Email Address: </label>
+          <label htmlFor="username"> Username: </label>
           <input
-            type="email"
-            id="email"
-            value={form.email}
+            type="text"
+            id="username"
+            value={form.username}
             className="input"
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            onChange={(e) => setForm({ ...form, username: e.target.value })}
           />
         </div>
+        
+        
         <div>
           <label htmlFor="password">Password: </label>
           <input
