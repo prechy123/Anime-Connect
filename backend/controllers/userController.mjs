@@ -7,7 +7,6 @@ import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
 import Token from "../models/tokenModel.mjs";
 import Log from "../models/logModel.mjs";
 
-
 export const createUser = async (req, res) => {
   const { username, fullname, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -88,9 +87,13 @@ export const signin = async (req, res) => {
 
 export const getUserLogs = async (req, res) => {
   try {
-    const logger = await Log.findOne({});
-    res.status(200).json({ messsage: logger.context });
+    const logger = await Log.find({});
+    res.status(200).json({ messsage: logger });
   } catch (err) {
     res.status(500).json({ err: err.message });
   }
+};
+
+export const logout = async (req, res) => {
+  res.status(500).json({ message: "Coming soon..." });
 };

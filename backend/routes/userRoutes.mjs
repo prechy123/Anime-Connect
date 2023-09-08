@@ -10,7 +10,7 @@ import {
 } from "../middleware/users/usersValidator.mjs";
 
 //controller
-import { createUser, getUserLogs, signin } from "../controllers/userController.mjs";
+import { createUser, getUserLogs, logout, signin } from "../controllers/userController.mjs";
 
 //middleware
 import requestIp from "request-ip";
@@ -36,6 +36,7 @@ router.post(
   useragent.express(),
   signin
 );
+router.post("/logout", logout)
 
 
 //get routes
