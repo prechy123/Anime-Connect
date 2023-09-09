@@ -1,7 +1,7 @@
 import * as api from "../api/authenticationApi";
 import * as types from "../constants/authenticationConstants";
 
-export const siginAction = (form) => async (dispatch) => {
+export const siginAction = (form, navigate) => async (dispatch) => {
   try {
     const response = await api.signin(form);
     const { error, data } = response;
@@ -23,11 +23,13 @@ export const siginAction = (form) => async (dispatch) => {
         type: types.SIGNIN_SUCCESS,
         payload: profile,
       });
+      navigate("/")
     }
   } catch {
     dispatch({
       type: types.SIGNIN_FAIL,
       payload: types.ERROR_MESSAGE,
     });
+    navigate("/signin")
   }
 };
