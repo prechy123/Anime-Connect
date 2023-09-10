@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function Signup() {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [form, setForm] = useState({
     username: "",
@@ -13,18 +15,13 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:4000/users/signup",
-        form
-      );
-      console.log(response.data.message);
+      dispatch(signUpAction(form, navigate))
       setForm({
         username: "",
         fullname: "",
         email: "",
         password: "",
       });
-      navigate("/signin");
     } catch (err) {
       if (err.response) {
         console.log(err.response.data);
