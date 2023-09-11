@@ -26,8 +26,22 @@ const authReducer = (state = initialState, action) => {
         refreshToken: payload.refreshToken || null,
         accessToken: payload.accessToken || null,
         signInError: null,
-        successMessage: payload || null
+        successMessage: payload || null,
       };
+    case types.SIGNUP_SUCCESS:
+      return {
+        ...state,
+        signUpError: [],
+        signInError: null,
+        successMessage: payload ? payload : null,
+      };
+      case types.SIGNUP_FAIL:
+        return {
+          ...state,
+          successMessage: null,
+          signInError: null,
+          signUpError: payload ? payload : []
+        }
     default:
       return state;
   }

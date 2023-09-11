@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpAction } from "../redux/actions/authenticationAction";
 
 function Signup() {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const success = useSelector((state) => state.auth);
+    console.log(success);
+
   const [form, setForm] = useState({
     username: "",
     fullname: "",
@@ -15,13 +18,13 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(signUpAction(form, navigate))
-      setForm({
-        username: "",
-        fullname: "",
-        email: "",
-        password: "",
-      });
+      dispatch(signUpAction(form, navigate));
+      // setForm({
+      //   username: "",
+      //   fullname: "",
+      //   email: "",
+      //   password: "",
+      // });
     } catch (err) {
       if (err.response) {
         console.log(err.response.data);
@@ -38,7 +41,7 @@ function Signup() {
         </Link>
       </h2>
       <form className="form" onSubmit={handleSubmit}>
-      <div>
+        <div>
           <label htmlFor="email"> Email Address: </label>
           <input
             type="email"
@@ -68,8 +71,7 @@ function Signup() {
             onChange={(e) => setForm({ ...form, username: e.target.value })}
           />
         </div>
-        
-        
+
         <div>
           <label htmlFor="password">Password: </label>
           <input

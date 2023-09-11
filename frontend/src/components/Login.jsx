@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 function Login() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const success = useSelector(state => state?.auth)
+  console.log(success)
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -28,8 +30,7 @@ function Login() {
       console.log(err.message);
     }
   };
-  const {successMessage} = useSelector(state => state.auth)
-  console.log(successMessage)
+
   return (
     <div>
       <h2>Don't have an account <Link to={"/signup"} className=" underline">Sign up</Link></h2>

@@ -14,9 +14,10 @@ export const signin = async (form) => {
 };
 export const signup = async (form) => {
   try {
-    const response = await API.post(form);
+    const response = await API.post("/users/signup", form);
     return { data: response.data, error: null };
   } catch (error) {
-    return { error: error.response.data, data: null };
+    const err = error.response.data.error;
+    return { error: err, data: null };
   }
 };
