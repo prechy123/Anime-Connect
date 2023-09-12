@@ -1,5 +1,6 @@
 import * as api from "../api/authenticationApi";
 import * as types from "../constants/authenticationConstants";
+// import Cookies from "js-cookie"
 
 export const signUpAction = (form, navigate) => async (dispatch) => {
   try {
@@ -43,6 +44,7 @@ export const siginAction = (form, navigate) => async (dispatch) => {
         refreshToken,
         accessTokenUpdatedAt,
       };
+      // Cookies.set("profile", JSON.stringify(profile))
       localStorage.setItem("profile", JSON.stringify(profile));
       dispatch({
         type: types.SIGNIN_SUCCESS,
@@ -56,5 +58,15 @@ export const siginAction = (form, navigate) => async (dispatch) => {
       payload: types.ERROR_MESSAGE,
     });
     navigate("/signin");
+  }
+};
+
+export const logoutAction = (accessToken) => async (dispatch) => {
+  try {
+    const { data } = await api.logout(accessToken);
+    localStorage.removeItem("profile");
+    dispatch({ type: types.LOGOUT, payload: data });
+  } catch (err) {
+    dispatch({ type: types.LOGOUT, payload: types.ERROR_MESSAGE });
   }
 };

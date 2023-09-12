@@ -1,4 +1,4 @@
-import { API } from "./utils";
+import { API, handleApiError } from "./utils";
 
 export const signin = async (form) => {
   try {
@@ -19,5 +19,15 @@ export const signup = async (form) => {
   } catch (error) {
     const err = error.response.data.error;
     return { error: err, data: null };
+  }
+};
+export const logout = async (accessToken) => {
+  try {
+    const response = await API.post("/users/logout", {
+      accessToken: accessToken,
+    });
+    return { data: response.data, error: null };
+  } catch (error) {
+    return handleApiError(error);
   }
 };

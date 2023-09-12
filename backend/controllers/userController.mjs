@@ -47,7 +47,7 @@ export const signin = async (req, res) => {
     );
 
     if (!isPasswordCorrect) {
-      await saveLogInfo(req, "User enterred incorrect password", "sign in");
+      await saveLogInfo(req, "User entered incorrect password", "sign in");
       return res.status(400).json({ message: "Incorrect password" });
     }
     const payload = {
@@ -95,5 +95,17 @@ export const getUserLogs = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-  res.status(500).json({ message: "Coming soon..." });
+  try {
+    const accessToken = req.body.accessToken;
+    if (accessToken) {
+      await Token.deleteOne({ accessToken });
+      // await saveLogInfo(null, "Logout successfully", "Logout");
+      res.status(200).json({ message: "Logged out successfully" });
+    }
+  } catch (err) {
+    // await saveLogInfo(null, err.message, "Logout");
+    res
+      .status(500)
+      .json({ message: "Internal server error. Please try again later." });
+  }
 };

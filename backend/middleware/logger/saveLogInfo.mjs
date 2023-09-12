@@ -3,8 +3,8 @@ import Log from "../../models/logModel.mjs";
 
 const saveLogInfo = async (req, message, type) => {
   try {
-    const ip = req.clientIp;
-    const useragent = req.useragent;
+    const ip = req?.clientIp;
+    const useragent = req?.useragent;
     const {
       ipaddress,
       city,
@@ -16,7 +16,7 @@ const saveLogInfo = async (req, message, type) => {
       platform,
     } = getContextData(ip, useragent);
     const context = `IP: ${ipaddress}, CITY: ${city}, COUNTRY: ${country}, DEVICETYPE: ${deviceType}, BROWSER: ${browser}, VERSION: ${version}, OS: ${os}, PLATFORM: ${platform}`;
-    const email = req.body.email;
+    const email = req?.body?.email;
     const newLog = new Log({
       email,
       context,
