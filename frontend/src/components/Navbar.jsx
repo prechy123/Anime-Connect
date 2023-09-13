@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { logoutAction } from "../redux/actions/authenticationAction";
 
 function Navbar({ userData, accessToken }) {
+
   const dispatch = useDispatch();
   // const location = useLocation()
   const [loggingOut, setLoggingOut] = useState(false);

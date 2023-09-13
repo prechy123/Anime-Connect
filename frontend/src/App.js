@@ -11,7 +11,9 @@ const Signup = lazy(() => import("./components/Signup"));
 // import Signup from "./components/Signup";
 
 function App() {
-  const userData = useSelector((state) => state?.auth?.userData);
+
+  let userData = useSelector((state) => state?.auth?.userData);
+  
   return (
     <Suspense fallback={<FallbackLoading />}>
       <Router>
