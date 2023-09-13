@@ -29,7 +29,7 @@ export const followUser = async (req, res) => {
       }),
     ]);
     await Relationship.create({ follower: followerId, following: followingId });
-    res.status(200).json({ message: "User followe successfully" });
+    res.status(200).json({ message: "User followed successfully" });
   } catch (error) {
     res
       .status(500)
@@ -52,10 +52,8 @@ export const unFollowUser = async (req, res) => {
       follower: followerId,
       following: followingId,
     });
-    if (relationshipExist) {
-      return res
-        .status(400)
-        .message({ message: "Relationship does not exist" });
+    if (!relationshipExist) {
+      return res.status(400).message({ message: "Relationship does not exist" });
     }
 
     await Promise.all([
