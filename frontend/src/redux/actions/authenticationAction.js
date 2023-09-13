@@ -17,7 +17,7 @@ export const signUpAction = (form, navigate) => async (dispatch) => {
         type: types.SIGNUP_SUCCESS,
         payload: types.SIGNUP_SUCCESS_MESSAGE,
       });
-      navigate("/signin");
+      navigate("/");
     }
   } catch (err) {
     dispatch({
@@ -50,7 +50,7 @@ export const siginAction = (form, navigate) => async (dispatch) => {
         type: types.SIGNIN_SUCCESS,
         payload: profile,
       });
-      navigate("/");
+      navigate("/user/home");
     }
   } catch {
     dispatch({
