@@ -9,7 +9,7 @@ import User from "../models/userModel.mjs";
  */
 export const followUser = async (req, res) => {
   try {
-    const followerId = req.userId;
+    const followerId = req.body.userId;
     const followingId = req.params.id;
 
     const relationshipExist = await Relationship.exists({
@@ -45,14 +45,14 @@ export const followUser = async (req, res) => {
  */
 export const unFollowUser = async (req, res) => {
   try {
-    const followerId = req.userId;
+    const followerId = req.body.userId;
     const followingId = req.params.id;
 
     const relationshipExist = await Relationship.exists({
       follower: followerId,
       following: followingId,
     });
-    if (!relationshipExist) {
+    if (relationshipExist) {
       return res
         .status(400)
         .message({ message: "Relationship does not exist" });
