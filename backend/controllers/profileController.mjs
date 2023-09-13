@@ -53,7 +53,7 @@ export const unFollowUser = async (req, res) => {
       following: followingId,
     });
     if (!relationshipExist) {
-      return res.status(400).message({ message: "Relationship does not exist" });
+      return res.status(400).json({ message: "Relationship does not exist" });
     }
 
     await Promise.all([
