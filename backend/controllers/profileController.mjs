@@ -1,15 +1,15 @@
 import Relationship from "../models/relationshipModel.mjs";
-
+import User from "../models/userModel.mjs";
 
 /**
  * JSDoc
  * @route PATCH /users/:id/follow
  * @param {string} req.userId - The ID of the current user
- * @param {string} req.params.id - The ID of the user to follow 
+ * @param {string} req.params.id - The ID of the user to follow
  */
 export const followUser = async (req, res) => {
   try {
-    const followerId = res.userId;
+    const followerId = req.userId;
     const followingId = req.params.id;
 
     const relationshipExist = await Relationship.exists({
@@ -36,6 +36,41 @@ export const followUser = async (req, res) => {
       .json({ message: "Some error occurred while following the user" });
   }
 };
-export const unFollowUser = (req, res) => {
 
+/**
+ * JSDoc
+ * @route PATCH /users/:id/unfollow
+ * @param {string} req.userId -
+ * @param {string} req.params.id
+ */
+export const unFollowUser = async (req, res) => {
+  try {
+    const followerId = req.userId;
+    const followingId = req.params.id;
+
+    const relationshipExist = await Relationship.exists({
+      follower: followerId,
+      following: followingId,
+    });
+    if (!relationshipExist) {
+      return res
+        .status(400)
+        .message({ message: "Relationship does not exist" });
+    }
+
+    await Promise.all([
+      User.findByIdAndUpdate(followingId, { $pull: { followers: followerId } }),
+      User.findByIdAndUpdate(followerId, { $pull: { following: followingId } }),
+    ]);
+
+    Relationship.deleteOne({
+      follower: followerId,
+      following: followingId,
+    });
+    res.status(200).json({ message: "User unfollowed successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Some error occured while unfollowing the user" });
+  }
 };
