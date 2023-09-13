@@ -6,9 +6,9 @@ const createLimiter = (windowMs, max, message) => {
   return rateLimit({
     windowMs,
     max,
-    skipSuccessfulRequests: true,
     message: { message: message },
   });
 };
 
 export const signupSigninLimiter = createLimiter(10 * 10 * 6000, 10, MESSAGE); //1hr, 10 requests
+export const followLimiter = createLimiter(10 * 10 * 6000, 50, MESSAGE); //1hr, 50 request

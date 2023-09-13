@@ -1,7 +1,10 @@
 import express from "express";
 
 //middleware-limiter
-import { signupSigninLimiter } from "../middleware/limiter/limiter.mjs";
+import {
+  followLimiter,
+  signupSigninLimiter,
+} from "../middleware/limiter/limiter.mjs";
 
 //middleware-validator
 import {
@@ -10,12 +13,18 @@ import {
 } from "../middleware/users/usersValidator.mjs";
 
 //controller
-import { createUser, getUserLogs, logout, signin } from "../controllers/userController.mjs";
+import {
+  createUser,
+  getUserLogs,
+  logout,
+  signin,
+} from "../controllers/userController.mjs";
 
 //middleware
 import requestIp from "request-ip";
 import useragent from "express-useragent";
 import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
+import { followUser, unFollowUser } from "../controllers/profileController.mjs";
 
 const router = express.Router();
 
@@ -36,10 +45,12 @@ router.post(
   useragent.express(),
   signin
 );
-router.post("/logout", logout)
+router.post("/logout", logout);
 
+router.patch("/:id/follow", followLimiter, followUser);
+router.patch("/:id/unfollow", followLimiter, unFollowUser);
 
 //get routes
-router.get("/getlogs", getUserLogs)
+router.get("/getlogs", getUserLogs);
 
 export default router;
