@@ -1,5 +1,12 @@
 import Relationship from "../models/relationshipModel.mjs";
 
+
+/**
+ * JSDoc
+ * @route PATCH /users/:id/follow
+ * @param {string} req.userId - The ID of the current user
+ * @param {string} req.params.id - The ID of the user to follow 
+ */
 export const followUser = async (req, res) => {
   try {
     const followerId = res.userId;
@@ -29,4 +36,6 @@ export const followUser = async (req, res) => {
       .json({ message: "Some error occurred while following the user" });
   }
 };
-export const unFollowUser = (req, res) => {};
+export const unFollowUser = (req, res) => {
+
+};
