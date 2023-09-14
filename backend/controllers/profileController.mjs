@@ -55,13 +55,12 @@ export const unFollowUser = async (req, res) => {
     if (!relationshipExist) {
       return res.status(400).json({ message: "Relationship does not exist" });
     }
-
     await Promise.all([
       User.findByIdAndUpdate(followingId, { $pull: { followers: followerId } }),
       User.findByIdAndUpdate(followerId, { $pull: { following: followingId } }),
     ]);
 
-    Relationship.deleteOne({
+    await Relationship.deleteOne({
       follower: followerId,
       following: followingId,
     });
