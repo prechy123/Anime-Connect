@@ -120,7 +120,7 @@ export const logout = async (req, res) => {
  */
 export const getFollowingUsers = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req;
     const relationships = await Relationship.find({
       follower: userId,
     })

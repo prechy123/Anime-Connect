@@ -9,7 +9,7 @@ import User from "../models/userModel.mjs";
  */
 export const followUser = async (req, res) => {
   try {
-    const followerId = req.body.userId;
+    const followerId = req.userId;
     const followingId = req.params.id;
 
     if (followerId === followingId) {
@@ -48,7 +48,7 @@ export const followUser = async (req, res) => {
  */
 export const unFollowUser = async (req, res) => {
   try {
-    const followerId = req.body.userId;
+    const followerId = req.userId;
     const followingId = req.params.id;
 
 
