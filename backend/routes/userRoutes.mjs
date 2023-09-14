@@ -15,6 +15,7 @@ import {
 //controller
 import {
   createUser,
+  getFollowingUsers,
   getUserLogs,
   logout,
   signin,
@@ -23,10 +24,13 @@ import {
 //middleware
 import requestIp from "request-ip";
 import useragent from "express-useragent";
-import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
+// import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
 import { followUser, unFollowUser } from "../controllers/profileController.mjs";
 
 const router = express.Router();
+
+
+router.get("/following", getFollowingUsers)
 
 //post routes
 router.post(

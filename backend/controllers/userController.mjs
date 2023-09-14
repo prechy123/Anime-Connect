@@ -6,6 +6,7 @@ import User from "../models/userModel.mjs";
 import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
 import Token from "../models/tokenModel.mjs";
 import Log from "../models/logModel.mjs";
+import Relationship from "../models/relationshipModel.mjs";
 
 export const createUser = async (req, res) => {
   const { username, fullname, email, password } = req.body;
@@ -110,3 +111,34 @@ export const logout = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves the users that the current user is following, including their name, avatar, location,
+ * and the date when they were followed, sorted by the most recent follow date.
+ *
+ * @route GET /users/following
+ * @param {String} req.userId - The ID of the current user
+ */
+export const getFollowingUsers = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const relationships = await Relationship.find({
+      follower: userId,
+    })
+      .populate("following", "_id username fullname profilepictureurl location")
+      .lean();
+
+    const followingUsers = relationships
+      .map((relationship) => ({
+        ...relationship.following,
+        followingSince: relationship.createdAt,
+      }))
+      .sort((a, b) => b.followingSince - a.followingSince);
+    res.status(200).json({ message: followingUsers });
+  } catch (err) {
+    res
+      .status(500)
+      .json({
+        message: "Some error occurred while retrieving the following users",
+      });
+  }
+};
