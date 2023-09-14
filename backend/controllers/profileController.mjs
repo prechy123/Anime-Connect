@@ -12,6 +12,9 @@ export const followUser = async (req, res) => {
     const followerId = req.body.userId;
     const followingId = req.params.id;
 
+    if (followerId === followingId) {
+      return res.status(400).json({message: "You can not follow yourself"})
+    }
     const relationshipExist = await Relationship.exists({
       follower: followerId,
       following: followingId,
@@ -47,6 +50,7 @@ export const unFollowUser = async (req, res) => {
   try {
     const followerId = req.body.userId;
     const followingId = req.params.id;
+
 
     const relationshipExist = await Relationship.exists({
       follower: followerId,
