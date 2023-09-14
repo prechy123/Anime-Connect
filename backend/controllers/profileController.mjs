@@ -11,7 +11,7 @@ export const followUser = async (req, res) => {
   try {
     const followerId = req.userId;
     const followingId = req.params.id;
-
+    // console.log(followerId)
     if (followerId === followingId) {
       return res.status(400).json({message: "You can not follow yourself"})
     }
