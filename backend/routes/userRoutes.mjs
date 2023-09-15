@@ -1,3 +1,4 @@
+//packages
 import express from "express";
 import passport from "passport"
 
@@ -30,7 +31,7 @@ import { followUser, unFollowUser } from "../controllers/profileController.mjs";
 
 const router = express.Router();
 
-
+//get routes
 router.get("/following", getFollowingUsers)
 
 //post routes
@@ -52,6 +53,7 @@ router.post(
 );
 router.post("/logout", logout);
 
+//patch routes
 router.patch("/:id/follow", followLimiter, followUser);
 router.patch("/:id/unfollow", followLimiter, unFollowUser);
 
