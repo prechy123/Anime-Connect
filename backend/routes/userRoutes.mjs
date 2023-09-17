@@ -62,4 +62,3 @@ router.get("/getlogs", getUserLogs);
 
 export default router;
 
-//Routes
