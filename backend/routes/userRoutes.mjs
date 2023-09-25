@@ -31,6 +31,11 @@ import { followUser, unFollowUser } from "../controllers/profileController.mjs";
 
 const router = express.Router();
 
+const requireAuth = passport.authenticate("jwt", { session: false }, null);
+//When a request comes to a protected route, this middleware will be called first, 
+//and it will attempt to authenticate the request using the JWT strategy. 
+//If the JWT is valid, the request will proceed; otherwise, it will be rejected.
+
 //get routes
 router.get("/following", getFollowingUsers)
 
