@@ -59,8 +59,8 @@ router.post(
 router.post("/logout", logout);
 
 //patch routes
-router.patch("/:id/follow", followLimiter, followUser);
-router.patch("/:id/unfollow", followLimiter, unFollowUser);
+router.patch("/:id/follow", requireAuth, followLimiter, followUser);
+router.patch("/:id/unfollow", requireAuth, followLimiter, unFollowUser);
 
 //get routes
 router.get("/getlogs", getUserLogs);
