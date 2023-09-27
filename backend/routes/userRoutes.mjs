@@ -36,10 +36,10 @@ const requireAuth = passport.authenticate("jwt", { session: false }, null);
 //and it will attempt to authenticate the request using the JWT strategy. 
 //If the JWT is valid, the request will proceed; otherwise, it will be rejected.
 
-//get routes
+//for get routes
 router.get("/following", getFollowingUsers)
 
-//post routes
+//for post routes
 router.post(
   "/signup",
   signupSigninLimiter,
