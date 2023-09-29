@@ -65,5 +65,7 @@ router.patch("/:id/unfollow", requireAuth, followLimiter, unFollowUser);
 //get routes
 router.get("/getlogs", getUserLogs);
 
+
+//export
 export default router;
 
