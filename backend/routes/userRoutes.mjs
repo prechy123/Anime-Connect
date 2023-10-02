@@ -31,7 +31,7 @@ import {
   getFollowingUsers,
   unFollowUser,
 } from "../controllers/profileController.mjs";
-import decodeToken from "../middleware/auth/decodeAuth.mjs";
+import decodeToken from "../middleware/auth/decodeToken.mjs";
 
 const router = express.Router();
 
@@ -59,8 +59,8 @@ router.post(
 router.post("/logout", logout);
 
 //patch routes
-router.patch("/:id/follow", requireAuth, followLimiter, followUser);
-router.patch("/:id/unfollow", requireAuth, followLimiter, unFollowUser);
+router.patch("/:id/follow", decodeToken, followLimiter, followUser);
+router.patch("/:id/unfollow", decodeToken, followLimiter, unFollowUser);
 
 //get routes
 router.get("/getlogs", getUserLogs);
