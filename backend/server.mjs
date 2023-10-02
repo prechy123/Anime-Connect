@@ -11,6 +11,7 @@ app.use(express.json());
 
 app.use("/users", userRouter);
 
+console.log("Connecting mongo database")
 mongoose
   .connect(process.env.DB_CONNECTION)
   .then(() => {

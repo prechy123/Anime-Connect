@@ -1,6 +1,6 @@
 //packages
 import express from "express";
-import passport from "passport"
+import passport from "passport";
 
 //middleware-limiter
 import {
@@ -17,7 +17,6 @@ import {
 //controller
 import {
   createUser,
-  getFollowingUsers,
   getUserLogs,
   logout,
   signin,
@@ -27,17 +26,18 @@ import {
 import requestIp from "request-ip";
 import useragent from "express-useragent";
 // import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
-import { followUser, unFollowUser } from "../controllers/profileController.mjs";
+import {
+  followUser,
+  getFollowingUsers,
+  unFollowUser,
+} from "../controllers/profileController.mjs";
+import decodeToken from "../middleware/auth/decodeAuth.mjs";
 
 const router = express.Router();
 
-const requireAuth = passport.authenticate("jwt", { session: false }, null);
-//When a request comes to a protected route, this middleware will be called first, 
-//and it will attempt to authenticate the request using the JWT strategy. 
-//If the JWT is valid, the request will proceed; otherwise, it will be rejected.
 
 //for get routes
-router.get("/following", getFollowingUsers)
+router.get("/following", decodeToken, getFollowingUsers);
 
 //for post routes
 router.post(
@@ -65,7 +65,5 @@ router.patch("/:id/unfollow", requireAuth, followLimiter, unFollowUser);
 //get routes
 router.get("/getlogs", getUserLogs);
 
-
 //export
 export default router;
-
