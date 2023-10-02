@@ -13,7 +13,7 @@ export const followUser = async (req, res) => {
     const followingId = req.params.id;
     // console.log(followerId)
     if (followerId === followingId) {
-      return res.status(400).json({message: "You can not follow yourself"})
+      return res.status(400).json({ message: "You can not follow yourself" });
     }
     const relationshipExist = await Relationship.exists({
       follower: followerId,
@@ -50,7 +50,6 @@ export const unFollowUser = async (req, res) => {
   try {
     const followerId = req.userId;
     const followingId = req.params.id;
-
 
     const relationshipExist = await Relationship.exists({
       follower: followerId,
@@ -99,10 +98,30 @@ export const getFollowingUsers = async (req, res) => {
       .sort((a, b) => b.followingSince - a.followingSince);
     res.status(200).json({ message: followingUsers });
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        message: "Some error occurred while retrieving the following users",
-      });
+    res.status(500).json({
+      message: "Some error occurred while retrieving the following users",
+    });
+  }
+};
+
+export const getFollowerUsers = async (req, res) => {
+  try {
+    const { userId } = req;
+    const relationship = await Relationship.find({
+      following: userId,
+    })
+      .populate("follower", "_id username fullname profilepictureurl location")
+      .lean();
+    const followerUser = relationship
+      .map((relationship) => ({
+        ...relationship.follower,
+        followerSince: relationship.createdAt,
+      }))
+      .sort((a, b) => b.followerSince - a.followerSince);
+    res.status(200).json({message: followerUser})
+  } catch (err) {
+    res.status(500).json({
+      message: "Some error occurred while retrieving the following users",
+    });
   }
 };

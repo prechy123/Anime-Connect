@@ -1,6 +1,5 @@
 //packages
 import express from "express";
-import passport from "passport";
 
 //middleware-limiter
 import {
@@ -28,6 +27,7 @@ import useragent from "express-useragent";
 // import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
 import {
   followUser,
+  getFollowerUsers,
   getFollowingUsers,
   unFollowUser,
 } from "../controllers/profileController.mjs";
@@ -38,6 +38,7 @@ const router = express.Router();
 
 //for get routes
 router.get("/following", decodeToken, getFollowingUsers);
+router.get("/follower", decodeToken, getFollowerUsers);
 
 //for post routes
 router.post(
