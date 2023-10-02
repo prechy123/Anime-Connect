@@ -63,7 +63,6 @@ export const unFollowUser = async (req, res) => {
       User.findByIdAndUpdate(followingId, { $pull: { followers: followerId } }),
       User.findByIdAndUpdate(followerId, { $pull: { following: followingId } }),
     ]);
-    //delete relationship
     await Relationship.deleteOne({
       follower: followerId,
       following: followingId,
