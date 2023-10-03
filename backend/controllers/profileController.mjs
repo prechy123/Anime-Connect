@@ -104,6 +104,13 @@ export const getFollowingUsers = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves the users that the current user followers, including their name, avatar, location,
+ * and the date when they were followed, sorted by the most recent follow date.
+ *
+ * @route GET /users/follower
+ * @param {String} req.userId - The ID of the current user
+ */
 export const getFollowerUsers = async (req, res) => {
   try {
     const { userId } = req;
