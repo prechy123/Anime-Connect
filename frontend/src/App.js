@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import { useSelector } from "react-redux";
 import PrivateRoutes from "./PrivateRoutes";
 import Profile from "./pages/Profile";
+//adding lazy to both login and signup to use Suspense to add a fallback
 const Login = lazy(() => import("./components/Login"));
 const Signup = lazy(() => import("./components/Signup"));
 
