@@ -11,7 +11,10 @@ app.use(express.json());
 
 app.use("/users", userRouter);
 
-console.log("Connecting mongo database")
+/**
+ * connecting mongodb database and listening on port 4000
+ */
+console.log("Connecting mongo database");
 mongoose
   .connect(process.env.DB_CONNECTION)
   .then(() => {
