@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import { Outlet } from "react-router-dom";
 
 function PrivateRoutes() {
+  document.title = "Feed | AnimeConnect"
   // const dispatch = useDispatch()
     const profile = localStorage.getItem("profile");
     let userData

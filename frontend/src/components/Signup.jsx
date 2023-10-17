@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signUpAction } from "../redux/actions/authenticationAction";
 
 function Signup() {
+  document.title = "Signup | AnimeConnect"
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const success = useSelector((state) => state.auth);
@@ -36,7 +37,7 @@ function Signup() {
     <div>
       <h2>
         Have an account, then{" "}
-        <Link to={"/signin"} className=" underline">
+        <Link to={"/"} className=" underline">
           Log in
         </Link>
       </h2>

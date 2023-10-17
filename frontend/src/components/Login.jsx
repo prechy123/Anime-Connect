@@ -4,6 +4,7 @@ import { siginAction } from "../redux/actions/authenticationAction";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
+  document.title = "Login | AnimeConnect"
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const success = useSelector(state => state?.auth)
@@ -12,6 +13,7 @@ function Login() {
     email: "",
     password: "",
   });
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -30,6 +32,11 @@ function Login() {
       console.log(err.message);
     }
   };
+  const signInDemo = () => {
+    const email = "testuser1@gmail.com"
+    const password = "test123"
+    setForm({email, password})
+  }
 
   return (
     <div>
@@ -57,6 +64,8 @@ function Login() {
         </div>
         <button className="button">Log in</button>
       </form>
+      <Link onClick={signInDemo} class=" underline ml-2">Demo-account login details</Link>
+      
     </div>
   );
 }
