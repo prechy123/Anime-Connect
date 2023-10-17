@@ -21,11 +21,11 @@ function Navbar({ userData, accessToken }) {
           <h1>LOGO</h1>
         </Link>
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-between gap-3">
         <img src={userData.profilepictureurl} alt="profile" width={50} />
         <div>
           <Link to="/profile">{userData.name}</Link>
-          <p>{userData.email}</p>
+          <p>{userData.username}</p>
         </div>
         <div>
           <button onClick={handleLogout}>
