@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpAction } from "../redux/actions/authenticationAction";
+import SigninSignupLoader from "./loader/SigninSignupLoader";
 
 function Signup() {
   document.title = "Signup | AnimeConnect"
+  const [error, setError] = useState([])
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const success = useSelector((state) => state.auth);
-    console.log(success);
+  const message = useSelector((state) => state.auth);
+    console.log(message);
 
   const [form, setForm] = useState({
     username: "",

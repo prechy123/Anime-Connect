@@ -2,7 +2,7 @@ import { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import FallbackLoading from "./components/loader/FallBackLoading";
 import Home from "./pages/Home";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import PrivateRoutes from "./PrivateRoutes";
 import Profile from "./pages/Profile";
 //adding lazy to both login and signup to use Suspense to add a fallback
