@@ -5,32 +5,24 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   document.title = "Login | AnimeConnect"
+  const [error1, setError1] = useState("")
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const success = useSelector(state => state?.auth)
-  console.log(success)
+  // const message = useSelector(state => state?.auth)
+  // if (message.signInError !== null) {
+  //   setError1(message.signInError)
+  // }
+  // console.log(message)
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
   
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      dispatch(siginAction(form, navigate))
-      //   .post("http://localhost:4000/users/signin", form)
-      //   .then((response) => {
-      //     console.log(response.message);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err.message);
-      //   });
-    } catch (err) {
-      if (err.response) {
-        console.log(err.response.data)
-      }
-      console.log(err.message);
-    }
+    dispatch(siginAction(form, navigate))
   };
   const signInDemo = () => {
     const email = "testuser1@gmail.com"
@@ -64,8 +56,12 @@ function Login() {
         </div>
         <button className="button">Log in</button>
       </form>
-      <Link onClick={signInDemo} class=" underline ml-2">Demo-account login details</Link>
-      
+      <Link onClick={signInDemo} class=" underline ml-2">Get Demo-account Login details</Link>
+      <div>
+          {error1 && (
+            <p>{error1}</p>
+          )}
+      </div>
     </div>
   );
 }
