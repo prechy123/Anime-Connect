@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { siginAction } from "../redux/actions/authenticationAction";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,11 +8,15 @@ function Login() {
   const [error1, setError1] = useState("")
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // const message = useSelector(state => state?.auth)
-  // if (message.signInError !== null) {
-  //   setError1(message.signInError)
-  // }
-  // console.log(message)
+  const message = useSelector(state => state?.auth)
+  const signInError = message.signInError
+  useEffect(() => {
+    if (signInError == null) {
+      setError1("")
+    } else {
+      setError1(signInError)
+    }
+  }, [signInError])
   const [form, setForm] = useState({
     email: "",
     password: "",
