@@ -5,13 +5,13 @@ import { signUpAction } from "../redux/actions/authenticationAction";
 import SigninSignupLoader from "./loader/SigninSignupLoader";
 
 function Signup() {
-  document.title = "Signup | AnimeConnect"
-  const [error, setError] = useState([])
-  const [loading, setLoading] = useState(false)
+  document.title = "Signup | AnimeConnect";
+  const [error, setError] = useState([]);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const message = useSelector((state) => state.auth);
-    console.log(message);
+  console.log(message);
 
   const [form, setForm] = useState({
     username: "",
