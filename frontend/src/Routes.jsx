@@ -3,7 +3,7 @@ import HomePage from "./Pages/HomePage";
 
 const router = createBrowserRouter([
   {
-    path: "/feed",
+    path: "/homefeed",
     element: <HomePage />
   },
 ]);

@@ -1,24 +1,39 @@
 import { useSelector } from "react-redux";
-import { Box, createTheme } from "@mui/material";
+import { Box, Divider, Stack, createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
+import LeftBar from "../Components/HomePage/LeftBar";
+import Feed from "../Components/HomePage/Feed";
+import SideBar from "../Components/HomePage/SideBar";
 
 const HomePage = () => {
+  const lightModeColors = {
+    primary: {
+      main: "#ffffff",
+      text: "#34373c"
+    },
+  };
+  const darkModeColors = {
+    primary: {
+      main: "#101418",
+      text: "#ffffff",
+    },
+  };
   const mode = useSelector((state) => state.theme.theme);
   const theme = createTheme({
     palette: {
       mode: mode,
+      ...(mode === "light" ? lightModeColors : darkModeColors),
     },
   });
 
   return (
     <ThemeProvider theme={theme}>
-      <Box
-        bgcolor={"background.default"}
-        color={"text.primary"}
-        width="100%"
-        height="100vh"
-      >
-        helle world
+      <Box bgcolor={"primary.main"} color={"primary.text"}>
+        <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2}>
+          <LeftBar />
+          <Feed />
+          <SideBar />
+        </Stack>
       </Box>
     </ThemeProvider>
   );
