@@ -59,12 +59,12 @@ const ThemeMode = () => {
       control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
       onChange={() => setMode(theme === "light" ? "dark" : "light")}
       label="Switch Theme"
-      sx={{ display: { sm: 'none', md: "flex" } }}
+      sx={{ display: { xs: 'none', md: "flex" } }}
     />
     <FormControlLabel
       control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
       onChange={() => setMode(theme === "light" ? "dark" : "light")}
-      sx={{ display: { sm: 'flex', md: "none" } }}
+      sx={{ display: { xs: 'flex', md: "none" } }}
       />
       </>
   );

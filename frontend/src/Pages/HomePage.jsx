@@ -11,6 +11,7 @@ const HomePage = () => {
       main: "#f7fafc",
       text: "#34373c",
       other: "#ffffff",
+      arrow: "#ace3e3"
     },
   };
   const darkModeColors = {
@@ -18,6 +19,7 @@ const HomePage = () => {
       main: "#101418",
       text: "#ffffff",
       other: "#0f0d15",
+      arrow: "#582268"
     },
   };
   const mode = useSelector((state) => state.theme.theme);

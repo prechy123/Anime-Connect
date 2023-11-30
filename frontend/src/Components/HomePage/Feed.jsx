@@ -1,8 +1,28 @@
 import { Box, Typography } from "@mui/material";
 import SearchBar from "./helperComponents/SearchBar";
 import FeedBoilerPlate from "./helperComponents/FeedBoilerPlate";
+import ThemeMode from "./helperComponents/ThemeMode";
+import { useState } from "react";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import { useTheme } from "@emotion/react";
 
 const Feed = () => {
+  const theme = useTheme()
+  const [showArrow, setShowArrow] = useState(false);
+  window.onscroll = function () {
+    const currentScrollPosition = window.scrollY;
+    if (currentScrollPosition > 100) {
+      setShowArrow(true);
+    } else {
+      setShowArrow(false);
+    }
+  };
+  const setCurrentPositionToBeggining = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   return (
     <Box flex={4}>
       <Box>
@@ -24,9 +44,7 @@ const Feed = () => {
           color="primary.text"
           mt={7}
           mb={-2}
-          sx={{ display: { xs: "block", md: "none" }}}
-          position="fixed"
-          right={10}
+          sx={{ display: { xs: "block", md: "none" } }}
         >
           ANIME CONNECT
         </Typography>
@@ -41,6 +59,21 @@ const Feed = () => {
       <FeedBoilerPlate />
       <FeedBoilerPlate />
       <FeedBoilerPlate />
+      <Box position="fixed" right={-20} top={0} zIndex={2} sx={{display: {xs: "block", sm: "none"}}}>
+        <ThemeMode />
+      </Box>
+      {showArrow && (
+        <Box
+          position="fixed"
+          bottom={10}
+          right={10}
+          zIndex={2}
+          onClick={setCurrentPositionToBeggining}
+          sx={{ borderRadius: "50%", padding: "10px", backgroundColor: theme.palette.primary.arrow }}
+        >
+          <ArrowUpwardIcon />
+        </Box>
+      )}
     </Box>
   );
 };
