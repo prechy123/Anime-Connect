@@ -8,14 +8,16 @@ import SideBar from "../Components/HomePage/SideBar";
 const HomePage = () => {
   const lightModeColors = {
     primary: {
-      main: "#ffffff",
-      text: "#34373c"
+      main: "#f7fafc",
+      text: "#34373c",
+      other: "#ffffff"
     },
   };
   const darkModeColors = {
     primary: {
       main: "#101418",
       text: "#ffffff",
+      other: "#0f0d15"
     },
   };
   const mode = useSelector((state) => state.theme.theme);

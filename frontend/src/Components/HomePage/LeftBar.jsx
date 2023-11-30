@@ -1,6 +1,7 @@
 import { Box, Divider, Stack } from "@mui/material";
 import ProfileOverview from "./helperComponents/ProfileOverview";
 import NavListItems from "./helperComponents/NavListItems";
+import ThemeMode from "./helperComponents/ThemeMode";
 
 const LeftBar = () => {
   return (
@@ -9,7 +10,7 @@ const LeftBar = () => {
       p={2}
       sx={{ display: { xs: "none", sm: "block" } }}
     >
-      {/* <Box position="fixed"> */}
+      <Box position="fixed" p={2}>
         <Stack
           direction="column"
           divider={<Divider orientation="horizontal" flexItem />}
@@ -17,8 +18,9 @@ const LeftBar = () => {
         >
           <ProfileOverview />
           <NavListItems />
+          <ThemeMode />
         </Stack>
-      {/* </Box> */}
+      </Box>
     </Box>
   );
 };

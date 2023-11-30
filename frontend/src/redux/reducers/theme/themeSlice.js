@@ -8,13 +8,10 @@ export const themeSlice = createSlice({
   name: "thememode",
   initialState,
   reducers: {
-    isLight: (state, action) => {
-      state.isAuthenticated = action.payload;
-    },
-    isDark: (state, action) => {
-      state.isAuthenticated = action.payload;
+    setTheme: (state, action) => {
+      state.theme = action.payload;
     },
   },
 });
-export const { isAuth, notAuth } = themeSlice.actions;
+export const { setTheme } = themeSlice.actions;
 export default themeSlice.reducer;

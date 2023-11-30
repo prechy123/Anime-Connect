@@ -20,7 +20,7 @@ const ProfileOverview = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   return (
     <>
-      {!isAuthenticated ? (
+      {isAuthenticated ? (
         <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
           <Badge color="success" overlap="circular" badgeContent="online">
             <Avatar
