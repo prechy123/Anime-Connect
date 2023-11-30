@@ -31,7 +31,7 @@ const ProfileOverview = () => {
           <Typography variant="h5" fontWeight={500}>
             John Doe
           </Typography>
-          <Stack direction="row" gap={3}>
+          <Stack direction="row" gap={3} sx={{display: {sm: "none", md: "flex"}}}>
             <StyledBox>
               <Typography>368</Typography>
               <Typography>Post</Typography>

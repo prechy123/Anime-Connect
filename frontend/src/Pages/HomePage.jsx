@@ -10,14 +10,14 @@ const HomePage = () => {
     primary: {
       main: "#f7fafc",
       text: "#34373c",
-      other: "#ffffff"
+      other: "#ffffff",
     },
   };
   const darkModeColors = {
     primary: {
       main: "#101418",
       text: "#ffffff",
-      other: "#0f0d15"
+      other: "#0f0d15",
     },
   };
   const mode = useSelector((state) => state.theme.theme);
@@ -31,7 +31,11 @@ const HomePage = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box bgcolor={"primary.main"} color={"primary.text"}>
-        <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2}>
+        <Stack
+          direction="row"
+          divider={<Divider orientation="vertical" flexItem />}
+          spacing={{ xs: 0, sm: 2 }}
+        >
           <LeftBar />
           <Feed />
           <SideBar />

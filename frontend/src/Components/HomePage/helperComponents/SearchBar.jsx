@@ -18,7 +18,7 @@ const Search = styled("div")(({ theme }) => ({
 const SearchBar = () => {
   const theme = useTheme()
   return (
-    <Search aria-label="Search for a profile" sx={{position: "fixed", width: "500px", backgroundColor: theme.palette.primary.main, zIndex: 1}}>
+    <Search aria-label="Search for a profile" sx={{position: "fixed", width: {xs: "100%",sm: "300px", md: "400px", lg: "40%"}, backgroundColor: theme.palette.primary.main, zIndex: 1}}>
       <SearchIcon />
       <InputBase placeholder="Search Profile" fullWidth />
     </Search>

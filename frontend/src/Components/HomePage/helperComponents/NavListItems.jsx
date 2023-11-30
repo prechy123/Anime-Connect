@@ -18,7 +18,7 @@ const NavListItems = () => {
       <ListItemButton component={Link} to="/your-path">
         <Typography>Settings</Typography>
       </ListItemButton>
-      <ListItemButton variant="outlined" sx={{outline: "1px solid red", borderRadius: "5px"}} component={Link} to="/your-path">
+      <ListItemButton variant="outlined" sx={{outline: {md:"1px solid red"}, borderRadius: "5px"}} component={Link} to="/your-path">
         <Typography>Log Out</Typography>
       </ListItemButton>
     </Stack>
