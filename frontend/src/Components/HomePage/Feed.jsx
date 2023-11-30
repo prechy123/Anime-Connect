@@ -66,7 +66,7 @@ const Feed = () => {
         <Box
           position="fixed"
           bottom={10}
-          right={10}
+          right={"calc(50% - 12px)"}
           zIndex={2}
           onClick={setCurrentPositionToBeggining}
           sx={{ borderRadius: "50%", padding: "10px", backgroundColor: theme.palette.primary.arrow }}
