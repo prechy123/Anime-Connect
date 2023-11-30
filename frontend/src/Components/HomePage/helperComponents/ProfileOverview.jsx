@@ -52,8 +52,8 @@ const ProfileOverview = () => {
           aria-label="signup or signin"
           fullWidth
         >
-          <Button color="secondary">SIGNUP</Button>
-          <Button variant="outlined" color="secondary">
+          <Button color="secondary" href="/signup">SIGNUP</Button>
+          <Button variant="outlined" color="secondary" href="/signin">
             SIGNIN
           </Button>
         </ButtonGroup>
