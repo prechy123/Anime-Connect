@@ -13,7 +13,7 @@ const SideBar = () => {
     <Box flex={2} p={2} sx={{ display: { xs: "none", md: "block" } }}>
       <Box position="fixed" p={2}>
         <Typography variant="h6" fontWeight={600}>
-          ANIME CONNECT
+          WEEEBS.com
         </Typography>
         <ActiveFriends />
         <Typography variant="h6" fontWeight={600} mt={2}>

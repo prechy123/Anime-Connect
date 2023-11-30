@@ -46,7 +46,7 @@ const Feed = () => {
           mb={-2}
           sx={{ display: { xs: "block", md: "none" } }}
         >
-          ANIME CONNECT
+          WEEEBS.com
         </Typography>
       </Box>
       <FeedBoilerPlate />
@@ -66,7 +66,7 @@ const Feed = () => {
         <Box
           position="fixed"
           bottom={10}
-          right={"calc(50% - 12px)"}
+          right="50%"
           zIndex={2}
           onClick={setCurrentPositionToBeggining}
           sx={{ borderRadius: "50%", padding: "10px", backgroundColor: theme.palette.primary.arrow }}
