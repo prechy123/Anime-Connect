@@ -187,7 +187,7 @@ const SignUp = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signin" variant="body2" color="secondary">
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -209,7 +209,6 @@ const SignUp = () => {
           ))}
         </Stack>
       )}
-      {/* <ThemeModeSigninSignUp /> */}
       <Box position="absolute" bottom={20} right={20}>
         <ThemeModeSigninSignUp />
       </Box>

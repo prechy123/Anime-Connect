@@ -1,8 +1,149 @@
+import { LockOutlined } from "@mui/icons-material";
+import {
+  Alert,
+  AlertTitle,
+  Avatar,
+  Box,
+  Button,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
 
-const SignIn = () => {
+const Signin = () => {
+  const Navigate = useNavigate();
+  const [errors, setErrors] = useState();
+
+  const closeAlert = (err) => {
+    setErrors(errors.filter((error) => error !== err));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    // console.log({
+    //   firstName: data.get("firstName"),
+    //   lastName: data.get("lastName"),
+    //   userName: data.get("userName"),
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+
+    const formData = {
+      email: data.get("email"),
+      password: data.get("password"),
+    };
+    const api = await fetch("http://localhost:4000/users/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const response = await api.json();
+    console.log(response);
+    if (response.message === "Account created successfully") {
+      Navigate("/signin");
+    } else {
+      if (response.message) {
+        setErrors([response.message]);
+      } else {
+        setErrors(response.error);
+      }
+    }
+  };
   return (
-    <div>SignIn</div>
-  )
-}
+    <>
+      <Box
+        display="flex"
+        alignItems="center"
+        bgcolor={"primary.main"}
+        color={"primary.text"}
+        height="100vh"
+      >
+        <Stack width="40%" margin="0 auto">
+          <Typography
+            variant="h6"
+            fontWeight={600}
+            color="primary.text"
+            margin="0 auto"
+          >
+            WEEEDS
+            <Typography display="inline" color="secondary">
+              .com
+            </Typography>
+          </Typography>
+          <Avatar sx={{ m: 1, bgcolor: "primary.main", margin: "0 auto" }}>
+            <LockOutlined />
+          </Avatar>
+          <Typography component="h1" variant="h5" margin="0 auto">
+            Sign In
+          </Typography>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  color="secondary"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                  color="secondary"
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+          </Box>
+        </Stack>
+      </Box>
+      {errors && (
+        <Stack gap={1} position="absolute" top={20} right={20} zIndex={2}>
+          {errors.map((error, index) => (
+            <Alert
+              severity="error"
+              key={index}
+              onClick={() => closeAlert(error)}
+            >
+              <AlertTitle>Error</AlertTitle>
+              This is an error alert — <strong>{error}</strong>
+            </Alert>
+          ))}
+        </Stack>
+      )}
+      <Box position="absolute" bottom={20} right={20}>
+        <ThemeModeSigninSignUp />
+      </Box>
+    </>
+  );
+};
 
-export default SignIn
+export default Signin;
