@@ -8,6 +8,16 @@ import Token from "../models/tokenModel.mjs";
 import Log from "../models/logModel.mjs";
 import Relationship from "../models/relationshipModel.mjs";
 
+export const checkUserName = async (req, res) => {
+  const { username } = req.query;
+  const usernameExist = await User.findOne({ username: username });
+  if (usernameExist) {
+    res.status(200).json({ message: "exist" });
+  } else {
+    res.status(200).json({ message: "not exist" });
+  }
+};
+
 export const createUser = async (req, res) => {
   const { username, fullname, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -110,4 +120,3 @@ export const logout = async (req, res) => {
       .json({ message: "Internal server error. Please try again later." });
   }
 };
-

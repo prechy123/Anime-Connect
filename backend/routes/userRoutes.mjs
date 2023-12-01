@@ -15,6 +15,7 @@ import {
 
 //controller
 import {
+  checkUserName,
   createUser,
   getUserLogs,
   logout,
@@ -39,6 +40,9 @@ const router = express.Router();
 //for get routes
 router.get("/following", decodeToken, getFollowingUsers);
 router.get("/follower", decodeToken, getFollowerUsers);
+
+// Check username
+router.get("/checkUserName", checkUserName)
 
 //for post routes
 router.post(
