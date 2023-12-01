@@ -25,6 +25,7 @@ const App = () => {
     palette: {
       mode: mode,
       ...(mode === "light" ? lightModeColors : darkModeColors),
+      divider: '#bdbdbd', // Customize divider color for borders
     },
   });
   return (

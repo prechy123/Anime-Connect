@@ -1,8 +1,4 @@
-import {
-  LockOutlined,
-  ThumbDownAlt,
-  ThumbUpAlt,
-} from "@mui/icons-material";
+import { LockOutlined, ThumbDownAlt, ThumbUpAlt } from "@mui/icons-material";
 import {
   Alert,
   AlertTitle,
@@ -17,8 +13,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import ThemeModeSigninSignUp from "./HomePage/helperComponents/ThemeModeSignInSignUp";
-import ThemeMode from "./HomePage/helperComponents/ThemeMode";
+import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
 
 const SignUp = () => {
   const Navigate = useNavigate();
@@ -93,8 +88,16 @@ const SignUp = () => {
         height="100vh"
       >
         <Stack width="40%" margin="0 auto">
-          <Typography component="h1" variant="h5" margin="0 auto">
-            WEEEDS.com
+          <Typography
+            variant="h6"
+            fontWeight={600}
+            color="primary.text"
+            margin="0 auto"
+          >
+            WEEEDS
+            <Typography display="inline" color="secondary">
+              .com
+            </Typography>
           </Typography>
           <Avatar sx={{ m: 1, bgcolor: "primary.main", margin: "0 auto" }}>
             <LockOutlined />
@@ -118,6 +121,7 @@ const SignUp = () => {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  color="secondary"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -128,6 +132,7 @@ const SignUp = () => {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  color="secondary"
                 />
               </Grid>
               <Grid item xs={12} display="flex" alignItems="center" gap={2}>
@@ -140,6 +145,7 @@ const SignUp = () => {
                   onChange={(e) => {
                     checkUserName(e.target.value);
                   }}
+                  color={userNameStatus ? "error" : "secondary"}
                 />
                 {userNameStatus ? (
                   <ThumbDownAlt color="error" />
@@ -155,6 +161,7 @@ const SignUp = () => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  color="secondary"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -166,6 +173,7 @@ const SignUp = () => {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  color="secondary"
                 />
               </Grid>
             </Grid>
@@ -202,7 +210,9 @@ const SignUp = () => {
         </Stack>
       )}
       {/* <ThemeModeSigninSignUp /> */}
-      <ThemeMode />
+      <Box position="absolute" bottom={20} right={20}>
+        <ThemeModeSigninSignUp />
+      </Box>
     </>
   );
 };
