@@ -13,10 +13,12 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
+import { ClipLoader } from "react-spinners";
 
 const Signin = () => {
   const Navigate = useNavigate();
   const [errors, setErrors] = useState();
+  const [success, setSuccess] = useState(false);
 
   const closeAlert = (err) => {
     setErrors(errors.filter((error) => error !== err));
@@ -38,8 +40,11 @@ const Signin = () => {
     });
     const response = await api.json();
     console.log(response);
-    if (response.message === "Account created successfully") {
-      Navigate("/signin");
+    if (response.message === "logged in successfully") {
+      setSuccess(true);
+      setTimeout(() => {
+        Navigate("/");
+      }, 2000);
     } else {
       if (response.message) {
         setErrors([response.message]);
@@ -129,6 +134,23 @@ const Signin = () => {
               This is an error alert — <strong>{error}</strong>
             </Alert>
           ))}
+        </Stack>
+      )}
+      {success && (
+        <Stack gap={1} position="absolute" top={20} right={20} zIndex={2}>
+          <Alert severity="success">
+            <AlertTitle>Success</AlertTitle>
+            This is an success alert —{" "}
+            <strong>
+              Log in Successfully - redirecting to home page{" "}
+              <ClipLoader
+                color="secondary"
+                size={20}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </strong>
+          </Alert>
         </Stack>
       )}
       <Box position="absolute" bottom={20} right={20}>

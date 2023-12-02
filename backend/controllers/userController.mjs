@@ -66,7 +66,7 @@ export const signin = async (req, res) => {
       email: existingUser.email,
     };
     const accessToken = jwt.sign(payload, process.env.SECRET, {
-      expiresIn: "3h",
+      expiresIn: "1d",
     });
     const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET, {
       expiresIn: "3d",
@@ -80,6 +80,7 @@ export const signin = async (req, res) => {
     newToken.save();
     await saveLogInfo(req, "Account logged in successfully", "Sign in");
     res.status(200).json({
+      message: "logged in successfully",
       accessToken,
       refreshToken,
       accessTokenUpdatedAt: new Date().toLocaleString(),
