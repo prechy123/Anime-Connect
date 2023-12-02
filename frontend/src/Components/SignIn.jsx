@@ -14,6 +14,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
 import { ClipLoader } from "react-spinners";
+import Cookies from "js-cookie"
+import expirationTime from "../../calculate/expirationTime";
 
 const Signin = () => {
   const Navigate = useNavigate();
@@ -39,12 +41,17 @@ const Signin = () => {
       body: JSON.stringify(formData),
     });
     const response = await api.json();
-    console.log(response);
     if (response.message === "logged in successfully") {
       setSuccess(true);
       setTimeout(() => {
         Navigate("/");
       }, 2000);
+      const userDetails = JSON.stringify(response.user)
+      Cookies.set("user", userDetails, {
+        expires: expirationTime(),
+        sameSite: "None",
+        secure: true
+      })
     } else {
       if (response.message) {
         setErrors([response.message]);
