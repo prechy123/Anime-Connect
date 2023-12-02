@@ -27,7 +27,6 @@ const App = () => {
       ...(mode === "light" ? lightModeColors : darkModeColors),
     },
   });
-  console.log('Current Mode:', mode);
 
   return (
     <ThemeProvider theme={theme}>
