@@ -62,7 +62,7 @@ const Feed = () => {
             mb={-2}
             sx={{ display: { xs: "block", md: "none" } }}
           >
-            WEEEDS
+            WEEEBS
             <Typography display="inline" color="secondary">
               .com
             </Typography>

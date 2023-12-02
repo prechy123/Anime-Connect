@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
@@ -93,7 +93,7 @@ const SignUp = () => {
             color="primary.text"
             margin="0 auto"
           >
-            WEEEDS
+            WEEEBS
             <Typography display="inline" color="secondary">
               .com
             </Typography>

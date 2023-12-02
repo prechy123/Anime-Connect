@@ -14,7 +14,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
 import { ClipLoader } from "react-spinners";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 import expirationTime from "../../calculate/expirationTime";
 
 const Signin = () => {
@@ -46,12 +46,12 @@ const Signin = () => {
       setTimeout(() => {
         Navigate("/");
       }, 2000);
-      const userDetails = JSON.stringify(response.user)
+      const userDetails = JSON.stringify(response.user);
       Cookies.set("user", userDetails, {
         expires: expirationTime(),
         sameSite: "None",
-        secure: true
-      })
+        secure: true,
+      });
     } else {
       if (response.message) {
         setErrors([response.message]);
@@ -76,7 +76,7 @@ const Signin = () => {
             color="primary.text"
             margin="0 auto"
           >
-            WEEEDS
+            WEEEBS
             <Typography display="inline" color="secondary">
               .com
             </Typography>
