@@ -5,24 +5,27 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Link,
   ListItemButton,
   Slide,
   Stack,
   Typography,
+  styled,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { forwardRef, useState } from "react";
 import { useSelector } from "react-redux";
 
-
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
+const StyledLink = styled(Link)(({ theme }) => ({
+  textDecoration: "none",
+  color: theme.palette.primary.text,
+}));
 const NavListItems = () => {
   const [open, setOpen] = useState(false);
-  const {isAuthenticated} = useSelector(state => state.auth)
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -31,28 +34,38 @@ const NavListItems = () => {
     setOpen(false);
   };
   const handleLogout = () => {
-    Cookies.remove("user")
+    Cookies.remove("user");
     setOpen(false);
-    window.location.reload()
-  }
+    window.location.reload();
+  };
 
   return (
     <>
-      <Stack spacing={1} sx={{display: isAuthenticated ? "flex" : "none"}}>
-        <ListItemButton component={Link} to="/">
-          <Typography>Home</Typography>
+      <Stack spacing={1} sx={{ display: isAuthenticated ? "flex" : "none" }}>
+        <ListItemButton>
+          <StyledLink to="/">
+            <Typography>Home</Typography>
+          </StyledLink>
         </ListItemButton>
-        <ListItemButton component={Link} to="/communities">
-          <Typography>Communities</Typography>
+        <ListItemButton>
+          <StyledLink to="/communities">
+            <Typography>Communities</Typography>
+          </StyledLink>
         </ListItemButton>
-        <ListItemButton component={Link} to="/notifications">
-          <Typography>Notifications</Typography>
+        <ListItemButton>
+          <StyledLink to="/notifications">
+            <Typography>Notifications</Typography>
+          </StyledLink>
         </ListItemButton>
-        <ListItemButton component={Link} to="/profile">
-          <Typography>Profile</Typography>
+        <ListItemButton>
+          <StyledLink to="/profile">
+            <Typography>Profile</Typography>
+          </StyledLink>
         </ListItemButton>
-        <ListItemButton component={Link} to="/setting">
-          <Typography>Settings</Typography>
+        <ListItemButton to="/setting">
+          <StyledLink to="/setting">
+            <Typography>Settings</Typography>
+          </StyledLink>
         </ListItemButton>
         <ListItemButton
           variant="outlined"

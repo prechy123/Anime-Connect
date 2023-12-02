@@ -19,7 +19,7 @@ const StyledBox = styled(Box)({
 });
 
 const ProfileOverview = () => {
-  const Theme = useTheme()
+  const Theme = useTheme();
   const {
     isAuthenticated,
     username,
@@ -68,10 +68,26 @@ const ProfileOverview = () => {
           fullWidth
         >
           <Button color="secondary">
-            <Link to="/signup" style={{textDecoration: "none", color: Theme.palette.primary.text}}>SIGNUP</Link>
+            <Link
+              to="/signup"
+              style={{
+                textDecoration: "none",
+                color: Theme.palette.primary.text,
+              }}
+            >
+              SIGNUP
+            </Link>
           </Button>
           <Button variant="outlined" color="secondary" href="/signin">
-            <Link to="/signin" style={{textDecoration: "none", color: Theme.palette.primary.text}}>SIGNIN</Link>
+            <Link
+              to="/signin"
+              style={{
+                textDecoration: "none",
+                color: Theme.palette.primary.text,
+              }}
+            >
+              SIGNIN
+            </Link>
           </Button>
         </ButtonGroup>
       )}

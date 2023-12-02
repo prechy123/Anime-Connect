@@ -2,7 +2,7 @@ import { Box, Divider, Stack } from "@mui/material";
 import LeftBar from "../Components/HomePage/LeftBar";
 import Feed from "../Components/HomePage/Feed";
 import SideBar from "../Components/HomePage/SideBar";
-import Cookie from "js-cookie";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { isAuth } from "../redux/reducers/auth/authSlice";
@@ -11,8 +11,8 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState();
   useEffect(() => {
-    if (Cookie.get("user")) {
-      setUser(JSON.parse(Cookie.get("user")));
+    if (Cookies.get("user")) {
+      setUser(JSON.parse(Cookies.get("user")));
     }
   }, []);
   if (user) {
