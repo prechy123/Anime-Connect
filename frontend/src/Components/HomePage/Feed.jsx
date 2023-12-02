@@ -38,16 +38,6 @@ const Feed = () => {
         >
           Feeds
         </Typography>
-        {/* <Typography
-          variant="h6"
-          fontWeight={600}
-          color="primary.text"
-          mt={7}
-          mb={-2}
-          sx={{ display: { xs: "block", md: "none" } }}
-        >
-          WEEEBS.com
-        </Typography> */}
         <Typography
           variant="h6"
           fontWeight={600}
@@ -85,7 +75,7 @@ const Feed = () => {
         <Box
           position="fixed"
           bottom={10}
-          right="50%"
+          right="calc(50% - 22px)"
           zIndex={2}
           onClick={setCurrentPositionToBeggining}
           sx={{
