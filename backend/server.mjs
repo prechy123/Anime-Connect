@@ -7,7 +7,7 @@ import userRouter from "./routes/userRoutes.mjs";
 const app = express();
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173", "https://anime-connect.onrender.com/"],
   credentials: true
 }));
 app.use(express.json());
