@@ -33,7 +33,7 @@ const Feed = () => {
           sx={{
             display: { xs: "block", sm: "none", cursor: "pointer" },
           }}
-          position="absolute"
+          position="fixed"
           top={15}
           left={15}
           onClick={() => setNavBar(!navBar)}
