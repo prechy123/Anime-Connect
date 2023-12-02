@@ -9,6 +9,7 @@ import {
   styled,
 } from "@mui/material";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -64,11 +65,11 @@ const ProfileOverview = () => {
           aria-label="signup or signin"
           fullWidth
         >
-          <Button color="secondary" href="/signup">
-            SIGNUP
+          <Button color="secondary">
+            <Link to="/signup" style={{textDecoration: "none"}}>SIGNUP</Link>
           </Button>
           <Button variant="outlined" color="secondary" href="/signin">
-            SIGNIN
+            <Link to="/signin" style={{textDecoration: "none"}}>SIGNIN</Link>
           </Button>
         </ButtonGroup>
       )}
