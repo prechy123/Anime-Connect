@@ -22,7 +22,7 @@ const SearchBar = () => {
       aria-label="Search for a profile"
       sx={{
         position: "fixed",
-        width: { xs: "80%", sm: "300px", md: "400px", lg: "40%" },
+        width: { xs: "60%", sm: "300px", md: "400px", lg: "40%" },
         backgroundColor: theme.palette.primary.main,
         zIndex: 1,
       }}

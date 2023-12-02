@@ -1,16 +1,17 @@
-import { Box, Divider, Stack } from "@mui/material";
+import { Box, Divider, Stack, useTheme } from "@mui/material";
 import ProfileOverview from "./helperComponents/ProfileOverview";
 import NavListItems from "./helperComponents/NavListItems";
 import ThemeMode from "./helperComponents/ThemeMode";
 
-const LeftBar = () => {
+const LeftBarXS = () => {
+    const Theme = useTheme()
   return (
     <>
-      <Box flex={1.5} p={2} sx={{ display: { xs: "none", sm: "block" } }}>
+      <Box flex={1.5} p={2} sx={{ display: "block" }}>
         <Box
           position="fixed"
           p={2}
-          sx={{ width: { sm: "170px", md: "200px", lg: "250px", xl: "12.5%" } }}
+          sx={{ width: "80%", background: Theme.palette.primary.main }}
         >
           <Stack
             direction="column"
@@ -27,4 +28,4 @@ const LeftBar = () => {
   );
 };
 
-export default LeftBar;
+export default LeftBarXS;

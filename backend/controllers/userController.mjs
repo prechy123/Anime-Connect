@@ -50,7 +50,7 @@ export const signin = async (req, res) => {
     const existingUser = await User.findOne({ email: email });
     if (!existingUser) {
       await saveLogInfo(req, "Email address does not exit", "Sign in");
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: "Invalid Username or Password" });
     }
     const isPasswordCorrect = await bcrypt.compare(
       password,
@@ -59,7 +59,7 @@ export const signin = async (req, res) => {
 
     if (!isPasswordCorrect) {
       await saveLogInfo(req, "User entered incorrect password", "sign in");
-      return res.status(400).json({ message: "Incorrect password" });
+      return res.status(400).json({ message: "Invalid Username or Password" });
     }
     const payload = {
       userId: existingUser._id,
