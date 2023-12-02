@@ -11,8 +11,10 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import Cookies from "js-cookie";
 import { forwardRef, useState } from "react";
 import { useSelector } from "react-redux";
+
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -28,23 +30,28 @@ const NavListItems = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleLogout = () => {
+    Cookies.remove("user")
+    setOpen(false);
+    window.location.reload()
+  }
 
   return (
     <>
       <Stack spacing={1} sx={{display: isAuthenticated ? "flex" : "none"}}>
-        <ListItemButton component={Link} to="/your-path">
+        <ListItemButton component={Link} to="/">
           <Typography>Home</Typography>
         </ListItemButton>
-        <ListItemButton component={Link} to="/your-path">
+        <ListItemButton component={Link} to="/communities">
           <Typography>Communities</Typography>
         </ListItemButton>
-        <ListItemButton component={Link} to="/your-path">
+        <ListItemButton component={Link} to="/notifications">
           <Typography>Notifications</Typography>
         </ListItemButton>
-        <ListItemButton component={Link} to="/your-path">
+        <ListItemButton component={Link} to="/profile">
           <Typography>Profile</Typography>
         </ListItemButton>
-        <ListItemButton component={Link} to="/your-path">
+        <ListItemButton component={Link} to="/setting">
           <Typography>Settings</Typography>
         </ListItemButton>
         <ListItemButton
@@ -72,7 +79,7 @@ const NavListItems = () => {
           <Button onClick={handleClose} variant="contained" color="secondary">
             No
           </Button>
-          <Button onClick={handleClose} variant="outlined" color="secondary">
+          <Button onClick={handleLogout} variant="outlined" color="secondary">
             Yes
           </Button>
         </DialogActions>
