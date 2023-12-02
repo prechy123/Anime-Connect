@@ -23,6 +23,9 @@ const HomePage = () => {
         fullname: user.fullname,
         profilePictureUrl: user.profilepictureurl,
         username: user.username,
+        postcount: user.postcount,
+        followers: user.followers,
+        following: user.following
       })
     );
   }

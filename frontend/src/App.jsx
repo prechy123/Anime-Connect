@@ -25,9 +25,10 @@ const App = () => {
     palette: {
       mode: mode,
       ...(mode === "light" ? lightModeColors : darkModeColors),
-      divider: '#bdbdbd', // Customize divider color for borders
     },
   });
+  console.log('Current Mode:', mode);
+
   return (
     <ThemeProvider theme={theme}>
       <RouterProvider router={router} />

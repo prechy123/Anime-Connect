@@ -6,11 +6,11 @@ import {
   Box,
   Button,
   Grid,
-  Link,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
+import {Link} from "react-router-dom"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
@@ -66,7 +66,6 @@ const SignUp = () => {
         body: JSON.stringify(formData),
       });
       const response = await api.json();
-      console.log(response);
       if (response.message === "Account created successfully") {
         Navigate("/signin");
       } else {
@@ -187,7 +186,7 @@ const SignUp = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/signin" variant="body2" color="secondary">
+                <Link to="/signin" variant="body2" color="secondary">
                   Already have an account? Sign in
                 </Link>
               </Grid>

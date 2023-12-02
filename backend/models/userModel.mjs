@@ -28,6 +28,10 @@ const userSchema = new Schema(
     profilepictureurl: {
       type: String,
     },
+    postcount: {
+      type: Number,
+      default: 0
+    },
     followers: [
       {
         type: Schema.Types.ObjectId,

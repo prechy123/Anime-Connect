@@ -90,6 +90,9 @@ export const signin = async (req, res) => {
         fullname: existingUser.fullname,
         email: existingUser.email,
         profilepictureurl: existingUser.profilepictureurl,
+        postcount: existingUser.postcount,
+        followers: existingUser.followers,
+        following: existingUser.following
       },
     });
   } catch (err) {
