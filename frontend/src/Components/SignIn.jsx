@@ -17,6 +17,9 @@ import { ClipLoader } from "react-spinners";
 import Cookies from "js-cookie";
 import expirationTime from "../../calculate/expirationTime";
 
+// const BASE_URL = "http://localhost:4000"
+const BASE_URL = "https://weeebs.onrender.com"
+
 const Signin = () => {
   const Navigate = useNavigate();
   const [errors, setErrors] = useState();
@@ -33,7 +36,7 @@ const Signin = () => {
       email: data.get("email"),
       password: data.get("password"),
     };
-    const api = await fetch("http://localhost:4000/users/signin", {
+    const api = await fetch(`${BASE_URL}/users/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

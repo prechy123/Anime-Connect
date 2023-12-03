@@ -15,6 +15,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
 
+// const BASE_URL = "http://localhost:4000"
+const BASE_URL = "https://weeebs.onrender.com"
+
 const SignUp = () => {
   const Navigate = useNavigate();
   const [userNameStatus, setUserNameStatus] = useState(false);
@@ -25,7 +28,7 @@ const SignUp = () => {
   };
   const checkUserName = (userName) => {
     if (userName) {
-      fetch(`http://localhost:4000/users/checkUserName?username=${userName}`, {
+      fetch(`${BASE_URL}/users/checkUserName?username=${userName}`, {
         credentials: "include",
       })
         .then((response) => response.json())
@@ -58,7 +61,7 @@ const SignUp = () => {
         email: data.get("email"),
         password: data.get("password"),
       };
-      const api = await fetch("http://localhost:4000/users/signup", {
+      const api = await fetch(`${BASE_URL}/users/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
