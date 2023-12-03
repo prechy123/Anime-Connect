@@ -42,31 +42,31 @@ const NavListItems = () => {
   return (
     <>
       <Stack spacing={1} sx={{ display: isAuthenticated ? "flex" : "none" }}>
-        <ListItemButton>
-          <StyledLink to="/">
+        <StyledLink to="/">
+          <ListItemButton>
             <Typography>Home</Typography>
-          </StyledLink>
-        </ListItemButton>
-        <ListItemButton>
-          <StyledLink to="/communities">
+          </ListItemButton>
+        </StyledLink>
+        <StyledLink to="/communities">
+          <ListItemButton>
             <Typography>Communities</Typography>
-          </StyledLink>
-        </ListItemButton>
-        <ListItemButton>
-          <StyledLink to="/notifications">
+          </ListItemButton>
+        </StyledLink>
+        <StyledLink to="/notifications">
+          <ListItemButton>
             <Typography>Notifications</Typography>
-          </StyledLink>
-        </ListItemButton>
-        <ListItemButton>
-          <StyledLink to="/profile">
+          </ListItemButton>
+        </StyledLink>
+        <StyledLink to="/profile">
+          <ListItemButton>
             <Typography>Profile</Typography>
-          </StyledLink>
-        </ListItemButton>
-        <ListItemButton to="/setting">
-          <StyledLink to="/setting">
+          </ListItemButton>
+        </StyledLink>
+        <StyledLink to="/setting">
+          <ListItemButton to="/setting">
             <Typography>Settings</Typography>
-          </StyledLink>
-        </ListItemButton>
+          </ListItemButton>
+        </StyledLink>
         <ListItemButton
           variant="outlined"
           sx={{ outline: { md: "1px solid red" }, borderRadius: "5px" }}

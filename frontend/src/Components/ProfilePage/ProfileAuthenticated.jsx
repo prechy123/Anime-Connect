@@ -1,4 +1,4 @@
-import { Feed, FmdGood } from "@mui/icons-material";
+import { Close, Feed, FmdGood, Menu } from "@mui/icons-material";
 import {
   Avatar,
   Badge,
@@ -9,7 +9,9 @@ import {
   styled,
   useTheme,
 } from "@mui/material";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import LeftBarXS from "../HomePage/LeftBarXS";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -19,7 +21,7 @@ const StyledBox = styled(Box)({
 
 const ProfileAuthenticated = () => {
   const Theme = useTheme();
-//   const [navBar, setNavBar] = useState(true);
+  const [navBar, setNavBar] = useState(false);
   const {
     username,
     fullname,
@@ -30,7 +32,7 @@ const ProfileAuthenticated = () => {
   } = useSelector((state) => state.auth);
   return (
     <Box display="flex" flexDirection="column" gap="20px" position="relative">
-        {/* <Box
+        <Box
           sx={{
             display: { xs: "block", sm: "none", cursor: "pointer" },
           }}
@@ -40,7 +42,7 @@ const ProfileAuthenticated = () => {
           onClick={() => setNavBar(!navBar)}
         >
           {navBar ? <Close /> : <Menu />}
-        </Box> */}
+        </Box>
       <Box
         sx={{
           backgroundColor: Theme.palette.primary.other,
@@ -119,11 +121,11 @@ const ProfileAuthenticated = () => {
           </Box>
         </Box>
       </Box>
-      {/* {navBar && ( */}
-        {/* <Box position="absolute" zIndex={2} top={30}>
+      {navBar && (
+        <Box position="absolute" zIndex={2} top={30} sx={{display: {xs: "block", sm: "none"}}}>
           <LeftBarXS />
         </Box>
-      )} */}
+      )}
     </Box>
   );
 };

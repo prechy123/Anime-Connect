@@ -32,7 +32,7 @@ const Profile = () => {
     );
   }
   return (
-    <Box bgcolor={"primary.main"} color={"primary.text"} height="100vh">
+    <Box bgcolor={"primary.main"} color={"primary.text"} height="150vh">
       <Stack
         direction="row"
         divider={<Divider orientation="vertical" flexItem />}
