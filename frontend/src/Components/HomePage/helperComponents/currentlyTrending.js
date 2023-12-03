@@ -1,28 +1,28 @@
 const itemData = [
   {
-    img: "https://images.unsplash.com/photo-1549388604-817d15aa0110",
-    title: "Bed",
-    author: "swabdesign",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqNoLHz3tQGYL84ybdtb6Zq3JtHTwJhh0quQ&usqp=CAU",
+    title: "Baki",
+    author: "Baki",
   },
   {
-    img: "https://images.unsplash.com/photo-1525097487452-6278ff080c31",
-    title: "Books",
-    author: "Pavel Nekoranec",
+    img: "https://staticg.sportskeeda.com/editor/2021/10/ce7da-16342796191206-1920.jpg?w=840",
+    title: "Attack on Titans",
+    author: "Attck on Titans",
   },
   {
-    img: "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6",
-    title: "Sink",
-    author: "Charles Deluvio",
+    img: "https://upload.wikimedia.org/wikipedia/en/thumb/c/c4/One_Piece_DVD_15.png/220px-One_Piece_DVD_15.png",
+    title: "One piece",
+    author: "One piece",
   },
   {
-    img: "https://images.unsplash.com/photo-1563298723-dcfebaa392e3",
-    title: "Kitchen",
-    author: "Christian Mackie",
+    img: "https://i.ytimg.com/vi/hllsOtU1CEA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCcLUOrnis-WejCviUu6sh4I8taHA",
+    title: "Death Note",
+    author: "Death Note",
   },
   {
-    img: "https://images.unsplash.com/photo-1588436706487-9d55d73a39e3",
-    title: "Blinds",
-    author: "Darren Richardson",
+    img: "https://i0.wp.com/www.spielanime.com/wp-content/uploads/2023/09/JJK-manga-Is-Sukuna-secretly-the-main-character-1.webp",
+    title: "Jujutsu Kaisen",
+    author: "Jujutsu Kaisen",
   },
   {
     img: "https://images.unsplash.com/photo-1574180045827-681f8a1a9622",
