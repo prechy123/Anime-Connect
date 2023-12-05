@@ -15,8 +15,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
 
-// const BASE_URL = "http://localhost:4000"
-const BASE_URL = "https://weeebs.onrender.com"
+const BASE_URL = "http://localhost:4000"
+// const BASE_URL = "https://weeebs.onrender.com"
 
 const SignUp = () => {
   const Navigate = useNavigate();

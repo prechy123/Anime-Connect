@@ -28,10 +28,12 @@ const userSchema = new Schema(
     profilepictureurl: {
       type: String,
     },
-    postcount: {
-      type: Number,
-      default: 0
-    },
+    post: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Post"
+      }
+    ],
     followers: [
       {
         type: Schema.Types.ObjectId,
@@ -46,16 +48,18 @@ const userSchema = new Schema(
     ],
     location: {
       type: String,
-      default: "",
+      default: "Somewhere click edit icon to change",
     },
     bio: {
       type: String,
-      default: "",
+      default: "I am new on WEEEBS",
     },
-    interest: {
-      type: String,
-      default: "",
-    },
+    animeInterest: [
+      {
+        type: String,
+        default: "",
+      }
+    ],
     verified: {
       type: Boolean,
       default: false,

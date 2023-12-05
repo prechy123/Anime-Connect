@@ -90,9 +90,14 @@ export const signin = async (req, res) => {
         fullname: existingUser.fullname,
         email: existingUser.email,
         profilepictureurl: existingUser.profilepictureurl,
-        postcount: existingUser.postcount,
+        post: existingUser.post,
+        postcount: existingUser.post.length,
         followers: existingUser.followers,
-        following: existingUser.following
+        following: existingUser.following,
+        location: existingUser.location,
+        bio: existingUser.bio,
+        animeInterest: existingUser.animeInterest,
+        verified: existingUser.verified
       },
     });
   } catch (err) {

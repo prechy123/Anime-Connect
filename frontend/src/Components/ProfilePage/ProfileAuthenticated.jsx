@@ -1,4 +1,4 @@
-import { Close, Feed, FmdGood, Menu } from "@mui/icons-material";
+import { Close, Feed, FmdGood, Menu, Verified } from "@mui/icons-material";
 import {
   Avatar,
   Badge,
@@ -29,6 +29,10 @@ const ProfileAuthenticated = () => {
     postcount,
     followers,
     following,
+    location,
+    bio,
+    animeInterest,
+    verified
   } = useSelector((state) => state.auth);
   return (
     <Box display="flex" flexDirection="column" gap="20px" position="relative">
@@ -54,8 +58,8 @@ const ProfileAuthenticated = () => {
           <Badge color="success" overlap="circular" badgeContent="online">
             <Avatar alt="Remy Sharp" src={profilepictureurl} />
           </Badge>
-          <Typography variant="p" fontWeight={100}>
-            {username}
+          <Typography variant="p" fontWeight={100} display="flex" gap={0.5} alignItems="center">
+            {username} {verified && <Verified />}
           </Typography>
           <Typography variant="h5" fontWeight={500}>
             {fullname}
@@ -75,14 +79,14 @@ const ProfileAuthenticated = () => {
             </StyledBox>
           </Stack>
           <Typography display="flex" gap={1} alignItems="center">
-            <Feed /> I am new on WEEEBS
+            <Feed /> {bio}
           </Typography>
         </Box>
         <Typography fontWeight={700} variant="h5" paddingTop={2}>
           Location:
         </Typography>
         <Typography display="flex" alignItems="center" gap={1} paddingTop={1}>
-          <FmdGood /> Somewhere
+          <FmdGood /> {location}
         </Typography>
         <Typography fontWeight={700} variant="h5" paddingTop={2}>
           Anime Interests:

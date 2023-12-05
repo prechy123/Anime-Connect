@@ -25,7 +25,11 @@ const HomePage = () => {
         username: user.username,
         postcount: user.postcount,
         followers: user.followers,
-        following: user.following
+        following: user.following,
+        location: user.location,
+        bio: user.bio,
+        animeInterest: user.animeInterest,
+        verified: user.verified
       })
     );
   }

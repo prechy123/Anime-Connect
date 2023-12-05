@@ -1,7 +1,5 @@
 import { Box, Divider, Stack } from "@mui/material";
-import LeftBar from "../Components/HomePage/LeftBar";
 import SideBar from "../Components/HomePage/SideBar";
-import Feed from "../Components/HomePage/Feed";
 import { isAuth } from "../redux/reducers/auth/authSlice";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
@@ -28,6 +26,10 @@ const Profile = () => {
         postcount: user.postcount,
         followers: user.followers,
         following: user.following,
+        location: user.location,
+        bio: user.bio,
+        animeInterest: user.animeInterest,
+        verified: user.verified
       })
     );
   }
