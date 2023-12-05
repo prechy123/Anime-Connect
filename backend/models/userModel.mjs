@@ -48,7 +48,7 @@ const userSchema = new Schema(
     ],
     location: {
       type: String,
-      default: "Somewhere click edit icon to change",
+      default: "Somewhere",
     },
     bio: {
       type: String,
@@ -57,7 +57,6 @@ const userSchema = new Schema(
     animeInterest: [
       {
         type: String,
-        default: "",
       }
     ],
     verified: {

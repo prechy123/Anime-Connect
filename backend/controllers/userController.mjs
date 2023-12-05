@@ -30,6 +30,7 @@ export const createUser = async (req, res) => {
     email,
     password: hashedPassword,
     profilepictureurl: defaultPicture,
+    animeInterest: ["One Piece", "Dragon Ball", "Naruto", "Demon Slayer", "Attack on Titans", "Something", "Something on Titans", "Death Note", "Jujustu Kaisen"], // default anime interests
   });
 
   try {

@@ -1,4 +1,11 @@
-import { Close, Feed, FmdGood, Menu, Verified } from "@mui/icons-material";
+import {
+  Close,
+  Edit,
+  Feed,
+  FmdGood,
+  Menu,
+  Verified,
+} from "@mui/icons-material";
 import {
   Avatar,
   Badge,
@@ -32,33 +39,43 @@ const ProfileAuthenticated = () => {
     location,
     bio,
     animeInterest,
-    verified
+    verified,
   } = useSelector((state) => state.auth);
   return (
     <Box display="flex" flexDirection="column" gap="20px" position="relative">
-        <Box
-          sx={{
-            display: { xs: "block", sm: "none", cursor: "pointer" },
-          }}
-          position="fixed"
-          top={15}
-          left={15}
-          onClick={() => setNavBar(!navBar)}
-        >
-          {navBar ? <Close /> : <Menu />}
-        </Box>
+      <Box
+        sx={{
+          display: { xs: "block", sm: "none", cursor: "pointer" },
+        }}
+        position="fixed"
+        top={15}
+        left={15}
+        onClick={() => setNavBar(!navBar)}
+      >
+        {navBar ? <Close /> : <Menu />}
+      </Box>
       <Box
         sx={{
           backgroundColor: Theme.palette.primary.other,
           padding: "20px",
           borderRadius: Theme.shape.borderRadius,
         }}
+        position="relative"
       >
+        <Box position="absolute" top={20} right={20}>
+          <Edit />
+        </Box>
         <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
           <Badge color="success" overlap="circular" badgeContent="online">
             <Avatar alt="Remy Sharp" src={profilepictureurl} />
           </Badge>
-          <Typography variant="p" fontWeight={100} display="flex" gap={0.5} alignItems="center">
+          <Typography
+            variant="p"
+            fontWeight={100}
+            display="flex"
+            gap={0.5}
+            alignItems="center"
+          >
             {username} {verified && <Verified />}
           </Typography>
           <Typography variant="h5" fontWeight={500}>
@@ -92,15 +109,9 @@ const ProfileAuthenticated = () => {
           Anime Interests:
         </Typography>
         <Box display="flex" gap={1} flexWrap="wrap" paddingTop={1}>
-          <Chip label="One Piece" />
-          <Chip label="Dragon Ball" />
-          <Chip label="Naruto" />
-          <Chip label="Demon Slayer" />
-          <Chip label="Attack on Titans" />
-          <Chip label="Something" />
-          <Chip label="Something on Titans" />
-          <Chip label="Death Note" />
-          <Chip label="Jujustu kaisen" />
+          {animeInterest.map((animeItem, index) => (
+            <Chip key={index} label={animeItem} />
+          ))}
         </Box>
       </Box>
       <Box
@@ -126,7 +137,12 @@ const ProfileAuthenticated = () => {
         </Box>
       </Box>
       {navBar && (
-        <Box position="absolute" zIndex={2} top={30} sx={{display: {xs: "block", sm: "none"}}}>
+        <Box
+          position="absolute"
+          zIndex={2}
+          top={30}
+          sx={{ display: { xs: "block", sm: "none" } }}
+        >
           <LeftBarXS />
         </Box>
       )}
