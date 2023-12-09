@@ -18,7 +18,7 @@ import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
 // const BASE_URL = "http://localhost:4000"
 
 const BASE_URL = "https://weeebs.onrender.com"
-
+// signup
 const SignUp = () => {
   const Navigate = useNavigate();
   const [userNameStatus, setUserNameStatus] = useState(false);
