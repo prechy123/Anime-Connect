@@ -5,7 +5,6 @@ import {
   CardActions,
   CardContent,
   CardHeader,
-  CardMedia,
   Checkbox,
   IconButton,
   Typography,
@@ -38,12 +37,7 @@ const FeedBoilerPlate = () => {
         title="John Doe"
         subheader="@john_doe322"
       />
-      <CardMedia
-        component="img"
-        height="20%"
-        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrRMHThLy0_Kq7eU7AwuhDoOiI5yyIyQQARA&usqp=CAU"
-        alt="Paella dish"
-      />
+    
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
