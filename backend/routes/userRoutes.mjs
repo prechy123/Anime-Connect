@@ -27,6 +27,7 @@ import requestIp from "request-ip";
 import useragent from "express-useragent";
 // import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
 import {
+  changeProfilePicture,
   followUser,
   getFollowerUsers,
   getFollowingUsers,
@@ -66,6 +67,7 @@ router.post("/logout", logout);
 //patch routes
 router.patch("/:id/follow", decodeToken, followLimiter, followUser);
 router.patch("/:id/unfollow", decodeToken, followLimiter, unFollowUser);
+router.patch("/changeprofilepicture", changeProfilePicture)
 
 //get routes
 router.get("/getlogs", getUserLogs);

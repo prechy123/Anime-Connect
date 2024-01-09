@@ -24,7 +24,7 @@ const ProfileOverview = () => {
     isAuthenticated,
     username,
     fullname,
-    profilepictureurl,
+    profilePictureUrl,
     postcount,
     followers,
     following,
@@ -33,8 +33,8 @@ const ProfileOverview = () => {
     <>
       {isAuthenticated ? (
         <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
-          <Badge color="success" overlap="circular" badgeContent="online">
-            <Avatar alt="Remy Sharp" src={profilepictureurl} />
+          <Badge color="success">
+            <Avatar alt="Remy Sharp" src={profilePictureUrl} />
           </Badge>
           <Typography variant="p" fontWeight={100}>
             {username}

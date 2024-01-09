@@ -19,6 +19,7 @@ import {
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import LeftBarXS from "../HomePage/LeftBarXS";
+import ChangeProfilePic from "./helperComponents/ChangeProfilePic";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -29,10 +30,11 @@ const StyledBox = styled(Box)({
 const ProfileAuthenticated = () => {
   const Theme = useTheme();
   const [navBar, setNavBar] = useState(false);
+  const [changePP, setChangePP] = useState(false);
   const {
     username,
     fullname,
-    profilepictureurl,
+    profilePictureUrl,
     postcount,
     followers,
     following,
@@ -66,8 +68,10 @@ const ProfileAuthenticated = () => {
           <Edit />
         </Box>
         <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
-          <Badge color="success" overlap="circular" badgeContent="online">
-            <Avatar alt="Remy Sharp" src={profilepictureurl} />
+          <Badge
+            onClick={() => setChangePP(!changePP)}
+          >
+            <Avatar alt="Profile Picture" src={profilePictureUrl} />
           </Badge>
           <Typography
             variant="p"
@@ -146,6 +150,7 @@ const ProfileAuthenticated = () => {
           <LeftBarXS />
         </Box>
       )}
+      {changePP && <ChangeProfilePic setChangePP={setChangePP} />}
     </Box>
   );
 };
