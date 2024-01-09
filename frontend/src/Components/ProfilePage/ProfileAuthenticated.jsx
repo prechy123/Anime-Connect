@@ -52,6 +52,7 @@ const ProfileAuthenticated = () => {
         position="fixed"
         top={15}
         left={15}
+        zIndex={3}
         onClick={() => setNavBar(!navBar)}
       >
         {navBar ? <Close /> : <Menu />}
@@ -64,12 +65,13 @@ const ProfileAuthenticated = () => {
         }}
         position="relative"
       >
-        <Box position="absolute" top={20} right={20}>
+        <Box position="absolute" top={20} right={20} sx={{cursor: "pointer"}}>
           <Edit />
         </Box>
         <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
           <Badge
             onClick={() => setChangePP(!changePP)}
+            sx={{cursor: "pointer"}}
           >
             <Avatar alt="Profile Picture" src={profilePictureUrl} />
           </Badge>

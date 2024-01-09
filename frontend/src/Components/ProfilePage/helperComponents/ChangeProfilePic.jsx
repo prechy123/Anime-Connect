@@ -2,11 +2,9 @@ import { useTheme } from "@emotion/react";
 import { Close } from "@mui/icons-material";
 import { Avatar, Box, Typography } from "@mui/material";
 import Cookies from "js-cookie";
-// import expirationTime from "../../../../calculate/expirationTime";
 import { useDispatch } from "react-redux";
 import { isAuth } from "../../../redux/reducers/auth/authSlice";
 import expirationTime from "../../../../calculate/expirationTime";
-// import { isAuth } from "../../../redux/reducers/auth/authSlice";
 
 const pictures = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqNoLHz3tQGYL84ybdtb6Zq3JtHTwJhh0quQ&usqp=CAU?w=248&fit=crop&auto=format",
@@ -31,7 +29,7 @@ const BASE_URL = "http://localhost:4000";
 
 // const BASE_URL = "https://weeebs.onrender.com"
 
-const ChangeProfilePic = (props) => {
+const ChangeProfilePic = ({ setChangePP }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const handlePictureUpdate = async (pictureUrl) => {
@@ -84,6 +82,7 @@ const ChangeProfilePic = (props) => {
         backgroundColor: theme.palette.primary.main,
         borderRadius: "20px",
         padding: "20px",
+        boxShadow: "10px 10px 10px " + theme.palette.primary.other
       }}
     >
       <Box
@@ -94,11 +93,15 @@ const ChangeProfilePic = (props) => {
         }}
       >
         <Typography>Select New Profile Picture</Typography>
-        <Close onClick={() => props.setChangePP(false)} />
+        <Close sx={{ cursor: "pointer" }} onClick={() => setChangePP(false)} />
       </Box>
       <Box sx={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
         {pictures.map((picture, index) => (
-          <Box key={index} onClick={() => handlePictureUpdate(picture)}>
+          <Box
+            sx={{ cursor: "pointer" }}
+            key={index}
+            onClick={() => handlePictureUpdate(picture)}
+          >
             <PictureBadge link={picture} />
           </Box>
         ))}
