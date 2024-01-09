@@ -11,18 +11,22 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
 import { ClipLoader } from "react-spinners";
 import Cookies from "js-cookie";
 import expirationTime from "../../calculate/expirationTime";
+import { PulseLoader } from "react-spinners";
+import { useTheme } from "@emotion/react";
 
-const BASE_URL = "http://localhost:4000"
+const BASE_URL = "http://localhost:4000";
 
 // const BASE_URL = "https://weeebs.onrender.com"
 
 const Signin = () => {
   const Navigate = useNavigate();
+  const theme = useTheme();
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState();
   const [success, setSuccess] = useState(false);
 
@@ -32,6 +36,7 @@ const Signin = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const data = new FormData(event.currentTarget);
     const formData = {
       email: data.get("email"),
@@ -45,6 +50,7 @@ const Signin = () => {
       body: JSON.stringify(formData),
     });
     const response = await api.json();
+    setLoading(false);
     if (response.message === "logged in successfully") {
       setSuccess(true);
       setTimeout(() => {
@@ -126,10 +132,24 @@ const Signin = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, cursor: loading && "wait" }}
             >
-              Sign In
+              {loading ? <PulseLoader /> : "Sign In"}
             </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link
+                  to="/signup"
+                  variant="body2"
+                  style={{
+                    color: theme.palette.primary.text,
+                    textDecoration: "none",
+                  }}
+                >
+                  Don't have an account? Sign up
+                </Link>
+              </Grid>
+            </Grid>
           </Box>
         </Stack>
       </Box>

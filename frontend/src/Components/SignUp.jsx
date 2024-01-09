@@ -14,13 +14,17 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
+import { PulseLoader } from "react-spinners";
+import { useTheme } from "@emotion/react";
 
 const BASE_URL = "http://localhost:4000"
 
 // const BASE_URL = "https://weeebs.onrender.com"
 // signup
 const SignUp = () => {
+  const theme = useTheme()
   const Navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
   const [userNameStatus, setUserNameStatus] = useState(false);
   const [errors, setErrors] = useState();
 
@@ -47,6 +51,7 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true)
     const data = new FormData(event.currentTarget);
     // console.log({
     //   firstName: data.get("firstName"),
@@ -70,6 +75,7 @@ const SignUp = () => {
         body: JSON.stringify(formData),
       });
       const response = await api.json();
+      setLoading(false)
       if (response.message === "Account created successfully") {
         Navigate("/signin");
       } else {
@@ -184,13 +190,13 @@ const SignUp = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, cursor: loading && "wait" }}
             >
-              Sign Up
+              {loading ? <PulseLoader /> : "Sign Up"}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to="/signin" variant="body2" color="secondary">
+                <Link to="/signin" variant="body2" style={{color: theme.palette.primary.text, textDecoration: "none"}}>
                   Already have an account? Sign in
                 </Link>
               </Grid>
