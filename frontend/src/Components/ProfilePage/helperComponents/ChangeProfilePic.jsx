@@ -25,9 +25,9 @@ const pictures = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4crT3koyc81nVYo8iyJzaBoEdzpW2SGjP2w&usqp=CAU",
 ];
 
-const BASE_URL = "http://localhost:4000";
+// const BASE_URL = "http://localhost:4000";
 
-// const BASE_URL = "https://weeebs.onrender.com"
+const BASE_URL = "https://weeebs.onrender.com"
 
 const ChangeProfilePic = ({ setChangePP }) => {
   const theme = useTheme();
