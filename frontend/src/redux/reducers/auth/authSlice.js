@@ -5,6 +5,7 @@ const initialState = {
   email: "",
   fullname: "",
   profilePictureUrl: "",
+  theme: "",
   username: "",
   postcount: 0,
   followers: 0,
@@ -25,6 +26,7 @@ export const authSlice = createSlice({
         email,
         fullname,
         profilePictureUrl,
+        theme,
         username,
         postcount,
         followers,
@@ -38,6 +40,7 @@ export const authSlice = createSlice({
       state.email = email;
       state.fullname = fullname;
       state.profilePictureUrl = profilePictureUrl;
+      state.theme = theme;
       state.username = username;
       state.postcount = postcount;
       state.followers = followers.length;

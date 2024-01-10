@@ -6,7 +6,6 @@ import User from "../models/userModel.mjs";
 import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
 import Token from "../models/tokenModel.mjs";
 import Log from "../models/logModel.mjs";
-import Relationship from "../models/relationshipModel.mjs";
 
 export const checkUserName = async (req, res) => {
   const { username } = req.query;
@@ -30,7 +29,7 @@ export const createUser = async (req, res) => {
     email,
     password: hashedPassword,
     profilepictureurl: defaultPicture,
-    animeInterest: ["One Piece", "Dragon Ball", "Naruto", "Demon Slayer", "Attack on Titans", "Something", "Something on Titans", "Death Note", "Jujustu Kaisen"], // default anime interests
+    animeInterest: ["One Piece", "Dragon Ball", "Naruto", "Demon Slayer", "Attack on Titans", "Solo Leveling", "Akame ga Kill", "Death Note", "Jujustu Kaisen"], // default anime interests
   });
 
   try {

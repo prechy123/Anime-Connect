@@ -148,24 +148,10 @@ export const changeProfilePicture = async (req, res) => {
   }
 };
 
-export const changeTheme = async (req, res) => {
-  try {
-    const { theme, userId } = req.body;
-    const existingUser = await User.findById(userId);
-    if (!existingUser) {
-      return res.status(404).json({ message: "Account not found" });
-    }
-    existingUser.theme = theme;
-    await existingUser.save();
-    res.status(200).json({ message: "Updated successfully" });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
 
 export const updateProfile = async (req, res) => {
   try {
-    const { userId, location, bio, animeInterest } = req.body;
+    const { userId, location, bio, animeInterest, theme } = req.body;
     const existingUser = await User.findById(userId);
     if (!existingUser) {
       return res.status(404).json({ message: "Account not found" });
@@ -173,6 +159,7 @@ export const updateProfile = async (req, res) => {
     existingUser.location = location;
     existingUser.bio = bio;
     existingUser.animeInterest = animeInterest;
+    existingUser.theme = theme;
     await existingUser.save();
     res.status(200).json({ message: "Updated successfully" });
   } catch (err) {

@@ -37,6 +37,7 @@ const ProfileAuthenticated = () => {
     username,
     fullname,
     profilePictureUrl,
+    theme,
     postcount,
     followers,
     following,
@@ -124,7 +125,7 @@ const ProfileAuthenticated = () => {
         </Typography>
         <Box display="flex" gap={1} flexWrap="wrap" paddingTop={1}>
           {animeInterest.map((animeItem, index) => (
-            <Chip key={index} label={animeItem} />
+            <Chip sx={{backgroundColor: theme}} key={index} label={animeItem} />
           ))}
         </Box>
       </Box>

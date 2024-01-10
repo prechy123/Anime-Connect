@@ -70,7 +70,6 @@ router.post("/logout", logout);
 router.patch("/:id/follow", decodeToken, followLimiter, followUser);
 router.patch("/:id/unfollow", decodeToken, followLimiter, unFollowUser);
 router.patch("/changeprofilepicture", changeProfilePicture)
-router.patch("/changetheme", changeTheme)
 router.patch("/updateprofile", updateProfile)
 
 //get routes

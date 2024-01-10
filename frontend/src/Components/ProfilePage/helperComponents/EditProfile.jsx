@@ -1,30 +1,28 @@
 import { useTheme } from "@emotion/react";
 import { ArrowForward, Close } from "@mui/icons-material";
-import { Box, Button, Chip, TextField, Typography } from "@mui/material";
+import { Box, Button, Chip, Fab, TextField, Typography } from "@mui/material";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import expirationTime from "../../../../calculate/expirationTime";
 import { isAuth } from "../../../redux/reducers/auth/authSlice";
+import ColourPicker from "./ColourPicker";
 
-const BASE_URL = "http://localhost:4000";
+// const BASE_URL = "http://localhost:4000";
 
-// const BASE_URL = "https://weeebs.onrender.com"
+const BASE_URL = "https://weeebs.onrender.com"
 
 const EditProfile = ({ setEditPage, setChangePP }) => {
-  const theme = useTheme();
+  const Theme = useTheme();
   const dispatch = useDispatch();
-  const {
-    // username,
-    // fullname,
-    location,
-    bio,
-    animeInterest,
-  } = useSelector((state) => state.auth);
+  const { theme, location, bio, animeInterest } = useSelector(
+    (state) => state.auth
+  );
   const [newAnimeName, setNewAnimeName] = useState("");
   const [animeList, setAnimeList] = useState(animeInterest);
   const [theLocation, setTheLocation] = useState(location);
   const [theBio, setTheBio] = useState(bio);
+  const [selecetedColour, setSelectedColour] = useState(theme)
 
   const handleRemoveAnimeList = (selectedAnime) => {
     setAnimeList(animeList.filter((anime) => anime !== selectedAnime));
@@ -47,24 +45,20 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
     user.location = theLocation;
     user.bio = theBio;
     user.animeInterest = animeList;
+    user.theme = selecetedColour
     const userDetails = JSON.stringify(user);
     Cookies.set("user", userDetails, {
       expires: expirationTime(),
       sameSite: "None",
       secure: true,
     });
-    const formData = {
-      userId: user._id,
-      location: theLocation,
-      bio: theBio,
-      animeInterest: animeList,
-    };
     dispatch(
       isAuth({
         isAuthenticated: true,
         email: user.email,
         fullname: user.fullname,
         profilePictureUrl: user.profilepictureurl,
+        theme: selecetedColour,
         username: user.username,
         postcount: user.postcount,
         followers: user.followers,
@@ -75,6 +69,13 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
         verified: user.verified,
       })
     );
+    const formData = {
+      userId: user._id,
+      location: theLocation,
+      bio: theBio,
+      animeInterest: animeList,
+      theme: selecetedColour
+    };
     await fetch(`${BASE_URL}/users/updateprofile`, {
       method: "PATCH",
       headers: {
@@ -82,8 +83,7 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
       },
       body: JSON.stringify(formData),
     });
-    setEditPage(false)
-
+    setEditPage(false);
   };
   return (
     <Box
@@ -94,10 +94,10 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
         position: "absolute",
         top: "20%",
         zIndex: "2",
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: Theme.palette.primary.main,
         borderRadius: "20px",
         padding: "20px",
-        boxShadow: "10px 10px 10px " + theme.palette.primary.other,
+        boxShadow: "10px 10px 10px " + Theme.palette.primary.other,
       }}
     >
       <Box
@@ -157,7 +157,7 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
         >
           {animeList.map((animeItem, index) => (
             <Box key={index} sx={{ display: "flex", placeItems: "center" }}>
-              <Chip label={animeItem} />
+              <Chip label={animeItem} sx={{ backgroundColor: selecetedColour }} />
               <Close
                 onClick={() => handleRemoveAnimeList(animeItem)}
                 sx={{ cursor: "pointer" }}
@@ -181,6 +181,7 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
               Add
             </Button>
           </Box>
+          <ColourPicker setSelectedColour={setSelectedColour} />
         </Box>
         <Button
           variant="contained"

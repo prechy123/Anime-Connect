@@ -22,6 +22,7 @@ const Profile = () => {
         email: user.email,
         fullname: user.fullname,
         profilePictureUrl: user.profilepictureurl,
+        theme: user.theme,
         username: user.username,
         postcount: user.postcount,
         followers: user.followers,
