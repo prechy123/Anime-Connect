@@ -192,7 +192,7 @@ const SignUp = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2, cursor: loading && "wait" }}
             >
-              {loading ? <PulseLoader /> : "Sign Up"}
+              {loading ? <PulseLoader color={theme.palette.primary.text} /> : "Sign Up"}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
