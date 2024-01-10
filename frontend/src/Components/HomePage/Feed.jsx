@@ -31,7 +31,7 @@ const Feed = () => {
       <Box flex={4}>
         <Box
           sx={{
-            display: { xs: "block", sm: "none", cursor: "pointer" },
+            display: { xs: "block", sm: "none" },
           }}
           position="fixed"
           top={15}
@@ -100,7 +100,7 @@ const Feed = () => {
               backgroundColor: theme.palette.primary.arrow,
             }}
           >
-            <ArrowUpwardIcon />
+            <ArrowUpwardIcon sx={{cursor: "pointer"}}/>
           </Box>
         )}
       </Box>
