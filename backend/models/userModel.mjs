@@ -28,6 +28,10 @@ const userSchema = new Schema(
     profilepictureurl: {
       type: String,
     },
+    theme: {
+      type: String,
+      default: "#36343b"
+    },
     post: [
       {
         type: Schema.Types.ObjectId,

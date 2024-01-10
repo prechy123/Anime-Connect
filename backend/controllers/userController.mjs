@@ -91,6 +91,7 @@ export const signin = async (req, res) => {
         fullname: existingUser.fullname,
         email: existingUser.email,
         profilepictureurl: existingUser.profilepictureurl,
+        theme: existingUser.theme,
         post: existingUser.post,
         postcount: existingUser.post.length,
         followers: existingUser.followers,
