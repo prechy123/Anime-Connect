@@ -28,7 +28,6 @@ import useragent from "express-useragent";
 // import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
 import {
   changeProfilePicture,
-  changeTheme,
   followUser,
   getFollowerUsers,
   getFollowingUsers,
