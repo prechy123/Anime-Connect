@@ -12,7 +12,7 @@ const themes = [
 
 const ColourPicker = ({ setSelectedColour }) => {
   return (
-    <Box sx={{ display: "flex", gap: "10px" }}>
+    <Box sx={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
       {themes.map((theme) => (
         <>
           <Fab
