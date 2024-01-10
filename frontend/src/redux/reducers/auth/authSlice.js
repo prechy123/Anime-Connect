@@ -11,7 +11,7 @@ const initialState = {
   following: 0,
   location: "",
   bio: "",
-  animeInterest: "",
+  animeInterest: [],
   verified: false,
 };
 

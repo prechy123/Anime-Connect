@@ -8,9 +8,9 @@ import expirationTime from "../../../../calculate/expirationTime";
 import pictures from "../utils/profilePictures";
 
 
-const BASE_URL = "http://localhost:4000";
+// const BASE_URL = "http://localhost:4000";
 
-// const BASE_URL = "https://weeebs.onrender.com";
+const BASE_URL = "https://weeebs.onrender.com";
 
 const ChangeProfilePic = ({ setChangePP }) => {
   const theme = useTheme();
@@ -60,7 +60,7 @@ const ChangeProfilePic = ({ setChangePP }) => {
         overflowY: "scroll",
         position: "absolute",
         top: "20%",
-        zIndex: "2",
+        zIndex: "3",
         backgroundColor: theme.palette.primary.main,
         borderRadius: "20px",
         padding: "20px",

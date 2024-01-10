@@ -20,6 +20,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import LeftBarXS from "../HomePage/LeftBarXS";
 import ChangeProfilePic from "./helperComponents/ChangeProfilePic";
+import EditProfile from "./helperComponents/EditProfile";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -31,6 +32,7 @@ const ProfileAuthenticated = () => {
   const Theme = useTheme();
   const [navBar, setNavBar] = useState(false);
   const [changePP, setChangePP] = useState(false);
+  const [editPage, setEditPage] = useState(false);
   const {
     username,
     fullname,
@@ -65,13 +67,19 @@ const ProfileAuthenticated = () => {
         }}
         position="relative"
       >
-        <Box position="absolute" top={20} right={20} sx={{cursor: "pointer"}}>
+        <Box
+          position="absolute"
+          top={20}
+          right={20}
+          sx={{ cursor: "pointer" }}
+          onClick={() => setEditPage(!editPage)}
+        >
           <Edit />
         </Box>
         <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
           <Badge
             onClick={() => setChangePP(!changePP)}
-            sx={{cursor: "pointer"}}
+            sx={{ cursor: "pointer" }}
           >
             <Avatar alt="Profile Picture" src={profilePictureUrl} />
           </Badge>
@@ -153,6 +161,7 @@ const ProfileAuthenticated = () => {
         </Box>
       )}
       {changePP && <ChangeProfilePic setChangePP={setChangePP} />}
+      {editPage && <EditProfile setEditPage={setEditPage} setChangePP={setChangePP} />}
     </Box>
   );
 };
