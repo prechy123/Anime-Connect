@@ -33,6 +33,7 @@ import {
   getFollowerUsers,
   getFollowingUsers,
   unFollowUser,
+  updateProfile,
 } from "../controllers/profileController.mjs";
 import decodeToken from "../middleware/auth/decodeToken.mjs";
 
@@ -70,6 +71,7 @@ router.patch("/:id/follow", decodeToken, followLimiter, followUser);
 router.patch("/:id/unfollow", decodeToken, followLimiter, unFollowUser);
 router.patch("/changeprofilepicture", changeProfilePicture)
 router.patch("/changetheme", changeTheme)
+router.patch("/updateprofile", updateProfile)
 
 //get routes
 router.get("/getlogs", getUserLogs);

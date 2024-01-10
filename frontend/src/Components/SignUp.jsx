@@ -17,9 +17,9 @@ import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
 import { PulseLoader } from "react-spinners";
 import { useTheme } from "@emotion/react";
 
-// const BASE_URL = "http://localhost:4000"
+const BASE_URL = "http://localhost:4000"
 
-const BASE_URL = "https://weeebs.onrender.com"
+// const BASE_URL = "https://weeebs.onrender.com"
 // signup
 const SignUp = () => {
   const theme = useTheme()

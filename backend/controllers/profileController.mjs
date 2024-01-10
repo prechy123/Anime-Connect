@@ -162,3 +162,20 @@ export const changeTheme = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { userId, location, bio, animeInterest } = req.body;
+    const existingUser = await User.findById(userId);
+    if (!existingUser) {
+      return res.status(404).json({ message: "Account not found" });
+    }
+    existingUser.location = location;
+    existingUser.bio = bio;
+    existingUser.animeInterest = animeInterest;
+    await existingUser.save();
+    res.status(200).json({ message: "Updated successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

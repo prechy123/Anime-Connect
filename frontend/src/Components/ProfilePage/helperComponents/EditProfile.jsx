@@ -1,20 +1,30 @@
 import { useTheme } from "@emotion/react";
 import { ArrowForward, Close } from "@mui/icons-material";
 import { Box, Button, Chip, TextField, Typography } from "@mui/material";
+import Cookies from "js-cookie";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import expirationTime from "../../../../calculate/expirationTime";
+import { isAuth } from "../../../redux/reducers/auth/authSlice";
+
+const BASE_URL = "http://localhost:4000";
+
+// const BASE_URL = "https://weeebs.onrender.com"
 
 const EditProfile = ({ setEditPage, setChangePP }) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const {
     // username,
     // fullname,
-    // location,
-    // bio,
+    location,
+    bio,
     animeInterest,
   } = useSelector((state) => state.auth);
   const [newAnimeName, setNewAnimeName] = useState("");
   const [animeList, setAnimeList] = useState(animeInterest);
+  const [theLocation, setTheLocation] = useState(location);
+  const [theBio, setTheBio] = useState(bio);
 
   const handleRemoveAnimeList = (selectedAnime) => {
     setAnimeList(animeList.filter((anime) => anime !== selectedAnime));
@@ -22,9 +32,58 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
 
   const handleAddAnime = () => {
     if (newAnimeName.length > 0) {
-      setAnimeList([...animeList, newAnimeName]);
-      setNewAnimeName("");
+      const animeExists = animeList.includes(newAnimeName);
+      if (!animeExists) {
+        setAnimeList([...animeList, newAnimeName]);
+        setNewAnimeName("");
+      } else {
+        setNewAnimeName("ALREADY EXISTS");
+      }
     }
+  };
+
+  const handleSubmitChange = async () => {
+    let user = JSON.parse(Cookies.get("user"));
+    user.location = theLocation;
+    user.bio = theBio;
+    user.animeInterest = animeList;
+    const userDetails = JSON.stringify(user);
+    Cookies.set("user", userDetails, {
+      expires: expirationTime(),
+      sameSite: "None",
+      secure: true,
+    });
+    const formData = {
+      userId: user._id,
+      location: theLocation,
+      bio: theBio,
+      animeInterest: animeList,
+    };
+    dispatch(
+      isAuth({
+        isAuthenticated: true,
+        email: user.email,
+        fullname: user.fullname,
+        profilePictureUrl: user.profilepictureurl,
+        username: user.username,
+        postcount: user.postcount,
+        followers: user.followers,
+        following: user.following,
+        location: user.location,
+        bio: user.bio,
+        animeInterest: user.animeInterest,
+        verified: user.verified,
+      })
+    );
+    await fetch(`${BASE_URL}/users/updateprofile`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    setEditPage(false)
+
   };
   return (
     <Box
@@ -62,6 +121,7 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
         <Box
           sx={{
             display: "flex",
+            placeItems: "center",
             justifyContent: "space-around",
             flexWrap: "wrap",
             marginTop: "20px",
@@ -70,14 +130,22 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
           <TextField
             id="standard-basic"
             label="Change Location"
+            multiline
+            rows={2}
             variant="standard"
             color="secondary"
+            onChange={(e) => setTheLocation(e.target.value)}
+            value={theLocation}
           />
           <TextField
             id="standard-basic"
             label="Change Bio"
+            multiline
+            rows={4}
             variant="standard"
             color="secondary"
+            onChange={(e) => setTheBio(e.target.value)}
+            value={theBio}
           />
         </Box>
         <Box
@@ -103,7 +171,7 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
               variant="standard"
               color="secondary"
               onChange={(e) => setNewAnimeName(e.target.value)}
-                value={newAnimeName}
+              value={newAnimeName}
             />
             <Button
               variant="contained"
@@ -117,9 +185,10 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
         <Button
           variant="contained"
           color="secondary"
-          sx={{marginTop: "20px"}}
+          sx={{ marginTop: "20px" }}
+          onClick={handleSubmitChange}
         >
-          Submit Change <ArrowForward />
+          Submit Change <ArrowForward sx={{ paddingLeft: "7px" }} />
         </Button>
       </Box>
     </Box>
