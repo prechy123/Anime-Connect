@@ -28,6 +28,7 @@ import useragent from "express-useragent";
 // import saveLogInfo from "../middleware/logger/saveLogInfo.mjs";
 import {
   changeProfilePicture,
+  changeTheme,
   followUser,
   getFollowerUsers,
   getFollowingUsers,
@@ -68,6 +69,7 @@ router.post("/logout", logout);
 router.patch("/:id/follow", decodeToken, followLimiter, followUser);
 router.patch("/:id/unfollow", decodeToken, followLimiter, unFollowUser);
 router.patch("/changeprofilepicture", changeProfilePicture)
+router.patch("/changetheme", changeTheme)
 
 //get routes
 router.get("/getlogs", getUserLogs);

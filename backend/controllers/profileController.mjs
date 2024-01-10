@@ -147,3 +147,18 @@ export const changeProfilePicture = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+export const changeTheme = async (req, res) => {
+  try {
+    const { theme, userId } = req.body;
+    const existingUser = await User.findById(userId);
+    if (!existingUser) {
+      return res.status(404).json({ message: "Account not found" });
+    }
+    existingUser.theme = theme;
+    await existingUser.save();
+    res.status(200).json({ message: "Updated successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
