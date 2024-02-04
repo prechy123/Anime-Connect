@@ -105,11 +105,17 @@ const Feed = () => {
           <ArrowUpwardIcon sx={{ cursor: "pointer" }} />
         </Box>
       </Box>
-      {navBar && (
-        <Box position="absolute" zIndex={2} top={30}>
-          <LeftBarXS />
-        </Box>
-      )}
+      <Box
+        position="absolute"
+        zIndex={2}
+        sx={{
+          left: navBar ? "0" : "-100vw",
+          top: navBar ? "30px" : "-100vh",
+          transition: "left 1s ease, top 1s ease",
+        }}
+      >
+        <LeftBarXS />
+      </Box>
     </>
   );
 };
