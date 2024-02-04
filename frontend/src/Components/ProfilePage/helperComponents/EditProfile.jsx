@@ -9,8 +9,8 @@ import { isAuth } from "../../../redux/reducers/auth/authSlice";
 import ColourPicker from "./ColourPicker";
 
 // const BASE_URL = "http://localhost:4000";
-
-const BASE_URL = "https://weeebs.onrender.com"
+import BASE_URL from "../../../utils";
+// const BASE_URL = "https://weeebs.onrender.com"
 
 const EditProfile = ({ setEditPage, setChangePP }) => {
   const Theme = useTheme();
