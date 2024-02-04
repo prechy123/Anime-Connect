@@ -87,22 +87,23 @@ const Feed = () => {
         >
           <ThemeMode />
         </Box>
-        {showArrow && (
-          <Box
-            position="fixed"
-            bottom={10}
-            right="calc(50% - 22px)"
-            zIndex={2}
-            onClick={setCurrentPositionToBeggining}
-            sx={{
-              borderRadius: "50%",
-              padding: "10px",
-              backgroundColor: theme.palette.primary.arrow,
-            }}
-          >
-            <ArrowUpwardIcon sx={{cursor: "pointer"}}/>
-          </Box>
-        )}
+        {/* {showArrow && ( */}
+        <Box
+          position="fixed"
+          // bottom={1}
+          right="calc(50% - 22px)"
+          zIndex={2}
+          onClick={setCurrentPositionToBeggining}
+          sx={{
+            borderRadius: "50%",
+            padding: "10px",
+            backgroundColor: theme.palette.primary.arrow,
+            bottom: showArrow ? "10px" : "-70px",
+            transition: "bottom 1s ease",
+          }}
+        >
+          <ArrowUpwardIcon sx={{ cursor: "pointer" }} />
+        </Box>
       </Box>
       {navBar && (
         <Box position="absolute" zIndex={2} top={30}>
