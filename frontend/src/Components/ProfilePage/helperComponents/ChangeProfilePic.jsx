@@ -44,6 +44,7 @@ const ChangeProfilePic = ({ setChangePP }) => {
       userId: user._id,
       pictureUrl,
     };
+    setChangePP(false)
     await fetch(`${BASE_URL}/users/changeprofilepicture`, {
       method: "PATCH",
       headers: {
