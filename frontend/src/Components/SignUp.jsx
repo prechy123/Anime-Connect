@@ -5,6 +5,7 @@ import {
   Avatar,
   Box,
   Button,
+  Checkbox,
   Grid,
   Stack,
   TextField,
@@ -27,6 +28,7 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false)
   const [userNameStatus, setUserNameStatus] = useState(false);
   const [errors, setErrors] = useState();
+  const [showPassword, setShowPassword] = useState(false)
 
   const closeAlert = (err) => {
     setErrors(errors.filter((error) => error !== err));
@@ -179,11 +181,21 @@ const SignUp = () => {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
+                  // type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   autoComplete="new-password"
                   color="secondary"
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <Checkbox
+                  color="secondary"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+                <Typography variant="p">
+                  {showPassword ? "hide" : "view"} password
+                </Typography>
               </Grid>
             </Grid>
             <Button

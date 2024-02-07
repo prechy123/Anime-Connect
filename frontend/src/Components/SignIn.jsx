@@ -1,10 +1,11 @@
-import { LockOutlined } from "@mui/icons-material";
+import { LockOutlined, Visibility } from "@mui/icons-material";
 import {
   Alert,
   AlertTitle,
   Avatar,
   Box,
   Button,
+  Checkbox,
   Grid,
   Stack,
   TextField,
@@ -29,6 +30,7 @@ const Signin = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState();
   const [success, setSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const closeAlert = (err) => {
     setErrors(errors.filter((error) => error !== err));
@@ -121,11 +123,21 @@ const Signin = () => {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
+                  // type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   autoComplete="new-password"
                   color="secondary"
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <Checkbox
+                  color="secondary"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+                <Typography variant="p">
+                  {showPassword ? "hide" : "view"} password
+                </Typography>
               </Grid>
             </Grid>
             <Button
@@ -134,7 +146,11 @@ const Signin = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2, cursor: loading && "wait" }}
             >
-              {loading ? <PulseLoader color={theme.palette.primary.text}/> : "Sign In"}
+              {loading ? (
+                <PulseLoader color={theme.palette.primary.text} />
+              ) : (
+                "Sign In"
+              )}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
