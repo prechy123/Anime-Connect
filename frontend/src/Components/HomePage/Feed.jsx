@@ -8,11 +8,13 @@ import { useTheme } from "@emotion/react";
 import { Close, Menu } from "@mui/icons-material";
 import LeftBarXS from "./LeftBarXS";
 import AddIcon from "@mui/icons-material/Add";
+import CreatePost from "./helperComponents/CreatePost";
 
 const Feed = () => {
   const theme = useTheme();
   const [showArrow, setShowArrow] = useState(false);
   const [navBar, setNavBar] = useState(false);
+  const [createPost, setCreatePost] = useState(false)
   window.onscroll = function () {
     const currentScrollPosition = window.scrollY;
     if (currentScrollPosition > 100) {
@@ -108,6 +110,7 @@ const Feed = () => {
         >
           <ArrowUpwardIcon sx={{ cursor: "pointer" }} />
         </Box>
+        {createPost && <CreatePost setCreatePost={setCreatePost} />}
       </Box>
       <Box
         position="absolute"
@@ -123,6 +126,7 @@ const Feed = () => {
       <Box
         position="fixed"
         zIndex={2}
+        onClick={() => setCreatePost(true)}
         sx={{
           borderRadius: "50%",
           padding: "10px",
@@ -137,6 +141,7 @@ const Feed = () => {
       >
         <AddIcon sx={{ cursor: "pointer" }} />
       </Box>
+      
     </>
   );
 };

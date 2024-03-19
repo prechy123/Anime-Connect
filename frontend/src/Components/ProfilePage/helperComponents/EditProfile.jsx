@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { ArrowForward, Close } from "@mui/icons-material";
-import { Box, Button, Chip, Fab, TextField, Typography } from "@mui/material";
+import { Box, Button, Chip, TextField, Typography } from "@mui/material";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,9 +8,7 @@ import expirationTime from "../../../../calculate/expirationTime";
 import { isAuth } from "../../../redux/reducers/auth/authSlice";
 import ColourPicker from "./ColourPicker";
 
-// const BASE_URL = "http://localhost:4000";
 import BASE_URL from "../../../utils";
-// const BASE_URL = "https://weeebs.onrender.com"
 
 const EditProfile = ({ setEditPage, setChangePP }) => {
   const Theme = useTheme();
