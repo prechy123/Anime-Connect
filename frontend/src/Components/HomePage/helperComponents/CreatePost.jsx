@@ -1,9 +1,36 @@
 import { useTheme } from "@emotion/react";
 import { ArrowForward, Close } from "@mui/icons-material";
 import { Box, Button, TextField, Typography } from "@mui/material";
+import Cookies from "js-cookie";
+import { useState } from "react";
+import BASE_URL from "../../../utils";
 
-function CreatePost({ setCreatePost }) {
+const CreatePost = ({ setCreatePost }) => {
   const Theme = useTheme();
+  const [content, setContent] = useState("");
+  const [error, setError] = useState(false);
+
+  const handlePostMessage = async () => {
+    let user = JSON.parse(Cookies.get("user"));
+
+    await fetch(`${BASE_URL}/post/newpost`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: user._id,
+        content,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message !== "message posted successfully") {
+          setError(true);
+        }
+      })
+      .catch((error) => console.error("Error:", error));
+  };
   return (
     <Box
       sx={{
@@ -43,7 +70,16 @@ function CreatePost({ setCreatePost }) {
           fullWidth
           color="secondary"
           placeholder="Write new post here"
+          onChange={(e) => {
+            setError(false);
+            setContent(e.target.value);
+          }}
         />
+        {error && (
+          <Typography color="error">
+            Ensure textfield is filled or try again
+          </Typography>
+        )}
         <Box
           sx={{
             display: "flex",
@@ -57,6 +93,7 @@ function CreatePost({ setCreatePost }) {
             variant="contained"
             color="secondary"
             sx={{ marginTop: "20px" }}
+            onClick={handlePostMessage}
           >
             Post <ArrowForward sx={{ paddingLeft: "7px" }} />
           </Button>
@@ -64,6 +101,6 @@ function CreatePost({ setCreatePost }) {
       </Box>
     </Box>
   );
-}
+};
 
 export default CreatePost;

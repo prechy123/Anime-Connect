@@ -38,13 +38,12 @@ import decodeToken from "../middleware/auth/decodeToken.mjs";
 
 const router = express.Router();
 
-
 //for get routes
 router.get("/following", decodeToken, getFollowingUsers);
 router.get("/follower", decodeToken, getFollowerUsers);
 
 // Check username
-router.get("/checkUserName", checkUserName)
+router.get("/checkUserName", checkUserName);
 
 //for post routes
 router.post(
@@ -68,11 +67,13 @@ router.post("/logout", logout);
 //patch routes
 router.patch("/:id/follow", decodeToken, followLimiter, followUser);
 router.patch("/:id/unfollow", decodeToken, followLimiter, unFollowUser);
-router.patch("/changeprofilepicture", changeProfilePicture)
-router.patch("/updateprofile", updateProfile)
+router.patch("/changeprofilepicture", changeProfilePicture);
+router.patch("/updateprofile", updateProfile);
 
 //get routes
 router.get("/getlogs", getUserLogs);
+
+
 
 //export
 export default router;

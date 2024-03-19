@@ -30,13 +30,13 @@ const userSchema = new Schema(
     },
     theme: {
       type: String,
-      default: "#36343b"
+      default: "#36343b",
     },
     post: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Post"
-      }
+        ref: "Post",
+      },
     ],
     followers: [
       {
@@ -44,12 +44,18 @@ const userSchema = new Schema(
         ref: "User",
       },
     ],
+    followersCount: {
+      type: Number,
+    },
     following: [
       {
         type: Schema.Types.ObjectId,
         ref: "User",
       },
     ],
+    followingCount: {
+      type: Number,
+    },
     location: {
       type: String,
       default: "Somewhere",
@@ -61,7 +67,7 @@ const userSchema = new Schema(
     animeInterest: [
       {
         type: String,
-      }
+      },
     ],
     verified: {
       type: Boolean,

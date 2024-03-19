@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const postSchema = new Schema(
   {
-    user: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -19,12 +19,24 @@ const postSchema = new Schema(
         ref: "User",
       },
     ],
+    likesCount: {
+      type: Number,
+      default: 0
+    },
     comments: [
       {
         type: Schema.Types.ObjectId,
         ref: "Comment",
       },
     ],
+    commentsCount: {
+      type: Number,
+      default: 0
+    },
+    shareCount: {
+      type: Number,
+      default: 0
+    }
   },
   {
     timestamps: true,

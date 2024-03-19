@@ -3,16 +3,20 @@ import mongoose from "mongoose";
 import "dotenv/config";
 import cors from "cors";
 import userRouter from "./routes/userRoutes.mjs";
+import postRouter from "./routes/postRoutes.mjs";
 
 const app = express();
 
-app.use(cors({
-  origin: ["http://localhost:5173", "https://anime-connect.onrender.com"],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://anime-connect.onrender.com"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.use("/users", userRouter);
+app.use("/post", postRouter);
 
 /**
  * connecting mongodb database and listening on port 4000
