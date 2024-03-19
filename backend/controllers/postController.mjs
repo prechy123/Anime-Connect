@@ -16,3 +16,12 @@ export const createPost = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
+export const getPost = async (req, res) => {
+  try {
+    const posts = await Post.find({})
+    res.status(200).json({messsage: posts});
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};

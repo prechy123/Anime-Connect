@@ -90,7 +90,6 @@ const Feed = () => {
         >
           <ThemeMode />
         </Box>
-        {/* {showArrow && ( */}
         <Box
           position="fixed"
           zIndex={2}
