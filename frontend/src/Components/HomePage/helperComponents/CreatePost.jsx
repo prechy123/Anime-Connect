@@ -7,7 +7,11 @@ function CreatePost({ setCreatePost }) {
   return (
     <Box
       sx={{
-        width: "50%",
+        width: {
+          xs: "95%",
+          sm: "65%",
+          md: "50%",
+        },
         maxHeight: "70vh",
         position: "fixed",
         top: { xs: "10%", sm: "20%" },
