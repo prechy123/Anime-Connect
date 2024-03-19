@@ -7,6 +7,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { useTheme } from "@emotion/react";
 import { Close, Menu } from "@mui/icons-material";
 import LeftBarXS from "./LeftBarXS";
+import AddIcon from "@mui/icons-material/Add";
 
 const Feed = () => {
   const theme = useTheme();
@@ -90,8 +91,6 @@ const Feed = () => {
         {/* {showArrow && ( */}
         <Box
           position="fixed"
-          // bottom={1}
-          right="calc(50% - 22px)"
           zIndex={2}
           onClick={setCurrentPositionToBeggining}
           sx={{
@@ -100,6 +99,11 @@ const Feed = () => {
             backgroundColor: theme.palette.primary.arrow,
             bottom: showArrow ? "10px" : "-70px",
             transition: "bottom 1s ease",
+            right: {
+              xs: "calc(50% - 24px)",
+              sm: "calc(100vw - 70vw)",
+              md: "50%",
+            },
           }}
         >
           <ArrowUpwardIcon sx={{ cursor: "pointer" }} />
@@ -115,6 +119,23 @@ const Feed = () => {
         }}
       >
         <LeftBarXS />
+      </Box>
+      <Box
+        position="fixed"
+        zIndex={2}
+        sx={{
+          borderRadius: "50%",
+          padding: "10px",
+          backgroundColor: theme.palette.primary.text,
+          color: theme.palette.primary.main,
+          bottom: "10px",
+          right: {
+            md: "calc(100vw - 72vw + 15px)",
+            xs: "15px",
+          },
+        }}
+      >
+        <AddIcon sx={{ cursor: "pointer" }} />
       </Box>
     </>
   );
