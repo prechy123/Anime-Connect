@@ -30,12 +30,12 @@ const Profile = () => {
         location: user.location,
         bio: user.bio,
         animeInterest: user.animeInterest,
-        verified: user.verified
+        verified: user.verified,
       })
     );
   }
   return (
-    <Box bgcolor={"primary.main"} color={"primary.text"} height="150vh">
+    <Box bgcolor={"primary.main"} color={"primary.text"} minHeight="150vh">
       <Stack
         direction="row"
         divider={<Divider orientation="vertical" flexItem />}

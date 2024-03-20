@@ -16,11 +16,15 @@ import {
   styled,
   useTheme,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import LeftBarXS from "../HomePage/LeftBarXS";
 import ChangeProfilePic from "./helperComponents/ChangeProfilePic";
 import EditProfile from "./helperComponents/EditProfile";
+import BASE_URL from "../../utils";
+import FeedBoilerPlate from "../HomePage/helperComponents/FeedBoilerPlate";
+import Cookies from "js-cookie";
+import { RotateLoader } from "react-spinners";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -33,6 +37,14 @@ const ProfileAuthenticated = () => {
   const [navBar, setNavBar] = useState(false);
   const [changePP, setChangePP] = useState(false);
   const [editPage, setEditPage] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [loadingState, setLoadingstate] = useState(true);
+  useEffect(() => {
+    const userId = JSON.parse(Cookies.get("user"))._id;
+    fetch(`${BASE_URL}/post/getmyposts?userId=${userId}`)
+      .then((res) => res.json())
+      .then((doc) => setPosts(doc.messsage), setLoadingstate(false));
+  }, []);
   const {
     username,
     fullname,
@@ -125,7 +137,11 @@ const ProfileAuthenticated = () => {
         </Typography>
         <Box display="flex" gap={1} flexWrap="wrap" paddingTop={1}>
           {animeInterest.map((animeItem, index) => (
-            <Chip sx={{backgroundColor: theme}} key={index} label={animeItem} />
+            <Chip
+              sx={{ backgroundColor: theme }}
+              key={index}
+              label={animeItem}
+            />
           ))}
         </Box>
       </Box>
@@ -151,6 +167,28 @@ const ProfileAuthenticated = () => {
           </Box>
         </Box>
       </Box>
+      {loadingState && <RotateLoader />}
+      {posts
+        .slice()
+        .reverse()
+        .map((post, index) => (
+          <FeedBoilerPlate
+            setPosts={setPosts}
+            index={posts.length - 1 - index}
+            key={post._id}
+            postId={post._id}
+            username={post.userId.username}
+            fullname={post.userId.fullname}
+            content={post.content}
+            likes={post.likes}
+            likeCount={post.likesCount}
+            comments={post.comments}
+            commentsCount={post.commentsCount}
+            shareCount={post.shareCount}
+            profilepictureurl={post.userId.profilepictureurl}
+            createdAt={post.createdAt}
+          />
+        ))}
       {navBar && (
         <Box
           position="absolute"
@@ -162,7 +200,9 @@ const ProfileAuthenticated = () => {
         </Box>
       )}
       {changePP && <ChangeProfilePic setChangePP={setChangePP} />}
-      {editPage && <EditProfile setEditPage={setEditPage} setChangePP={setChangePP} />}
+      {editPage && (
+        <EditProfile setEditPage={setEditPage} setChangePP={setChangePP} />
+      )}
     </Box>
   );
 };

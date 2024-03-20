@@ -98,7 +98,7 @@ const FeedBoilerPlate = ({
     }
   };
   return (
-    <Card sx={{ margin: 5, backgroundColor: theme.palette.primary.other }}>
+    <Card sx={{ margin: 2, backgroundColor: theme.palette.primary.other }}>
       <CardHeader
         avatar={<Avatar alt={username} src={profilepictureurl} />}
         action={

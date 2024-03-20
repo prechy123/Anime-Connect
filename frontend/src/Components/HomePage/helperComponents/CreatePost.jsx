@@ -4,17 +4,22 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import BASE_URL from "../../../utils";
+import expirationTime from "../../../../calculate/expirationTime";
+import { useDispatch } from "react-redux";
+import { isAuth } from "../../../redux/reducers/auth/authSlice";
 
 const CreatePost = ({ setPosts, setCreatePost }) => {
   const Theme = useTheme();
   const [content, setContent] = useState("");
   const [error, setError] = useState(false);
-  const [user, setUser] = useState();
-  useEffect(() => {
-    if (Cookies.get("user")) {
-      setUser(JSON.parse(Cookies.get("user")));
-    }
-  }, []);
+  // const [user, setUser] = useState();
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   if (Cookies.get("user")) {
+  //     setUser(JSON.parse(Cookies.get("user")));
+  //   }
+  // }, []);
 
   const handlePostMessage = async () => {
     let user = JSON.parse(Cookies.get("user"));
@@ -50,6 +55,14 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
               createdAt: new Date(),
             },
           ]);
+          let user = JSON.parse(Cookies.get("user"));
+          user.postcount++;
+          const userDetails = JSON.stringify(user);
+          Cookies.set("user", userDetails, {
+            expires: expirationTime(),
+            sameSite: "None",
+            secure: true,
+          });
         } else {
           setError(true);
         }
