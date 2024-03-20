@@ -42,7 +42,10 @@ const FeedBoilerPlate = ({
 }) => {
   const theme = useTheme();
   const [checked, setChecked] = useState(false);
-  const userId = JSON.parse(Cookies.get("user"))._id;
+  let userId;
+  if (Cookies.get("user")) {
+    userId = JSON.parse(Cookies.get("user"))._id;
+  }
   useEffect(() => {
     if (likes.includes(userId)) {
       setChecked(true);
