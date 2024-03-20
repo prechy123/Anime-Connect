@@ -27,3 +27,32 @@ export const getPost = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
+export const likePost = async (req, res) => {
+  const { postId, userId } = req.body;
+  try {
+    const post = await Post.findOne({ _id: postId });
+    post.likes.push(userId);
+    post.likesCount++;
+    await post.save();
+    res.status(200).json({ message: "updated successfully" });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+export const unlikePost = async (req, res) => {
+  const { postId, userId } = req.body;
+  try {
+    const post = await Post.findOne({ _id: postId });
+    const userIndex = post.likes.indexOf(userId);
+    if (userIndex !== -1) {
+      post.likes.splice(userIndex, 1);
+    }
+    post.likesCount--;
+    await post.save();
+    res.status(200).json({ message: "updated successfully" });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};

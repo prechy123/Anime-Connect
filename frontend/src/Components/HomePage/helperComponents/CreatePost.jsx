@@ -36,13 +36,13 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
           setPosts((prevItems) => [
             ...prevItems,
             {
-              key: user._id,
               userId: {
                 username: user.username,
                 fullname: user.fullname,
                 profilepictureurl: user.profilepictureurl,
               },
               content,
+              likes: [],
               likesCount: 0,
               comments: [],
               commentsCount: 0,

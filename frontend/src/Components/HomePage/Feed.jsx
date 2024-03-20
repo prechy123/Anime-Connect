@@ -38,6 +38,7 @@ const Feed = () => {
       behavior: "smooth",
     });
   };
+  console.log(posts);
   return (
     <>
       <Box flex={4} minHeight="100vh">
@@ -96,12 +97,16 @@ const Feed = () => {
         {posts
           .slice()
           .reverse()
-          .map((post) => (
+          .map((post, index) => (
             <FeedBoilerPlate
+              setPosts={setPosts}
+              index={posts.length - 1 - index}
               key={post._id}
+              postId={post._id}
               username={post.userId.username}
               fullname={post.userId.fullname}
               content={post.content}
+              likes={post.likes}
               likeCount={post.likesCount}
               comments={post.comments}
               commentsCount={post.commentsCount}
