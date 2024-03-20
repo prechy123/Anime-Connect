@@ -2,13 +2,19 @@ import { useTheme } from "@emotion/react";
 import { ArrowForward, Close } from "@mui/icons-material";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import Cookies from "js-cookie";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BASE_URL from "../../../utils";
 
-const CreatePost = ({ setCreatePost }) => {
+const CreatePost = ({ setPosts, setCreatePost }) => {
   const Theme = useTheme();
   const [content, setContent] = useState("");
   const [error, setError] = useState(false);
+  const [user, setUser] = useState();
+  useEffect(() => {
+    if (Cookies.get("user")) {
+      setUser(JSON.parse(Cookies.get("user")));
+    }
+  }, []);
 
   const handlePostMessage = async () => {
     let user = JSON.parse(Cookies.get("user"));
@@ -25,7 +31,26 @@ const CreatePost = ({ setCreatePost }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.message !== "message posted successfully") {
+        if (data.message === "message posted successfully") {
+          setCreatePost(false);
+          setPosts((prevItems) => [
+            ...prevItems,
+            {
+              key: user._id,
+              userId: {
+                username: user.username,
+                fullname: user.fullname,
+                profilepictureurl: user.profilepictureurl,
+              },
+              content,
+              likesCount: 0,
+              comments: [],
+              commentsCount: 0,
+              shareCount: 0,
+              createdAt: new Date(),
+            },
+          ]);
+        } else {
           setError(true);
         }
       })

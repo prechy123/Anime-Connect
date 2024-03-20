@@ -2,19 +2,28 @@ import { Box, Typography } from "@mui/material";
 import SearchBar from "./helperComponents/SearchBar";
 import FeedBoilerPlate from "./helperComponents/FeedBoilerPlate";
 import ThemeMode from "./helperComponents/ThemeMode";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { useTheme } from "@emotion/react";
 import { Close, Menu } from "@mui/icons-material";
 import LeftBarXS from "./LeftBarXS";
 import AddIcon from "@mui/icons-material/Add";
 import CreatePost from "./helperComponents/CreatePost";
+import BASE_URL from "../../utils";
+import { RotateLoader } from "react-spinners";
 
 const Feed = () => {
   const theme = useTheme();
+  const [posts, setPosts] = useState([]);
   const [showArrow, setShowArrow] = useState(false);
   const [navBar, setNavBar] = useState(false);
-  const [createPost, setCreatePost] = useState(false)
+  const [createPost, setCreatePost] = useState(false);
+  const [loadingState, setLoadingstate] = useState(true);
+  useEffect(() => {
+    fetch(BASE_URL + "/post/getposts")
+      .then((res) => res.json())
+      .then((doc) => setPosts(doc.messsage), setLoadingstate(false));
+  }, []);
   window.onscroll = function () {
     const currentScrollPosition = window.scrollY;
     if (currentScrollPosition > 100) {
@@ -31,7 +40,7 @@ const Feed = () => {
   };
   return (
     <>
-      <Box flex={4}>
+      <Box flex={4} minHeight="100vh">
         <Box
           sx={{
             display: { xs: "block", sm: "none" },
@@ -71,16 +80,36 @@ const Feed = () => {
             </Typography>
           </Typography>
         </Box>
-        <FeedBoilerPlate />
-        <FeedBoilerPlate />
-        <FeedBoilerPlate />
-        <FeedBoilerPlate />
-        <FeedBoilerPlate />
-        <FeedBoilerPlate />
-        <FeedBoilerPlate />
-        <FeedBoilerPlate />
-        <FeedBoilerPlate />
-        <FeedBoilerPlate />
+        {loadingState && (
+          <Box
+            sx={{
+              width: "100%",
+              height: "100vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <RotateLoader />
+          </Box>
+        )}
+        {posts
+          .slice()
+          .reverse()
+          .map((post) => (
+            <FeedBoilerPlate
+              key={post._id}
+              username={post.userId.username}
+              fullname={post.userId.fullname}
+              content={post.content}
+              likeCount={post.likesCount}
+              comments={post.comments}
+              commentsCount={post.commentsCount}
+              shareCount={post.shareCount}
+              profilepictureurl={post.userId.profilepictureurl}
+              createdAt={post.createdAt}
+            />
+          ))}
         <Box
           position="fixed"
           right={-20}
@@ -109,7 +138,9 @@ const Feed = () => {
         >
           <ArrowUpwardIcon sx={{ cursor: "pointer" }} />
         </Box>
-        {createPost && <CreatePost setCreatePost={setCreatePost} />}
+        {createPost && (
+          <CreatePost setPosts={setPosts} setCreatePost={setCreatePost} />
+        )}
       </Box>
       <Box
         position="absolute"
@@ -127,7 +158,7 @@ const Feed = () => {
         zIndex={2}
         onClick={() => setCreatePost(true)}
         sx={{
-          borderRadius: "50%",
+          borderRadius: "10px",
           padding: "10px",
           backgroundColor: theme.palette.primary.text,
           color: theme.palette.primary.main,
@@ -136,11 +167,13 @@ const Feed = () => {
             md: "calc(100vw - 72vw + 15px)",
             xs: "15px",
           },
+          "&:hover": {
+            backgroundColor: theme.palette.secondary.main,
+          },
         }}
       >
         <AddIcon sx={{ cursor: "pointer" }} />
       </Box>
-      
     </>
   );
 };
