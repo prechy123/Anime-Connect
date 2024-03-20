@@ -24,6 +24,7 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
   const handlePostMessage = async () => {
     let user = JSON.parse(Cookies.get("user"));
 
+    setCreatePost(false);
     await fetch(`${BASE_URL}/post/newpost`, {
       method: "POST",
       headers: {
@@ -37,7 +38,6 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.message === "message posted successfully") {
-          setCreatePost(false);
           setPosts((prevItems) => [
             ...prevItems,
             {
