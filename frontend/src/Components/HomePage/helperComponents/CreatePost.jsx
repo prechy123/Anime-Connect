@@ -2,72 +2,65 @@ import { useTheme } from "@emotion/react";
 import { ArrowForward, Close } from "@mui/icons-material";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BASE_URL from "../../../utils";
 import expirationTime from "../../../../calculate/expirationTime";
-import { useDispatch } from "react-redux";
-import { isAuth } from "../../../redux/reducers/auth/authSlice";
 
 const CreatePost = ({ setPosts, setCreatePost }) => {
   const Theme = useTheme();
   const [content, setContent] = useState("");
   const [error, setError] = useState(false);
-  // const [user, setUser] = useState();
-  const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   if (Cookies.get("user")) {
-  //     setUser(JSON.parse(Cookies.get("user")));
-  //   }
-  // }, []);
-
   const handlePostMessage = async () => {
-    let user = JSON.parse(Cookies.get("user"));
-
-    setCreatePost(false);
-    await fetch(`${BASE_URL}/post/newpost`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: user._id,
-        content,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message === "message posted successfully") {
-          setPosts((prevItems) => [
-            ...prevItems,
-            {
-              userId: {
-                username: user.username,
-                fullname: user.fullname,
-                profilepictureurl: user.profilepictureurl,
-              },
-              content,
-              likes: [],
-              likesCount: 0,
-              comments: [],
-              commentsCount: 0,
-              shareCount: 0,
-              createdAt: new Date(),
-            },
-          ]);
-          let user = JSON.parse(Cookies.get("user"));
-          user.postcount++;
-          const userDetails = JSON.stringify(user);
-          Cookies.set("user", userDetails, {
-            expires: expirationTime(),
-            sameSite: "None",
-            secure: true,
-          });
-        } else {
-          setError(true);
-        }
+    let user;
+    if (Cookies.get("user")) {
+      setCreatePost(false);
+      user = JSON.parse(Cookies.get("user"));
+      await fetch(`${BASE_URL}/post/newpost`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user._id,
+          content,
+        }),
       })
-      .catch((error) => console.error("Error:", error));
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.message === "message posted successfully") {
+            setPosts((prevItems) => [
+              ...prevItems,
+              {
+                userId: {
+                  username: user.username,
+                  fullname: user.fullname,
+                  profilepictureurl: user.profilepictureurl,
+                },
+                content,
+                likes: [],
+                likesCount: 0,
+                comments: [],
+                commentsCount: 0,
+                shareCount: 0,
+                createdAt: new Date(),
+              },
+            ]);
+            // let user = JSON.parse(Cookies.get("user"));
+            user.postcount++;
+            const userDetails = JSON.stringify(user);
+            Cookies.set("user", userDetails, {
+              expires: expirationTime(),
+              sameSite: "None",
+              secure: true,
+            });
+          } else {
+            setError(true);
+          }
+        })
+        .catch((err) => setError(true));
+    } else {
+      setError(true);
+    }
   };
   return (
     <Box
@@ -115,7 +108,7 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
         />
         {error && (
           <Typography color="error">
-            Ensure textfield is filled or try again
+            Ensure textfield is filled or signin then try again
           </Typography>
         )}
         <Box
