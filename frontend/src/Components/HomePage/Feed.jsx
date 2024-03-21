@@ -23,9 +23,9 @@ const Feed = () => {
     fetch(BASE_URL + "/post/getposts")
       .then((res) => res.json())
       .then((doc) => setPosts(doc.messsage));
-    setTimeout(() => {
-      setLoadingstate(false)
-    }, 2500)
+    // setTimeout(() => {
+    //   setLoadingstate(false)
+    // }, 2500)
   }, []);
   window.onscroll = function () {
     const currentScrollPosition = window.scrollY;
@@ -92,9 +92,15 @@ const Feed = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              flexDirection: "column",
+              gap: "40px",
             }}
           >
             <RotateLoader />
+            <Typography>
+              Please be patient will backend gets started, consider refreshing
+              page
+            </Typography>
           </Box>
         )}
         {posts
@@ -104,6 +110,7 @@ const Feed = () => {
             <FeedBoilerPlate
               setPosts={setPosts}
               index={posts.length - 1 - index}
+              setLoadingstate={setLoadingstate}
               key={post._id}
               postId={post._id}
               username={post.userId.username}

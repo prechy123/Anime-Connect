@@ -28,6 +28,7 @@ import Cookies from "js-cookie";
 const FeedBoilerPlate = ({
   setPosts,
   index,
+  setLoadingstate,
   postId,
   username,
   fullname,
@@ -42,6 +43,9 @@ const FeedBoilerPlate = ({
 }) => {
   const theme = useTheme();
   const [checked, setChecked] = useState(false);
+  if (index === 0) {
+    setLoadingstate(false)
+  }
   let userId;
   if (Cookies.get("user")) {
     userId = JSON.parse(Cookies.get("user"))._id;
