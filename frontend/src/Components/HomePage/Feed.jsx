@@ -22,7 +22,7 @@ const Feed = () => {
   useEffect(() => {
     fetch(BASE_URL + "/post/getposts")
       .then((res) => res.json())
-      .then((doc) => setPosts(doc.messsage), setLoadingstate(false));
+      .then((doc) => setPosts(doc.messsage));
   }, []);
   window.onscroll = function () {
     const currentScrollPosition = window.scrollY;
@@ -115,6 +115,7 @@ const Feed = () => {
               createdAt={post.createdAt}
             />
           ))}
+        {setLoadingstate(false)}
         <Box
           position="fixed"
           right={-20}
