@@ -20,7 +20,7 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
   const [animeList, setAnimeList] = useState(animeInterest);
   const [theLocation, setTheLocation] = useState(location);
   const [theBio, setTheBio] = useState(bio);
-  const [selecetedColour, setSelectedColour] = useState(theme)
+  const [selecetedColour, setSelectedColour] = useState(theme);
 
   const handleRemoveAnimeList = (selectedAnime) => {
     setAnimeList(animeList.filter((anime) => anime !== selectedAnime));
@@ -39,13 +39,13 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
   };
 
   const handleSubmitChange = async () => {
-    let user = JSON.parse(Cookies.get("user"));
+    let user = JSON.parse(Cookies.get("weebsuser"));
     user.location = theLocation;
     user.bio = theBio;
     user.animeInterest = animeList;
-    user.theme = selecetedColour
+    user.theme = selecetedColour;
     const userDetails = JSON.stringify(user);
-    Cookies.set("user", userDetails, {
+    Cookies.set("weebsuser", userDetails, {
       expires: expirationTime(),
       sameSite: "None",
       secure: true,
@@ -72,7 +72,7 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
       location: theLocation,
       bio: theBio,
       animeInterest: animeList,
-      theme: selecetedColour
+      theme: selecetedColour,
     };
     await fetch(`${BASE_URL}/users/updateprofile`, {
       method: "PATCH",
@@ -90,7 +90,7 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
         height: "70vh",
         overflowY: "scroll",
         position: "absolute",
-        top: {xs: "10%", sm: "20%"},
+        top: { xs: "10%", sm: "20%" },
         zIndex: "2",
         backgroundColor: Theme.palette.primary.main,
         borderRadius: "20px",
@@ -155,7 +155,10 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
         >
           {animeList.map((animeItem, index) => (
             <Box key={index} sx={{ display: "flex", placeItems: "center" }}>
-              <Chip label={animeItem} sx={{ backgroundColor: selecetedColour }} />
+              <Chip
+                label={animeItem}
+                sx={{ backgroundColor: selecetedColour }}
+              />
               <Close
                 onClick={() => handleRemoveAnimeList(animeItem)}
                 sx={{ cursor: "pointer" }}

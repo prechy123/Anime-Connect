@@ -59,7 +59,7 @@ const Signin = () => {
         Navigate("/");
       }, 2000);
       const userDetails = JSON.stringify(response.user);
-      Cookies.set("user", userDetails, {
+      Cookies.set("weebsuser", userDetails, {
         expires: expirationTime(),
         sameSite: "None",
         secure: true,

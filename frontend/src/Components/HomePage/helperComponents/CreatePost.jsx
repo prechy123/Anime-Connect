@@ -12,9 +12,9 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
   const [error, setError] = useState(false);
   const handlePostMessage = async () => {
     let user;
-    if (Cookies.get("user")) {
+    if (Cookies.get("weebsuser")) {
       setCreatePost(false);
-      user = JSON.parse(Cookies.get("user"));
+      user = JSON.parse(Cookies.get("weebsuser"));
       await fetch(`${BASE_URL}/post/newpost`, {
         method: "POST",
         headers: {
@@ -45,10 +45,9 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
                 createdAt: new Date(),
               },
             ]);
-            // let user = JSON.parse(Cookies.get("user"));
             user.postcount++;
             const userDetails = JSON.stringify(user);
-            Cookies.set("user", userDetails, {
+            Cookies.set("weebsuser", userDetails, {
               expires: expirationTime(),
               sameSite: "None",
               secure: true,

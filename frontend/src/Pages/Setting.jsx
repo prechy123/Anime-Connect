@@ -11,8 +11,8 @@ const Setting = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState();
   useEffect(() => {
-    if (Cookies.get("user")) {
-      setUser(JSON.parse(Cookies.get("user")));
+    if (Cookies.get("weebsuser")) {
+      setUser(JSON.parse(Cookies.get("weebsuser")));
     }
   }, []);
   if (user) {

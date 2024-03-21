@@ -44,11 +44,11 @@ const FeedBoilerPlate = ({
   const theme = useTheme();
   const [checked, setChecked] = useState(false);
   if (index === 0) {
-    setLoadingstate(false)
+    setLoadingstate(false);
   }
   let userId;
-  if (Cookies.get("user")) {
-    userId = JSON.parse(Cookies.get("user"))._id;
+  if (Cookies.get("weebsuser")) {
+    userId = JSON.parse(Cookies.get("weebsuser"))._id;
   }
   useEffect(() => {
     if (likes.includes(userId)) {

@@ -40,7 +40,7 @@ const ProfileAuthenticated = () => {
   const [posts, setPosts] = useState([]);
   const [loadingState, setLoadingstate] = useState(true);
   useEffect(() => {
-    const userId = JSON.parse(Cookies.get("user"))._id;
+    const userId = JSON.parse(Cookies.get("weebsuser"))._id;
     fetch(`${BASE_URL}/post/getmyposts?userId=${userId}`)
       .then((res) => res.json())
       .then((doc) => setPosts(doc.messsage), setLoadingstate(false));

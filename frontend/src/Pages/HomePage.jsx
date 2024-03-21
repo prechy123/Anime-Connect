@@ -11,8 +11,8 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState();
   useEffect(() => {
-    if (Cookies.get("user")) {
-      setUser(JSON.parse(Cookies.get("user")));
+    if (Cookies.get("weebsuser")) {
+      setUser(JSON.parse(Cookies.get("weebsuser")));
     }
   }, []);
   if (user) {
@@ -30,7 +30,7 @@ const HomePage = () => {
         location: user.location,
         bio: user.bio,
         animeInterest: user.animeInterest,
-        verified: user.verified
+        verified: user.verified,
       })
     );
   }
