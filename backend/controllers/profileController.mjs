@@ -148,7 +148,6 @@ export const changeProfilePicture = async (req, res) => {
   }
 };
 
-
 export const updateProfile = async (req, res) => {
   try {
     const { userId, location, bio, animeInterest, theme } = req.body;
@@ -164,5 +163,23 @@ export const updateProfile = async (req, res) => {
     res.status(200).json({ message: "Updated successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+export const searchProfile = async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    // Perform a case-insensitive search for profiles starting with the given username
+    const profiles = await User.find({
+      username: { $regex: `^${username}`, $options: "i" },
+    }).select("_id username fullname profilepictureurl theme");
+    if (profiles.length !== 0) {
+      res.status(200).json({ success: true, profiles });
+    } else {
+      res.status(200).json({ success: false });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 };

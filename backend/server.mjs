@@ -4,6 +4,7 @@ import "dotenv/config";
 import cors from "cors";
 import userRouter from "./routes/userRoutes.mjs";
 import postRouter from "./routes/postRoutes.mjs";
+import profileRouter from "./routes/profileRoutes.mjs";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use("/users", userRouter);
 app.use("/post", postRouter);
+app.use("/profile", profileRouter);
 
 /**
  * connecting mongodb database and listening on port 4000
