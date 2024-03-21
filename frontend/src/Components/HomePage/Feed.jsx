@@ -11,6 +11,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CreatePost from "./helperComponents/CreatePost";
 import BASE_URL from "../../utils";
 import { RotateLoader } from "react-spinners";
+import SearchProfile from "./helperComponents/SearchProfile";
 
 const Feed = () => {
   const theme = useTheme();
@@ -19,13 +20,13 @@ const Feed = () => {
   const [navBar, setNavBar] = useState(false);
   const [createPost, setCreatePost] = useState(false);
   const [loadingState, setLoadingstate] = useState(true);
+  const [searchState, setSearchState] = useState(false);
+  const [searchContent, setSearchContent] = useState("")
+
   useEffect(() => {
     fetch(BASE_URL + "/post/getposts")
       .then((res) => res.json())
       .then((doc) => setPosts(doc.messsage));
-    // setTimeout(() => {
-    //   setLoadingstate(false)
-    // }, 2500)
   }, []);
   window.onscroll = function () {
     const currentScrollPosition = window.scrollY;
@@ -41,7 +42,6 @@ const Feed = () => {
       behavior: "smooth",
     });
   };
-  console.log(posts);
   return (
     <>
       <Box flex={4} minHeight="100vh">
@@ -56,8 +56,11 @@ const Feed = () => {
         >
           {navBar ? <Close /> : <Menu />}
         </Box>
-        <Box sx={{ marginLeft: { xs: "15%" } }}>
-          <SearchBar />
+        <Box
+          sx={{ marginLeft: { xs: "15%" } }}
+          onClick={() => setSearchState(true)}
+        >
+          <SearchBar searchContent={searchContent} setSearchContent={setSearchContent} />
         </Box>
 
         <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -98,8 +101,8 @@ const Feed = () => {
           >
             <RotateLoader />
             <Typography>
-              Please be patient will backend gets started, consider refreshing
-              page
+              Please be patient while backend gets started. Patience this may
+              take a minute
             </Typography>
           </Box>
         )}
@@ -156,6 +159,7 @@ const Feed = () => {
         {createPost && (
           <CreatePost setPosts={setPosts} setCreatePost={setCreatePost} />
         )}
+        {searchState && <SearchProfile setSearchState={setSearchState} searchContent={searchContent} />}
       </Box>
       <Box
         position="absolute"

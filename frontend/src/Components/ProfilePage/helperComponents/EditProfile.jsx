@@ -39,13 +39,13 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
   };
 
   const handleSubmitChange = async () => {
-    let user = JSON.parse(Cookies.get("weebsuser"));
+    let user = JSON.parse(Cookies.get("weeebsuser"));
     user.location = theLocation;
     user.bio = theBio;
     user.animeInterest = animeList;
     user.theme = selecetedColour;
     const userDetails = JSON.stringify(user);
-    Cookies.set("weebsuser", userDetails, {
+    Cookies.set("weeebsuser", userDetails, {
       expires: expirationTime(),
       sameSite: "None",
       secure: true,

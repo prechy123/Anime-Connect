@@ -15,7 +15,7 @@ const Search = styled("div")(({ theme }) => ({
     outline: "1px solid #ffffff",
   },
 }));
-const SearchBar = () => {
+const SearchBar = ({ searchContent, setSearchContent }) => {
   const theme = useTheme();
   return (
     <Search
@@ -28,7 +28,12 @@ const SearchBar = () => {
       }}
     >
       <SearchIcon />
-      <InputBase placeholder="Search Profile" fullWidth />
+      <InputBase
+        placeholder="Search Profile"
+        fullWidth
+        onChange={(e) => setSearchContent(e.target.value)}
+        value={searchContent}
+      />
     </Search>
   );
 };

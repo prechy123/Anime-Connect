@@ -47,8 +47,8 @@ const FeedBoilerPlate = ({
     setLoadingstate(false);
   }
   let userId;
-  if (Cookies.get("weebsuser")) {
-    userId = JSON.parse(Cookies.get("weebsuser"))._id;
+  if (Cookies.get("weeebsuser")) {
+    userId = JSON.parse(Cookies.get("weeebsuser"))._id;
   }
   useEffect(() => {
     if (likes.includes(userId)) {

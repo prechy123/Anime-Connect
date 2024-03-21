@@ -11,8 +11,8 @@ const Profile = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState();
   useEffect(() => {
-    if (Cookies.get("weebsuser")) {
-      setUser(JSON.parse(Cookies.get("weebsuser")));
+    if (Cookies.get("weeebsuser")) {
+      setUser(JSON.parse(Cookies.get("weeebsuser")));
     }
   }, []);
   if (user) {

@@ -15,10 +15,10 @@ const ChangeProfilePic = ({ setChangePP }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const handlePictureUpdate = async (pictureUrl) => {
-    let user = JSON.parse(Cookies.get("weebsuser"));
+    let user = JSON.parse(Cookies.get("weeebsuser"));
     user.profilepictureurl = pictureUrl;
     const userDetails = JSON.stringify(user);
-    Cookies.set("weebsuser", userDetails, {
+    Cookies.set("weeebsuser", userDetails, {
       expires: expirationTime(),
       sameSite: "None",
       secure: true,
