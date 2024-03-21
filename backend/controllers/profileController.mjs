@@ -167,7 +167,7 @@ export const updateProfile = async (req, res) => {
 };
 
 export const searchProfile = async (req, res) => {
-  const { username } = req.body;
+  const { username } = req.query;
 
   try {
     // Perform a case-insensitive search for profiles starting with the given username

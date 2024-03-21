@@ -21,7 +21,7 @@ const Feed = () => {
   const [createPost, setCreatePost] = useState(false);
   const [loadingState, setLoadingstate] = useState(true);
   const [searchState, setSearchState] = useState(false);
-  const [searchContent, setSearchContent] = useState("")
+  const [searchContent, setSearchContent] = useState("");
 
   useEffect(() => {
     fetch(BASE_URL + "/post/getposts")
@@ -60,7 +60,10 @@ const Feed = () => {
           sx={{ marginLeft: { xs: "15%" } }}
           onClick={() => setSearchState(true)}
         >
-          <SearchBar searchContent={searchContent} setSearchContent={setSearchContent} />
+          <SearchBar
+            searchContent={searchContent}
+            setSearchContent={setSearchContent}
+          />
         </Box>
 
         <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -159,7 +162,13 @@ const Feed = () => {
         {createPost && (
           <CreatePost setPosts={setPosts} setCreatePost={setCreatePost} />
         )}
-        {searchState && <SearchProfile setSearchState={setSearchState} searchContent={searchContent} />}
+        {searchState && (
+          <SearchProfile
+            setSearchState={setSearchState}
+            searchContent={searchContent}
+            setSearchContent={setSearchContent}
+          />
+        )}
       </Box>
       <Box
         position="absolute"

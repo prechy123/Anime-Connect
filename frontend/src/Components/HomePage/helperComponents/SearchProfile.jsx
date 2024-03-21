@@ -1,15 +1,30 @@
 import { useTheme } from "@emotion/react";
 import { Close } from "@mui/icons-material";
-import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { Avatar, Box, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { RotateLoader } from "react-spinners";
+import BASE_URL from "../../../utils";
 
-const SearchProfile = ({ setSearchState, searchContent }) => {
+const SearchProfile = ({ setSearchState, searchContent, setSearchContent }) => {
   const Theme = useTheme();
   const [loadingState, setLoadingstate] = useState(true);
-//   useEffect(()=>{
-
-//   }, [searchContent])
+  const [profiles, setProfiles] = useState([]);
+  useEffect(() => {
+    if (String(searchContent).length > 0) {
+      fetch(`${BASE_URL}/profile/getProfiles?username=${searchContent}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success === true) {
+            setLoadingstate(false);
+            setProfiles(data.profiles);
+          } else {
+            setLoadingstate(true);
+          }
+        });
+    } else {
+      setLoadingstate(true);
+    }
+  }, [searchContent]);
   return (
     <Box
       sx={{
@@ -39,7 +54,7 @@ const SearchProfile = ({ setSearchState, searchContent }) => {
         <Typography>Searched Profile</Typography>
         <Close
           sx={{ cursor: "pointer" }}
-          onClick={() => setSearchState(false)}
+          onClick={(() => setSearchState(false), () => setSearchContent(""))}
         />
       </Box>
       <Box>
@@ -51,7 +66,7 @@ const SearchProfile = ({ setSearchState, searchContent }) => {
             marginTop: "20px",
           }}
         >
-          {loadingState && (
+          {loadingState ? (
             <Box
               sx={{
                 display: "flex",
@@ -63,6 +78,29 @@ const SearchProfile = ({ setSearchState, searchContent }) => {
               <RotateLoader />
               <Typography color="error">Ensure username is correct</Typography>
             </Box>
+          ) : (
+            profiles.map((profile) => (
+              <Box
+                key={profile._id}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Avatar
+                  alt={profile.fullname}
+                  src={profile.profilepictureurl}
+                />
+                <Typography
+                  sx={{
+                    borderBottom: "3px solid" + profile.theme,
+                  }}
+                >
+                  {profile.username}
+                </Typography>
+              </Box>
+            ))
           )}
         </Box>
       </Box>
