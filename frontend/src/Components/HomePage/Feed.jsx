@@ -25,7 +25,7 @@ const Feed = () => {
       .then((doc) => setPosts(doc.messsage));
     setTimeout(() => {
       setLoadingstate(false)
-    }, 5000)
+    }, 2500)
   }, []);
   window.onscroll = function () {
     const currentScrollPosition = window.scrollY;
