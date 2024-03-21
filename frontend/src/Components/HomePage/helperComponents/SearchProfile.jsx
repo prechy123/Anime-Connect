@@ -54,7 +54,10 @@ const SearchProfile = ({ setSearchState, searchContent, setSearchContent }) => {
         <Typography>Searched Profile</Typography>
         <Close
           sx={{ cursor: "pointer" }}
-          onClick={(() => setSearchState(false), () => setSearchContent(""))}
+          onClick={() => {
+            setSearchContent("");
+            setSearchState(false);
+          }}
         />
       </Box>
       <Box>
@@ -80,6 +83,7 @@ const SearchProfile = ({ setSearchState, searchContent, setSearchContent }) => {
             </Box>
           ) : (
             profiles.map((profile) => (
+              
               <Box
                 key={profile._id}
                 sx={{
