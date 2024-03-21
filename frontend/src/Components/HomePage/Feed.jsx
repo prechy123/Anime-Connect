@@ -22,12 +22,10 @@ const Feed = () => {
   useEffect(() => {
     fetch(BASE_URL + "/post/getposts")
       .then((res) => res.json())
-      .then((doc) => {
-setPosts(doc.messsage)
-setTimeout(() => {
-    setLoadingstate(false)
-  }, 5000)
-);
+      .then((doc) => setPosts(doc.messsage));
+    setTimeout(() => {
+      setLoadingstate(false)
+    }, 5000)
   }, []);
   window.onscroll = function () {
     const currentScrollPosition = window.scrollY;
