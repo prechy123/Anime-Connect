@@ -29,6 +29,7 @@ const FeedBoilerPlate = ({
   setPosts,
   index,
   setLoadingstate,
+  setCommentState,
   postId,
   username,
   fullname,
@@ -142,7 +143,10 @@ const FeedBoilerPlate = ({
             <Typography>{likeCount}</Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton aria-label="Like Post">
+            <IconButton
+              aria-label="comment on Post"
+              onClick={() => setCommentState(true)}
+            >
               <Comment />
             </IconButton>
             <Typography>{commentsCount}</Typography>

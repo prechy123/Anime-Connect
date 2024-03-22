@@ -90,7 +90,7 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
         height: "70vh",
         overflowY: "scroll",
         position: "absolute",
-        top: { xs: "10%", sm: "20%" },
+        top: "5%",
         zIndex: "2",
         backgroundColor: Theme.palette.primary.main,
         borderRadius: "20px",

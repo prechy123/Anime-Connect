@@ -12,6 +12,7 @@ import CreatePost from "./helperComponents/CreatePost";
 import BASE_URL from "../../utils";
 import { RotateLoader } from "react-spinners";
 import SearchProfile from "./helperComponents/SearchProfile";
+import PostComment from "./helperComponents/PostComment";
 
 const Feed = () => {
   const theme = useTheme();
@@ -22,6 +23,7 @@ const Feed = () => {
   const [loadingState, setLoadingstate] = useState(true);
   const [searchState, setSearchState] = useState(false);
   const [searchContent, setSearchContent] = useState("");
+  const [commentState, setCommentState] = useState(false);
 
   useEffect(() => {
     fetch(BASE_URL + "/post/getposts")
@@ -117,6 +119,7 @@ const Feed = () => {
               setPosts={setPosts}
               index={posts.length - 1 - index}
               setLoadingstate={setLoadingstate}
+              setCommentState={setCommentState}
               key={post._id}
               postId={post._id}
               username={post.userId.username}
@@ -168,6 +171,9 @@ const Feed = () => {
             searchContent={searchContent}
             setSearchContent={setSearchContent}
           />
+        )}
+        {commentState && (
+          <PostComment setCommentState={setCommentState} />
         )}
       </Box>
       <Box

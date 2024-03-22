@@ -33,7 +33,6 @@ const SearchProfile = ({ setSearchState, searchContent, setSearchContent }) => {
           sm: "65%",
           md: "50%",
         },
-        maxHeight: "70vh",
         position: "fixed",
         top: { xs: "10%", sm: "20%" },
         zIndex: "2",
@@ -63,9 +62,6 @@ const SearchProfile = ({ setSearchState, searchContent, setSearchContent }) => {
       <Box>
         <Box
           sx={{
-            display: "flex",
-            placeItems: "center",
-            justifyContent: "space-around",
             marginTop: "20px",
           }}
         >
@@ -82,29 +78,38 @@ const SearchProfile = ({ setSearchState, searchContent, setSearchContent }) => {
               <Typography color="error">Ensure username is correct</Typography>
             </Box>
           ) : (
-            profiles.map((profile) => (
-              
-              <Box
-                key={profile._id}
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <Avatar
-                  alt={profile.fullname}
-                  src={profile.profilepictureurl}
-                />
-                <Typography
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr",
+                gap: "10px",
+                maxHeight: "40vh",
+                overflowY: "scroll",
+              }}
+            >
+              {profiles.map((profile) => (
+                <Box
+                  key={profile._id}
                   sx={{
-                    borderBottom: "3px solid" + profile.theme,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
                 >
-                  {profile.username}
-                </Typography>
-              </Box>
-            ))
+                  <Avatar
+                    alt={profile.fullname}
+                    src={profile.profilepictureurl}
+                  />
+                  <Typography
+                    sx={{
+                      borderBottom: "3px solid" + profile.theme,
+                    }}
+                  >
+                    {profile.username}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
           )}
         </Box>
       </Box>
