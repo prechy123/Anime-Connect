@@ -34,7 +34,7 @@ const NavListItems = () => {
     setOpen(false);
   };
   const handleLogout = () => {
-    Cookies.remove("user");
+    Cookies.remove("weeebsuser");
     setOpen(false);
     window.location.reload();
   };
