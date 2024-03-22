@@ -1,5 +1,6 @@
 import Post from "../models/postModel.mjs";
 import User from "../models/userModel.mjs";
+import Comment from "../models/commentModel.mjs";
 
 export const createPost = async (req, res) => {
   const { userId, content } = req.body;
@@ -35,7 +36,7 @@ export const getPost = async (req, res) => {
 export const getMyPost = async (req, res) => {
   const { userId } = req.query;
   try {
-    const posts = await Post.find({userId})
+    const posts = await Post.find({ userId })
       .populate("userId", "username fullname profilepictureurl")
       .lean();
     res.status(200).json({ messsage: posts });
@@ -68,6 +69,46 @@ export const unlikePost = async (req, res) => {
     post.likesCount--;
     await post.save();
     res.status(200).json({ message: "updated successfully" });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+export const getComments = async (req, res) => {
+  const { postId } = req.query;
+
+  try {
+    const post = await Post.findById(postId).populate("comments");
+    if (!post) {
+      return res.status(400).json({ message: "Post not found" });
+    }
+    const comments = post.comments;
+    res.status(200).json({ message: "success", comments });
+  } catch (err) {
+    res.status(400).json({ message: "Internal Server Error" });
+  }
+};
+
+export const postComment = async (req, res) => {
+  const { userId, postId, content } = req.body;
+
+  try {
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(400).json({ message: "Post not found" });
+    }
+    const newComment = new Comment({
+      content,
+      user: userId,
+      post: postId,
+    });
+    await newComment.save();
+    await post.updateOne({
+      $push: { comments: newComment._id },
+      $inc: { commentsCount: 1 },
+    });
+    await post.save();
+    res.status(200).json({ message: "Comment successfully created" });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
