@@ -111,11 +111,6 @@ const FeedBoilerPlate = ({
     <Card sx={{ margin: 2, backgroundColor: theme.palette.primary.other }}>
       <CardHeader
         avatar={<Avatar alt={username} src={profilepictureurl} />}
-        action={
-          <IconButton aria-label="settings">
-            <MoreVert />
-          </IconButton>
-        }
         title={fullname}
         subheader={"@" + username}
       />
@@ -148,9 +143,9 @@ const FeedBoilerPlate = ({
             <IconButton
               aria-label="comment on Post"
               onClick={() => {
-                setCommentState(true)
-                setPostId(postId)
-                setCommentIndex(index)
+                setCommentState(true);
+                setPostId(postId);
+                setCommentIndex(index);
               }}
             >
               <Comment />

@@ -99,6 +99,7 @@ const SearchProfile = ({ setSearchState, searchContent, setSearchContent }) => {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
+                    cursor: "pointer"
                   }}
                 >
                   <Avatar
