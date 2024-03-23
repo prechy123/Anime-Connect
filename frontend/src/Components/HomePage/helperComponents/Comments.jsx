@@ -7,7 +7,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { formatDistanceToNow } from "date-fns";
 
-const Comment = ({ postId, content, user, createdAt }) => {
+const Comment = ({ content, user, createdAt }) => {
   return (
     <>
       <ListItem alignItems="flex-start">

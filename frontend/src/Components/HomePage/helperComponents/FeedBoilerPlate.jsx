@@ -39,6 +39,7 @@ const FeedBoilerPlate = ({
   likeCount,
   comments,
   commentsCount,
+  setCommentIndex,
   shareCount,
   profilepictureurl,
   createdAt,
@@ -149,6 +150,7 @@ const FeedBoilerPlate = ({
               onClick={() => {
                 setCommentState(true)
                 setPostId(postId)
+                setCommentIndex(index)
               }}
             >
               <Comment />

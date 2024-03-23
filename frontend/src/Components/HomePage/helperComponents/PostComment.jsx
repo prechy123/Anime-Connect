@@ -4,10 +4,16 @@ import { Box, Button, List, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import BASE_URL from "../../../utils";
 import Comment from "./Comments";
+import { RotateLoader } from "react-spinners";
+import Cookies from "js-cookie";
 
-const PostComment = ({ setCommentState, postId }) => {
+const PostComment = ({ setCommentState, postId, commentIndex, setPosts }) => {
   const Theme = useTheme();
   const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [empty, setEmpty] = useState(false);
+  const [comment, setComment] = useState("");
+
   useEffect(() => {
     if (postId !== "") {
       fetch(`${BASE_URL}/post/getComments?postId=${postId}`)
@@ -15,10 +21,55 @@ const PostComment = ({ setCommentState, postId }) => {
         .then((doc) => {
           if (doc.message === "success") {
             setComments(doc.comments);
+            setLoading(true);
+            if (doc.comments.length === 0) {
+              setLoading(false);
+              setEmpty(true);
+            }
           }
         });
     }
   }, [postId]);
+
+  const handlePostComment = async () => {
+    const userDet = JSON.parse(Cookies.get("weeebsuser"));
+    const api = await fetch(`${BASE_URL}/post/postcomment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        postId,
+        userId: userDet._id,
+        content: comment,
+      }),
+    });
+    const response = await api.json();
+    if (response.message === "Comment successfully created") {
+      setComment("");
+      setEmpty(false);
+      comments.push({
+        _id: userDet._id,
+        content: comment,
+        user: {
+          username: userDet.username,
+          profilepictureurl: userDet.profilepictureurl,
+        },
+        createdAt: new Date(),
+      });
+      setPosts((prevVal) => {
+        const newPosts = [...prevVal];
+
+        if (newPosts[commentIndex]) {
+          newPosts[commentIndex] = {
+            ...newPosts[commentIndex],
+            commentsCount: newPosts[commentIndex].commentsCount + 1,
+          };
+        }
+        return newPosts;
+      });
+    }
+  };
   return (
     <Box
       sx={{
@@ -66,19 +117,18 @@ const PostComment = ({ setCommentState, postId }) => {
             borderRadius: "20px",
           }}
         >
-          {comments.map((comment) => (
-            <Comment
-              key={comment._id}
-              content={comment.content}
-              user={comment.user}
-              createdAt={comment.createdAt}
-            />
-          ))}
-          {/* <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment /> */}
+          {/* {comments ? <Typography>Be the first to post here</Typography> :} */}
+          {comments.length > 0
+            ? comments.map((comment) => (
+                <Comment
+                  key={comment._id}
+                  content={comment.content}
+                  user={comment.user}
+                  createdAt={comment.createdAt}
+                />
+              ))
+            : loading && <RotateLoader />}
+          {empty && <Typography>Be the first to comment.</Typography>}
         </List>
       </Box>
       <Box
@@ -97,10 +147,16 @@ const PostComment = ({ setCommentState, postId }) => {
             fullWidth
             color="secondary"
             placeholder="Write new post here"
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
           />
         </Box>
         <Box>
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handlePostComment}
+          >
             Post <ArrowForward sx={{ paddingLeft: "7px" }} />
           </Button>
         </Box>

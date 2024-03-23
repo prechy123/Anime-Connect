@@ -10,7 +10,11 @@ const SearchProfile = ({ setSearchState, searchContent, setSearchContent }) => {
   const [loadingState, setLoadingstate] = useState(true);
   const [profiles, setProfiles] = useState([]);
   useEffect(() => {
-    if (String(searchContent).length > 0) {
+    if (String(searchContent).length === 0) {
+      setLoadingstate(true);
+      return;
+    }
+    const timeout = setTimeout(() => {
       fetch(`${BASE_URL}/profile/getProfiles?username=${searchContent}`)
         .then((res) => res.json())
         .then((data) => {
@@ -21,9 +25,10 @@ const SearchProfile = ({ setSearchState, searchContent, setSearchContent }) => {
             setLoadingstate(true);
           }
         });
-    } else {
-      setLoadingstate(true);
-    }
+    }, 1500);
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [searchContent]);
   return (
     <Box
