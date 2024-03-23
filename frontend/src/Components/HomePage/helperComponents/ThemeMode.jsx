@@ -52,6 +52,7 @@ const ThemeMode = () => {
   const { theme } = useSelector((state) => state.theme);
   const setMode = (theme) => {
     dispatch(setTheme(theme));
+    localStorage.setItem("weeebstheme", theme);
   };
   return (
     <>
@@ -64,6 +65,7 @@ const ThemeMode = () => {
       <FormControlLabel
         control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
         onChange={() => setMode(theme === "light" ? "dark" : "light")}
+        checked={theme === "light" ? false : true}
         sx={{ display: { xs: "flex", md: "none" } }}
       />
     </>

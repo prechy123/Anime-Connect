@@ -50,18 +50,20 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 const ThemeModeSigninSignUp = () => {
-    const themeSet = useTheme()
+  const themeSet = useTheme();
   const dispatch = useDispatch();
   const { theme } = useSelector((state) => state.theme);
   const setMode = (theme) => {
     dispatch(setTheme(theme));
+    localStorage.setItem("weeebstheme", theme);
   };
   return (
     <>
       <FormControlLabel
-        sx={{color: themeSet.palette.primary.text}}
+        sx={{ color: themeSet.palette.primary.text }}
         control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
         onChange={() => setMode(theme === "light" ? "dark" : "light")}
+        checked={theme === "light" ? false : true}
         label="Switch Theme"
       />
     </>
