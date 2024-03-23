@@ -1,12 +1,24 @@
 import { useTheme } from "@emotion/react";
 import { ArrowForward, Close } from "@mui/icons-material";
 import { Box, Button, List, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import BASE_URL from "../../../utils";
 import Comment from "./Comments";
 
-const PostComment = ({ setCommentState }) => {
+const PostComment = ({ setCommentState, postId }) => {
   const Theme = useTheme();
-
+  const [comments, setComments] = useState([]);
+  useEffect(() => {
+    if (postId !== "") {
+      fetch(`${BASE_URL}/post/getComments?postId=${postId}`)
+        .then((res) => res.json())
+        .then((doc) => {
+          if (doc.message === "success") {
+            setComments(doc.comments);
+          }
+        });
+    }
+  }, [postId]);
   return (
     <Box
       sx={{
@@ -54,11 +66,19 @@ const PostComment = ({ setCommentState }) => {
             borderRadius: "20px",
           }}
         >
+          {comments.map((comment) => (
+            <Comment
+              key={comment._id}
+              content={comment.content}
+              user={comment.user}
+              createdAt={comment.createdAt}
+            />
+          ))}
+          {/* <Comment />
           <Comment />
           <Comment />
           <Comment />
-          <Comment />
-          <Comment />
+          <Comment /> */}
         </List>
       </Box>
       <Box
@@ -67,7 +87,7 @@ const PostComment = ({ setCommentState }) => {
           gridTemplateColumns: "5fr 1fr",
           alignItems: "center",
           gap: "40px",
-          marginTop: "20px"
+          marginTop: "20px",
         }}
       >
         <Box>

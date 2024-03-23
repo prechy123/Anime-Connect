@@ -24,6 +24,7 @@ const Feed = () => {
   const [searchState, setSearchState] = useState(false);
   const [searchContent, setSearchContent] = useState("");
   const [commentState, setCommentState] = useState(false);
+  const [postId, setPostId] = useState("")
 
   useEffect(() => {
     fetch(BASE_URL + "/post/getposts")
@@ -120,6 +121,7 @@ const Feed = () => {
               index={posts.length - 1 - index}
               setLoadingstate={setLoadingstate}
               setCommentState={setCommentState}
+              setPostId={setPostId}
               key={post._id}
               postId={post._id}
               username={post.userId.username}
@@ -173,7 +175,7 @@ const Feed = () => {
           />
         )}
         {commentState && (
-          <PostComment setCommentState={setCommentState} />
+          <PostComment setCommentState={setCommentState} postId={postId} />
         )}
       </Box>
       <Box

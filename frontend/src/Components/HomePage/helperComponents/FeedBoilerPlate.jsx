@@ -30,6 +30,7 @@ const FeedBoilerPlate = ({
   index,
   setLoadingstate,
   setCommentState,
+  setPostId,
   postId,
   username,
   fullname,
@@ -145,7 +146,10 @@ const FeedBoilerPlate = ({
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconButton
               aria-label="comment on Post"
-              onClick={() => setCommentState(true)}
+              onClick={() => {
+                setCommentState(true)
+                setPostId(postId)
+              }}
             >
               <Comment />
             </IconButton>

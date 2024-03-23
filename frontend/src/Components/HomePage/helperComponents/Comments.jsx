@@ -1,29 +1,31 @@
+/* eslint-disable react/prop-types */
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
+import { formatDistanceToNow } from "date-fns";
 
-const Comment = () => {
+const Comment = ({ postId, content, user, createdAt }) => {
   return (
     <>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          <Avatar alt={user.username} src={user.profilepictureurl} />
         </ListItemAvatar>
         <ListItemText
-          primary="Brunch this weekend?"
+          primary={user.username}
           secondary={
             <>
-              {"I'll be in your neighborhood doing errands this…  — "}
+              {`${content}  — `}
               <Typography
                 sx={{ display: "inline" }}
                 component="span"
                 variant="body2"
                 color="text.primary"
               >
-                Ali Connors
+                {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
               </Typography>
             </>
           }

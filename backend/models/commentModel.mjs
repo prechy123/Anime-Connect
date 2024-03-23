@@ -18,7 +18,7 @@ const commentSchema = Schema(
     },
   },
   {
-    timeStamps: true,
+    timestamps: true,
   }
 );
 

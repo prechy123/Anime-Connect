@@ -78,7 +78,13 @@ export const getComments = async (req, res) => {
   const { postId } = req.query;
 
   try {
-    const post = await Post.findById(postId).populate("comments");
+    const post = await Post.findById(postId).populate({
+      path: "comments",
+      populate: {
+        path: "user",
+        select: "username profilepictureurl",
+      },
+    });
     if (!post) {
       return res.status(400).json({ message: "Post not found" });
     }
