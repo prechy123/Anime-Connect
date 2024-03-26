@@ -77,7 +77,7 @@ export const signin = async (req, res) => {
     });
     if (!existingUser) {
       existingUser = await User.findOne({
-        username: { $regex: new RegExp(username, "i") },
+        username: { $regex: new RegExp(email, "i") },
       });
     }
 
