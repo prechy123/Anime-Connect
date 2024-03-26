@@ -29,7 +29,17 @@ export const createUser = async (req, res) => {
     email,
     password: hashedPassword,
     profilepictureurl: defaultPicture,
-    animeInterest: ["One Piece", "Dragon Ball", "Naruto", "Demon Slayer", "Attack on Titans", "Solo Leveling", "Akame ga Kill", "Death Note", "Jujustu Kaisen"], // default anime interests
+    animeInterest: [
+      "One Piece",
+      "Dragon Ball",
+      "Naruto",
+      "Demon Slayer",
+      "Attack on Titans",
+      "Solo Leveling",
+      "Akame ga Kill",
+      "Death Note",
+      "Jujustu Kaisen",
+    ], // default anime interests
   });
 
   try {
@@ -47,7 +57,10 @@ export const signin = async (req, res) => {
   await saveLogInfo(req, "User is attempting to sign in", "Sign in");
   try {
     const { email, password } = req.body;
-    const existingUser = await User.findOne({ email: email });
+    const existingUser = await User.findOne({
+      email: { $regex: new RegExp(email, "i") },
+    });
+
     if (!existingUser) {
       await saveLogInfo(req, "Email address does not exit", "Sign in");
       return res.status(400).json({ message: "Invalid Username or Password" });
@@ -98,7 +111,7 @@ export const signin = async (req, res) => {
         location: existingUser.location,
         bio: existingUser.bio,
         animeInterest: existingUser.animeInterest,
-        verified: existingUser.verified
+        verified: existingUser.verified,
       },
     });
   } catch (err) {
