@@ -51,8 +51,9 @@ Replace `your_mongodb_connection_string` with your MongoDB connection string, an
 ## 4. Setting up the Frontend
 
 1. Navigate to the `frontend` directory: `cd frontend`.
-2. Install dependencies: Run `npm install`.
-3. Start the React frontend: Run `npm run dev`.
+2. Open util.js in src, set BASE_URL to "http://localhost:4000"
+3. Install dependencies: Run `npm install`.
+4. Start the React frontend: Run `npm run dev`.
 
 ## 5. Running the Application
 - Access the website at `http://localhost:5173/`.
