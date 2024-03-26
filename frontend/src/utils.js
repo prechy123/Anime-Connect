@@ -3,4 +3,3 @@
 const BASE_URL = "https://weeebs.onrender.com"
 
 export default BASE_URL;
-

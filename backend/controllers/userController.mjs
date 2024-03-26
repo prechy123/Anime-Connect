@@ -10,7 +10,7 @@ import Log from "../models/logModel.mjs";
 export const checkUserName = async (req, res) => {
   const { username } = req.query;
   const usernameExist = await User.findOne({
-    username: { $regex: new RegExp(username, "i") },
+    username: { $regex: new RegExp("^" + username + "$", "i") },
   });
   if (usernameExist) {
     res.status(200).json({ message: "exist" });
@@ -23,11 +23,11 @@ export const createUser = async (req, res) => {
   const { username, fullname, email, password } = req.body;
   let existingUser;
     existingUser = await User.findOne({
-      email: { $regex: new RegExp(email, "i") },
+      email: { $regex: new RegExp("^" + email + "$", "i") },
     });
     if (!existingUser) {
       existingUser = await User.findOne({
-        username: { $regex: new RegExp(username, "i") },
+        username: { $regex: new RegExp("^" + username + "$", "i") },
       });
     }
     if (existingUser) {
@@ -73,11 +73,11 @@ export const signin = async (req, res) => {
     const { email, password } = req.body;
     let existingUser;
     existingUser = await User.findOne({
-      email: { $regex: new RegExp(email, "i") },
+      email: { $regex: new RegExp("^" + email + "$", "i") },
     });
     if (!existingUser) {
       existingUser = await User.findOne({
-        username: { $regex: new RegExp(email, "i") },
+        username: { $regex: new RegExp("^" + email + "$", "i") },
       });
     }
 
