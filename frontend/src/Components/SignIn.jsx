@@ -29,7 +29,7 @@ const Signin = () => {
   const [errors, setErrors] = useState();
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const closeAlert = (err) => {
     setErrors(errors.filter((error) => error !== err));
   };
@@ -109,7 +109,7 @@ const Signin = () => {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email or username"
                   name="email"
                   autoComplete="email"
                   color="secondary"

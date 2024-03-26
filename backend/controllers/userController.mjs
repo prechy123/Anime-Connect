@@ -9,7 +9,9 @@ import Log from "../models/logModel.mjs";
 
 export const checkUserName = async (req, res) => {
   const { username } = req.query;
-  const usernameExist = await User.findOne({ username: username });
+  const usernameExist = await User.findOne({
+    username: { $regex: new RegExp(username, "i") },
+  });
   if (usernameExist) {
     res.status(200).json({ message: "exist" });
   } else {
@@ -19,6 +21,18 @@ export const checkUserName = async (req, res) => {
 
 export const createUser = async (req, res) => {
   const { username, fullname, email, password } = req.body;
+  let existingUser;
+    existingUser = await User.findOne({
+      email: { $regex: new RegExp(email, "i") },
+    });
+    if (!existingUser) {
+      existingUser = await User.findOne({
+        username: { $regex: new RegExp(username, "i") },
+      });
+    }
+    if (existingUser) {
+      res.status(200).json({message: "Username or email address already exist"})
+    }
   const hashedPassword = await bcrypt.hash(password, 10);
   const defaultPicture =
     "https://raw.githubusercontent.com/nz-m/public-files/main/dp.jpg";
@@ -57,9 +71,15 @@ export const signin = async (req, res) => {
   await saveLogInfo(req, "User is attempting to sign in", "Sign in");
   try {
     const { email, password } = req.body;
-    const existingUser = await User.findOne({
+    let existingUser;
+    existingUser = await User.findOne({
       email: { $regex: new RegExp(email, "i") },
     });
+    if (!existingUser) {
+      existingUser = await User.findOne({
+        username: { $regex: new RegExp(username, "i") },
+      });
+    }
 
     if (!existingUser) {
       await saveLogInfo(req, "Email address does not exit", "Sign in");
