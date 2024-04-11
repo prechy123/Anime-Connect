@@ -13,6 +13,7 @@ import BASE_URL from "../../utils";
 import { RotateLoader } from "react-spinners";
 import SearchProfile from "./helperComponents/SearchProfile";
 import PostComment from "./helperComponents/PostComment";
+import { UserDetails } from "./helperComponents/UserDetails";
 
 const Feed = () => {
   const theme = useTheme();
@@ -22,6 +23,7 @@ const Feed = () => {
   const [createPost, setCreatePost] = useState(false);
   const [loadingState, setLoadingstate] = useState(true);
   const [searchState, setSearchState] = useState(false);
+  const [searchedProfileId, setSearchedProfileId] = useState("");
   const [searchContent, setSearchContent] = useState("");
   const [commentState, setCommentState] = useState(false);
   const [commentIndex, setCommentIndex] = useState();
@@ -135,6 +137,8 @@ const Feed = () => {
               shareCount={post.shareCount}
               profilepictureurl={post.userId.profilepictureurl}
               createdAt={post.createdAt}
+              setSearchedProfileId={setSearchedProfileId}
+              userPageId={post.userId._id}
             />
           ))}
         <Box
@@ -173,7 +177,11 @@ const Feed = () => {
             setSearchState={setSearchState}
             searchContent={searchContent}
             setSearchContent={setSearchContent}
+            setSearchedProfileId={setSearchedProfileId}
           />
+        )}
+        {searchedProfileId && (
+          <UserDetails searchedProfileId={searchedProfileId} setSearchedProfileId={setSearchedProfileId} />
         )}
         {commentState && (
           <PostComment

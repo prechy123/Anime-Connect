@@ -17,6 +17,7 @@ import {
 import {
   checkUserName,
   createUser,
+  getAUserDetails,
   getUserLogs,
   logout,
   signin,
@@ -71,6 +72,7 @@ router.patch("/changeprofilepicture", changeProfilePicture);
 router.patch("/updateprofile", updateProfile);
 
 //get routes
+router.get("/user", getAUserDetails)
 router.get("/getlogs", getUserLogs);
 
 

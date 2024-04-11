@@ -5,7 +5,12 @@ import { useEffect, useState } from "react";
 import { RotateLoader } from "react-spinners";
 import BASE_URL from "../../../utils";
 
-const SearchProfile = ({ setSearchState, searchContent, setSearchContent }) => {
+const SearchProfile = ({
+  setSearchState,
+  searchContent,
+  setSearchContent,
+  setSearchedProfileId,
+}) => {
   const Theme = useTheme();
   const [loadingState, setLoadingstate] = useState(true);
   const [profiles, setProfiles] = useState([]);
@@ -99,7 +104,12 @@ const SearchProfile = ({ setSearchState, searchContent, setSearchContent }) => {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    cursor: "pointer"
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    setSearchedProfileId(profile._id);
+                    setSearchContent("");
+                    setSearchState(false);
                   }}
                 >
                   <Avatar

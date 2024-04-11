@@ -16,16 +16,15 @@ import {
   Comment,
   Favorite,
   FavoriteBorder,
-  MoreVert,
   Share,
 } from "@mui/icons-material";
 
 import { formatDistanceToNow } from "date-fns";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import BASE_URL from "../../../utils";
 import Cookies from "js-cookie";
 
-const FeedBoilerPlate = ({
+export default memo(function FeedBoilerPlate({
   setPosts,
   index,
   setLoadingstate,
@@ -43,7 +42,9 @@ const FeedBoilerPlate = ({
   shareCount,
   profilepictureurl,
   createdAt,
-}) => {
+  setSearchedProfileId,
+  userPageId,
+}) {
   const theme = useTheme();
   const [checked, setChecked] = useState(false);
   if (index === 0) {
@@ -57,7 +58,7 @@ const FeedBoilerPlate = ({
     if (likes.includes(userId)) {
       setChecked(true);
     }
-  }, []);
+  }, [likes, userId]);
   const handleLikeSystem = async () => {
     if (checked === false) {
       setChecked(true);
@@ -113,6 +114,12 @@ const FeedBoilerPlate = ({
         avatar={<Avatar alt={username} src={profilepictureurl} />}
         title={fullname}
         subheader={"@" + username}
+        onClick={() => setSearchedProfileId(userPageId)}
+        sx={{
+          ":hover": {
+            cursor: "pointer",
+          },
+        }}
       />
 
       <CardContent>
@@ -170,6 +177,4 @@ const FeedBoilerPlate = ({
       </CardActions>
     </Card>
   );
-};
-
-export default FeedBoilerPlate;
+});
