@@ -88,7 +88,6 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
       sx={{
         width: "100%",
         height: "70vh",
-        overflowY: "scroll",
         position: "absolute",
         top: "5%",
         zIndex: "2",
@@ -108,7 +107,10 @@ const EditProfile = ({ setEditPage, setChangePP }) => {
         <Typography>Edit Profile</Typography>
         <Close sx={{ cursor: "pointer" }} onClick={() => setEditPage(false)} />
       </Box>
-      <Box>
+      <Box sx={{
+        height: "60vh",
+        overflowY: "scroll"
+      }}>
         <Button
           variant="contained"
           color="secondary"

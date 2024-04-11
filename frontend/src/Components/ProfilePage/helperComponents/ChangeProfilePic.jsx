@@ -7,9 +7,7 @@ import { isAuth } from "../../../redux/reducers/auth/authSlice";
 import expirationTime from "../../../../calculate/expirationTime";
 import pictures from "../utils/profilePictures";
 
-// const BASE_URL = "http://localhost:4000";
 import BASE_URL from "../../../utils";
-// const BASE_URL = "https://weeebs.onrender.com";
 
 const ChangeProfilePic = ({ setChangePP }) => {
   const theme = useTheme();
@@ -58,7 +56,7 @@ const ChangeProfilePic = ({ setChangePP }) => {
       sx={{
         width: "100%",
         height: "50vh",
-        overflowY: "scroll",
+        
         position: "absolute",
         top: "20%",
         zIndex: "3",
@@ -78,7 +76,7 @@ const ChangeProfilePic = ({ setChangePP }) => {
         <Typography>Select New Profile Picture</Typography>
         <Close sx={{ cursor: "pointer" }} onClick={() => setChangePP(false)} />
       </Box>
-      <Box sx={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", gap: "20px", flexWrap: "wrap", overflowY: "scroll", height: "40vh", }}>
         {pictures.map((picture, index) => (
           <Box
             sx={{ cursor: "pointer" }}

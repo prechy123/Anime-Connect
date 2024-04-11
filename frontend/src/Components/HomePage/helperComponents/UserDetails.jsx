@@ -7,7 +7,7 @@ import {
   Typography,
   styled,
   useTheme,
-  Button
+  Button,
 } from "@mui/material";
 import FeedBoilerPlate from "./FeedBoilerPlate";
 import { useEffect, useState } from "react";
@@ -43,7 +43,7 @@ export const UserDetails = ({ searchedProfileId, setSearchedProfileId }) => {
   const handleFollowUser = () => {
     // const userId = JSON.parse(Cookies.get("weeebsuser"))._id;
     // fetch(`${BASE_URL}/users/user?userId=${searchedProfileId}`)
-  }
+  };
 
   const {
     username,
@@ -59,162 +59,216 @@ export const UserDetails = ({ searchedProfileId, setSearchedProfileId }) => {
     verified,
   } = userDetail;
   return (
-    <Box
-      sx={{
-        width: {
-          xs: "95%",
-          sm: "65%",
-          md: "50%",
-        },
-        maxHeight: "70vh",
-        position: "fixed",
-        top: { xs: "10%", sm: "20%" },
-        zIndex: "2",
-        backgroundColor: Theme.palette.primary.main,
-        borderRadius: "20px",
-        padding: "20px",
-        boxShadow: "10px 10px 10px " + Theme.palette.primary.other,
-        overflowY: "scroll"
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          paddingBottom: "20px",
-        }}
-      >
-        <Typography>Searched Profile</Typography>
-        <Close
-          sx={{ cursor: "pointer" }}
-          onClick={() => {
-            setSearchedProfileId("");
-          }}
-        />
-      </Box>
+    <>
       {userDetailReady ? (
-        <>
+        <Box
+          sx={{
+            width: {
+              xs: "95%",
+              sm: "65%",
+              md: "50%",
+            },
+            height: "70vh",
+            position: "fixed",
+            top: { xs: "10%", sm: "20%" },
+            zIndex: "2",
+            backgroundColor: Theme.palette.primary.other,
+            borderRadius: "20px",
+            padding: "20px",
+            boxShadow: "10px 10px 10px " + Theme.palette.primary.other,
+          }}
+        >
           <Box
             sx={{
-              backgroundColor: Theme.palette.primary.other,
-              padding: "20px",
-              borderRadius: Theme.shape.borderRadius,
+              display: "flex",
+              justifyContent: "space-between",
+              paddingBottom: "20px",
             }}
-            position="relative"
+          >
+            <Typography>Searched Profile</Typography>
+            <Close
+              sx={{ cursor: "pointer" }}
+              onClick={() => {
+                setSearchedProfileId("");
+              }}
+            />
+          </Box>
+          <Box
+            sx={{
+              maxHeight: "60vh",
+              overflowY: "scroll",
+            }}
           >
             <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              gap={1}
+              sx={{
+                backgroundColor: Theme.palette.primary.other,
+                padding: "20px",
+                borderRadius: Theme.shape.borderRadius,
+              }}
+              position="relative"
             >
-              <Badge sx={{ cursor: "pointer" }}>
-                <Avatar alt="Profile Picture" src={profilePictureUrl} />
-              </Badge>
-              <Typography
-                variant="p"
-                fontWeight={100}
+              <Box
                 display="flex"
-                gap={0.5}
+                flexDirection="column"
                 alignItems="center"
+                gap={1}
               >
-                {username} {verified && <Verified />}
+                <Badge sx={{ cursor: "pointer" }}>
+                  <Avatar alt="Profile Picture" src={profilePictureUrl} />
+                </Badge>
+                <Typography
+                  variant="p"
+                  fontWeight={100}
+                  display="flex"
+                  gap={0.5}
+                  alignItems="center"
+                >
+                  {username} {verified && <Verified />}
+                </Typography>
+                <Typography variant="h5" fontWeight={500}>
+                  {fullname}
+                </Typography>
+                <Stack
+                  direction="row"
+                  gap={3}
+                  sx={{ display: { sm: "none", md: "flex" } }}
+                >
+                  <StyledBox>
+                    <Typography>{followers.length}</Typography>
+                    <Typography>Followers</Typography>
+                  </StyledBox>
+                  <StyledBox>
+                    <Typography>{following.length}</Typography>
+                    <Typography>Following</Typography>
+                  </StyledBox>
+                </Stack>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleFollowUser}
+                >
+                  Follow
+                </Button>
+                <Typography display="flex" gap={1} alignItems="center">
+                  <Feed /> {bio}
+                </Typography>
+              </Box>
+              <Typography fontWeight={700} variant="h5" paddingTop={2}>
+                Location:
               </Typography>
-              <Typography variant="h5" fontWeight={500}>
-                {fullname}
-              </Typography>
-              <Stack
-                direction="row"
-                gap={3}
-                sx={{ display: { sm: "none", md: "flex" } }}
+              <Typography
+                display="flex"
+                alignItems="center"
+                gap={1}
+                paddingTop={1}
               >
-                <StyledBox>
-                  <Typography>{followers.length}</Typography>
-                  <Typography>Followers</Typography>
-                </StyledBox>
-                <StyledBox>
-                  <Typography>{following.length}</Typography>
-                  <Typography>Following</Typography>
-                </StyledBox>
-              </Stack>
-              <Button variant="contained" color="secondary" onClick={handleFollowUser}>Follow</Button>
-              <Typography display="flex" gap={1} alignItems="center">
-                <Feed /> {bio}
+                <FmdGood /> {location}
               </Typography>
+              <Typography fontWeight={700} variant="h5" paddingTop={2}>
+                Anime Interests:
+              </Typography>
+              <Box display="flex" gap={1} flexWrap="wrap" paddingTop={1}>
+                {animeInterest.map((animeItem, index) => (
+                  <Chip
+                    sx={{ backgroundColor: theme }}
+                    key={index}
+                    label={animeItem}
+                  />
+                ))}
+              </Box>
             </Box>
-            <Typography fontWeight={700} variant="h5" paddingTop={2}>
-              Location:
-            </Typography>
-            <Typography
-              display="flex"
-              alignItems="center"
-              gap={1}
-              paddingTop={1}
+            <Box
+              sx={{
+                backgroundColor: Theme.palette.primary.other,
+                padding: "20px",
+                borderRadius: Theme.shape.borderRadius,
+              }}
             >
-              <FmdGood /> {location}
-            </Typography>
-            <Typography fontWeight={700} variant="h5" paddingTop={2}>
-              Anime Interests:
-            </Typography>
-            <Box display="flex" gap={1} flexWrap="wrap" paddingTop={1}>
-              {animeInterest.map((animeItem, index) => (
-                <Chip
-                  sx={{ backgroundColor: theme }}
-                  key={index}
-                  label={animeItem}
+              <Box>
+                <Box display="flex" justifyContent="space-between">
+                  <Typography fontWeight={700}>Profile Summary</Typography>
+                  <Typography>Joined recently.</Typography>
+                </Box>
+                <Box display="flex" justifyContent="space-between">
+                  <Typography>Total Posts</Typography>
+                  <Typography>{post.length}</Typography>
+                </Box>
+                <Box display="flex" justifyContent="space-between">
+                  <Typography>Total Communities</Typography>
+                  <Typography>0</Typography>
+                </Box>
+              </Box>
+            </Box>
+            {loadingState && <RotateLoader />}
+            {posts
+              .slice()
+              .reverse()
+              .map((post, index) => (
+                <FeedBoilerPlate
+                  setPosts={setPosts}
+                  index={posts.length - 1 - index}
+                  setLoadingstate={setLoadingstate}
+                  key={post._id}
+                  postId={post._id}
+                  username={post.userId.username}
+                  fullname={post.userId.fullname}
+                  content={post.content}
+                  likes={post.likes}
+                  likeCount={post.likesCount}
+                  comments={post.comments}
+                  commentsCount={post.commentsCount}
+                  shareCount={post.shareCount}
+                  profilepictureurl={post.userId.profilepictureurl}
+                  createdAt={post.createdAt}
                 />
               ))}
-            </Box>
+          </Box>
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            width: {
+              xs: "95%",
+              sm: "65%",
+              md: "50%",
+            },
+            height: "70vh",
+            position: "fixed",
+            top: { xs: "10%", sm: "20%" },
+            zIndex: "2",
+            backgroundColor: Theme.palette.primary.main,
+            borderRadius: "20px",
+            padding: "20px",
+            boxShadow: "10px 10px 10px " + Theme.palette.primary.other,
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              paddingBottom: "20px",
+            }}
+          >
+            <Typography>Searched Profile</Typography>
+            <Close
+              sx={{ cursor: "pointer" }}
+              onClick={() => {
+                setSearchedProfileId("");
+              }}
+            />
           </Box>
           <Box
             sx={{
-              backgroundColor: Theme.palette.primary.other,
-              padding: "20px",
-              borderRadius: Theme.shape.borderRadius,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
             }}
           >
-            <Box>
-              <Box display="flex" justifyContent="space-between">
-                <Typography fontWeight={700}>Profile Summary</Typography>
-                <Typography>Joined recently.</Typography>
-              </Box>
-              <Box display="flex" justifyContent="space-between">
-                <Typography>Total Posts</Typography>
-                <Typography>{post.length}</Typography>
-              </Box>
-              <Box display="flex" justifyContent="space-between">
-                <Typography>Total Communities</Typography>
-                <Typography>0</Typography>
-              </Box>
-            </Box>
+            <RotateLoader />
           </Box>
-          {loadingState && <RotateLoader />}
-          {posts
-            .slice()
-            .reverse()
-            .map((post, index) => (
-              <FeedBoilerPlate
-                setPosts={setPosts}
-                index={posts.length - 1 - index}
-                setLoadingstate={setLoadingstate}
-                key={post._id}
-                postId={post._id}
-                username={post.userId.username}
-                fullname={post.userId.fullname}
-                content={post.content}
-                likes={post.likes}
-                likeCount={post.likesCount}
-                comments={post.comments}
-                commentsCount={post.commentsCount}
-                shareCount={post.shareCount}
-                profilepictureurl={post.userId.profilepictureurl}
-                createdAt={post.createdAt}
-              />
-            ))}
-        </>
-      ) : (
-        <h1>Loading...</h1>
+        </Box>
       )}
-    </Box>
+    </>
   );
 };
