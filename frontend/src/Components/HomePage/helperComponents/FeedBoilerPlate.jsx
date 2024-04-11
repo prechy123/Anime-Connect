@@ -20,7 +20,7 @@ import {
 } from "@mui/icons-material";
 
 import { formatDistanceToNow } from "date-fns";
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import BASE_URL from "../../../utils";
 import Cookies from "js-cookie";
 
@@ -107,7 +107,7 @@ export default memo(function FeedBoilerPlate({
         }),
       });
     }
-  };
+  }
   return (
     <Card sx={{ margin: 2, backgroundColor: theme.palette.primary.other }}>
       <CardHeader
