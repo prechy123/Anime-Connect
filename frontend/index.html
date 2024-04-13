@@ -16,8 +16,29 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        padding:0;
+        
       }
+      /* Dark mode scrollbar styles */
+::-webkit-scrollbar {
+    width: 6px !important;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #dcd7d782 !important;
+    border-radius: 40px !important;
+}
+::-webkit-scrollbar-track {
+    background-color: #090909 !important;
+}
+
+/* Light mode scrollbar styles */
+@media (prefers-color-scheme: light) {
+    ::-webkit-scrollbar-thumb {
+        background-color: #a0a0a0 !important;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: #dcd7d782 !important;
+    }
+}
     </style>
     <title>Anime-Connect</title>
   </head>
