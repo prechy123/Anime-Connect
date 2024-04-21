@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Alert, Box, Stack, Typography } from "@mui/material";
 import SearchBar from "./helperComponents/SearchBar";
 import FeedBoilerPlate from "./helperComponents/FeedBoilerPlate";
 import ThemeMode from "./helperComponents/ThemeMode";
@@ -181,7 +181,10 @@ const Feed = () => {
           />
         )}
         {searchedProfileId && (
-          <UserDetails searchedProfileId={searchedProfileId} setSearchedProfileId={setSearchedProfileId} />
+          <UserDetails
+            searchedProfileId={searchedProfileId}
+            setSearchedProfileId={setSearchedProfileId}
+          />
         )}
         {commentState && (
           <PostComment

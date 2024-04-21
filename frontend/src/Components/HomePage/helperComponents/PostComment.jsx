@@ -6,13 +6,16 @@ import BASE_URL from "../../../utils";
 import Comment from "./Comments";
 import { RotateLoader } from "react-spinners";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const PostComment = ({ setCommentState, postId, commentIndex, setPosts }) => {
+  const Navigate = useNavigate();
   const Theme = useTheme();
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [empty, setEmpty] = useState(false);
   const [comment, setComment] = useState("");
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (postId !== "") {
@@ -32,42 +35,54 @@ const PostComment = ({ setCommentState, postId, commentIndex, setPosts }) => {
   }, [postId]);
 
   const handlePostComment = async () => {
-    const userDet = JSON.parse(Cookies.get("weeebsuser"));
-    const api = await fetch(`${BASE_URL}/post/postcomment`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        postId,
-        userId: userDet._id,
-        content: comment,
-      }),
-    });
-    const response = await api.json();
-    if (response.message === "Comment successfully created") {
-      setComment("");
-      setEmpty(false);
-      comments.push({
-        _id: userDet._id,
-        content: comment,
-        user: {
-          username: userDet.username,
-          profilepictureurl: userDet.profilepictureurl,
+    try {
+      const userDet = JSON.parse(Cookies.get("weeebsuser"));
+      const api = await fetch(`${BASE_URL}/post/postcomment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        createdAt: new Date(),
+        body: JSON.stringify({
+          postId,
+          userId: userDet._id,
+          content: comment,
+        }),
       });
-      setPosts((prevVal) => {
-        const newPosts = [...prevVal];
+      const response = await api.json();
+      if (response.message === "Comment successfully created") {
+        setComment("");
+        setEmpty(false);
+        comments.push({
+          _id: userDet._id,
+          content: comment,
+          user: {
+            username: userDet.username,
+            profilepictureurl: userDet.profilepictureurl,
+          },
+          createdAt: new Date(),
+        });
+        setPosts((prevVal) => {
+          const newPosts = [...prevVal];
 
-        if (newPosts[commentIndex]) {
-          newPosts[commentIndex] = {
-            ...newPosts[commentIndex],
-            commentsCount: newPosts[commentIndex].commentsCount + 1,
-          };
-        }
-        return newPosts;
-      });
+          if (newPosts[commentIndex]) {
+            newPosts[commentIndex] = {
+              ...newPosts[commentIndex],
+              commentsCount: newPosts[commentIndex].commentsCount + 1,
+            };
+          }
+          return newPosts;
+        });
+      } else {
+        setError(true);
+        setTimeout(() => {
+          Navigate("/signup");
+        }, 1500);
+      }
+    } catch (err) {
+      setError(true);
+      setTimeout(() => {
+        Navigate("/signup");
+      }, 1500);
     }
   };
   return (
@@ -131,6 +146,11 @@ const PostComment = ({ setCommentState, postId, commentIndex, setPosts }) => {
           {empty && <Typography>Be the first to comment.</Typography>}
         </List>
       </Box>
+      {error && (
+        <Typography color="error">
+          Signup or Signin, then try again
+        </Typography>
+      )}
       <Box
         sx={{
           display: "grid",
