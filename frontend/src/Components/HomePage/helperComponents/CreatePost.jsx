@@ -5,9 +5,11 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import BASE_URL from "../../../utils";
 import expirationTime from "../../../../calculate/expirationTime";
+// import { useNavigate } from "react-router-dom";
 
 const CreatePost = ({ setPosts, setCreatePost }) => {
   const Theme = useTheme();
+  // const Navigate = useNavigate();
   const [content, setContent] = useState("");
   const [error, setError] = useState(false);
   const handlePostMessage = async () => {
@@ -56,7 +58,7 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
             setError(true);
           }
         })
-        .catch((err) => setError(true));
+        .catch(() => setError(true));
     } else {
       setError(true);
     }
