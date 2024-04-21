@@ -23,13 +23,13 @@ import BASE_URL from "../utils";
 import expirationTime from "../../calculate/expirationTime";
 // signup
 const SignUp = () => {
-  const theme = useTheme()
+  const theme = useTheme();
   const Navigate = useNavigate();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [userNameStatus, setUserNameStatus] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState();
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
 
   const closeAlert = (err) => {
     setErrors(errors.filter((error) => error !== err));
@@ -54,62 +54,64 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true)
+    setLoading(true);
     const data = new FormData(event.currentTarget);
-    if (!userNameStatus) {
-      const formData = {
-        username: data.get("userName"),
-        fullname: data.get("firstName") + " " + data.get("lastName"),
-        email: data.get("email"),
-        password: data.get("password"),
-      };
-      const api = await fetch(`${BASE_URL}/users/signup`, {
+    if (userNameStatus) {
+      setErrors(["Username already exist, try another"]);
+      setLoading(false)
+    }
+    const formData = {
+      username: data.get("userName"),
+      fullname: data.get("firstName") + " " + data.get("lastName"),
+      email: data.get("email"),
+      password: data.get("password"),
+    };
+    const api = await fetch(`${BASE_URL}/users/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const response = await api.json();
+    if (response.message === "Account created successfully") {
+      const loginApi = await fetch(`${BASE_URL}/users/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
       });
-      const response = await api.json();
-      if (response.message === "Account created successfully") {
-        const loginApi = await fetch(`${BASE_URL}/users/signin`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: formData.email,
-            password: formData.password
-          }),
+      const loginResponse = await loginApi.json();
+      setLoading(false);
+      if (loginResponse.message === "logged in successfully") {
+        setSuccess(true);
+        setTimeout(() => {
+          Navigate("/");
+        }, 2000);
+        const userDetails = JSON.stringify(loginResponse.user);
+        Cookies.set("weeebsuser", userDetails, {
+          expires: expirationTime(),
+          sameSite: "None",
+          secure: true,
         });
-        const loginResponse = await loginApi.json();
-        setLoading(false);
-        if (loginResponse.message === "logged in successfully") {
-          setSuccess(true);
-          setTimeout(() => {
-            Navigate("/");
-          }, 2000);
-          const userDetails = JSON.stringify(loginResponse.user);
-          Cookies.set("weeebsuser", userDetails, {
-            expires: expirationTime(),
-            sameSite: "None",
-            secure: true,
-          });
-        } else {
-          setLoading(false);
-          if (loginResponse.message) {
-            setErrors([loginResponse.message]);
-          } else {
-            setErrors(loginResponse.error);
-          }
-        }
       } else {
         setLoading(false);
-        if (response.message) {
-          setErrors([response.message]);
+        if (loginResponse.message) {
+          setErrors([loginResponse.message]);
         } else {
-          setErrors(response.error);
+          setErrors(loginResponse.error);
         }
+      }
+    } else {
+      setLoading(false);
+      if (response.message) {
+        setErrors([response.message]);
+      } else {
+        setErrors(response.error);
       }
     }
   };
@@ -122,12 +124,15 @@ const SignUp = () => {
         color={"primary.text"}
         height="100vh"
       >
-        <Stack margin="0 auto" sx={{
-          width: {
-            xs: '80%',
-            md: '50%'
-          }
-        }}>
+        <Stack
+          margin="0 auto"
+          sx={{
+            width: {
+              xs: "80%",
+              md: "50%",
+            },
+          }}
+        >
           <Typography
             variant="h6"
             fontWeight={600}
@@ -234,11 +239,22 @@ const SignUp = () => {
               color="secondary"
               sx={{ mt: 3, mb: 2, cursor: loading && "wait" }}
             >
-              {loading ? <PulseLoader color={theme.palette.primary.text} /> : "Sign Up"}
+              {loading ? (
+                <PulseLoader color={theme.palette.primary.text} />
+              ) : (
+                "Sign Up"
+              )}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to="/signin" variant="body2" style={{color: theme.palette.primary.text, textDecoration: "none"}}>
+                <Link
+                  to="/signin"
+                  variant="body2"
+                  style={{
+                    color: theme.palette.primary.text,
+                    textDecoration: "none",
+                  }}
+                >
                   Already have an account? Sign in
                 </Link>
               </Grid>

@@ -31,7 +31,7 @@ export const createUser = async (req, res) => {
       });
     }
     if (existingUser) {
-      res.status(200).json({message: "Username or email address already exist"})
+      return res.status(200).json({message: "Username or email address already exist"})
     }
   const hashedPassword = await bcrypt.hash(password, 10);
   const defaultPicture =
