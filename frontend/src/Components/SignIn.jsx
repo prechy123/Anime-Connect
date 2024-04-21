@@ -1,4 +1,4 @@
-import { LockOutlined, Visibility } from "@mui/icons-material";
+import { LockOutlined } from "@mui/icons-material";
 import {
   Alert,
   AlertTitle,
@@ -79,7 +79,12 @@ const Signin = () => {
         color={"primary.text"}
         height="100vh"
       >
-        <Stack width="40%" margin="0 auto">
+        <Stack margin="0 auto" sx={{
+          width: {
+            xs: '80%',
+            md: '50%'
+          }
+        }}>
           <Typography
             variant="h6"
             fontWeight={600}
@@ -109,10 +114,11 @@ const Signin = () => {
                   required
                   fullWidth
                   id="email"
-                  label="Email or username"
+                  label="Email or Username"
                   name="email"
                   autoComplete="email"
                   color="secondary"
+                  autoFocus
                 />
               </Grid>
               <Grid item xs={12}>
@@ -142,6 +148,7 @@ const Signin = () => {
               type="submit"
               fullWidth
               variant="contained"
+              color="secondary"
               sx={{ mt: 3, mb: 2, cursor: loading && "wait" }}
             >
               {loading ? (
@@ -160,7 +167,7 @@ const Signin = () => {
                     textDecoration: "none",
                   }}
                 >
-                  Don't have an account? Sign up
+                  Dont have an account? Sign up
                 </Link>
               </Grid>
             </Grid>
@@ -198,7 +205,7 @@ const Signin = () => {
           </Alert>
         </Stack>
       )}
-      <Box position="absolute" bottom={20} right={20}>
+      <Box position="absolute" bottom={0} right={0}>
         <ThemeModeSigninSignUp />
       </Box>
     </>

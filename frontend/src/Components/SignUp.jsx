@@ -14,19 +14,20 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
-import { PulseLoader } from "react-spinners";
+import { ClipLoader, PulseLoader } from "react-spinners";
 import { useTheme } from "@emotion/react";
 
-// const BASE_URL = "http://localhost:4000"
 import BASE_URL from "../utils";
-// const BASE_URL = "https://weeebs.onrender.com"
+import expirationTime from "../../calculate/expirationTime";
 // signup
 const SignUp = () => {
   const theme = useTheme()
   const Navigate = useNavigate();
   const [loading, setLoading] = useState(false)
   const [userNameStatus, setUserNameStatus] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState();
   const [showPassword, setShowPassword] = useState(false)
 
@@ -55,13 +56,6 @@ const SignUp = () => {
     event.preventDefault();
     setLoading(true)
     const data = new FormData(event.currentTarget);
-    // console.log({
-    //   firstName: data.get("firstName"),
-    //   lastName: data.get("lastName"),
-    //   userName: data.get("userName"),
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
     if (!userNameStatus) {
       const formData = {
         username: data.get("userName"),
@@ -77,10 +71,40 @@ const SignUp = () => {
         body: JSON.stringify(formData),
       });
       const response = await api.json();
-      setLoading(false)
       if (response.message === "Account created successfully") {
-        Navigate("/signin");
+        const loginApi = await fetch(`${BASE_URL}/users/signin`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password
+          }),
+        });
+        const loginResponse = await loginApi.json();
+        setLoading(false);
+        if (loginResponse.message === "logged in successfully") {
+          setSuccess(true);
+          setTimeout(() => {
+            Navigate("/");
+          }, 2000);
+          const userDetails = JSON.stringify(loginResponse.user);
+          Cookies.set("weeebsuser", userDetails, {
+            expires: expirationTime(),
+            sameSite: "None",
+            secure: true,
+          });
+        } else {
+          setLoading(false);
+          if (loginResponse.message) {
+            setErrors([loginResponse.message]);
+          } else {
+            setErrors(loginResponse.error);
+          }
+        }
       } else {
+        setLoading(false);
         if (response.message) {
           setErrors([response.message]);
         } else {
@@ -98,7 +122,12 @@ const SignUp = () => {
         color={"primary.text"}
         height="100vh"
       >
-        <Stack width="40%" margin="0 auto">
+        <Stack margin="0 auto" sx={{
+          width: {
+            xs: '80%',
+            md: '50%'
+          }
+        }}>
           <Typography
             variant="h6"
             fontWeight={600}
@@ -131,8 +160,8 @@ const SignUp = () => {
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  autoFocus
                   color="secondary"
+                  autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -202,6 +231,7 @@ const SignUp = () => {
               type="submit"
               fullWidth
               variant="contained"
+              color="secondary"
               sx={{ mt: 3, mb: 2, cursor: loading && "wait" }}
             >
               {loading ? <PulseLoader color={theme.palette.primary.text} /> : "Sign Up"}
@@ -230,7 +260,24 @@ const SignUp = () => {
           ))}
         </Stack>
       )}
-      <Box position="absolute" bottom={20} right={20}>
+      {success && (
+        <Stack gap={1} position="absolute" top={20} right={20} zIndex={2}>
+          <Alert severity="success">
+            <AlertTitle>Success</AlertTitle>
+            This is an success alert —{" "}
+            <strong>
+              Log in Successfully - redirecting to home page{" "}
+              <ClipLoader
+                color="secondary"
+                size={20}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </strong>
+          </Alert>
+        </Stack>
+      )}
+      <Box position="absolute" bottom={0} right={0}>
         <ThemeModeSigninSignUp />
       </Box>
     </>
