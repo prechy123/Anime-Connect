@@ -47,6 +47,13 @@ export default memo(function FeedBoilerPlate({
 }) {
   const theme = useTheme();
   const [checked, setChecked] = useState(false);
+  const [showFullContent, setShowFullContent] = useState(true);
+  const [contentLength, setContentLength] = useState(120)
+  useEffect(() => {
+    if (content.length > 150) {
+      setShowFullContent(false);
+    }
+  }, []);
   if (index === 0) {
     setLoadingstate(false);
   }
@@ -107,7 +114,7 @@ export default memo(function FeedBoilerPlate({
         }),
       });
     }
-  }
+  };
   return (
     <Card sx={{ margin: 2, backgroundColor: theme.palette.primary.other }}>
       <CardHeader
@@ -124,7 +131,27 @@ export default memo(function FeedBoilerPlate({
 
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {content}
+          {showFullContent ? (
+            content
+          ) : (
+            <>
+              {content.substring(0, contentLength)}{" "}
+              <Typography
+                variant="p"
+                sx={{ cursor: "pointer", display: "inline-block" }}
+                color="secondary"
+                onClick={() => {
+                  if (contentLength === 120) {
+                    setContentLength(content.length)
+                  } else {
+                    setContentLength(120)
+                  }
+                }}
+              >
+                ...Show {contentLength === 120 ? 'More...' : 'Less...'}
+              </Typography>
+            </>
+          )}
         </Typography>
       </CardContent>
       <CardActions
