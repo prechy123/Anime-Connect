@@ -1,3 +1,6 @@
+
+// data();
+
 const itemData = [
   {
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqNoLHz3tQGYL84ybdtb6Zq3JtHTwJhh0quQ&usqp=CAU",

@@ -107,7 +107,7 @@ const Feed = () => {
               gap: "40px",
             }}
           >
-            <RotateLoader />
+            <RotateLoader color={theme.palette.primary.text} />
             <Typography>
               Please be patient while backend gets started. Patience this may
               take a minute

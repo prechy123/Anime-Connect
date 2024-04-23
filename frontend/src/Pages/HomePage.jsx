@@ -1,11 +1,13 @@
 import { Box, Divider, Stack } from "@mui/material";
 import LeftBar from "../Components/HomePage/LeftBar";
 import Feed from "../Components/HomePage/Feed";
-import SideBar from "../Components/HomePage/SideBar";
+// import SideBar from "../Components/HomePage/SideBar";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
+const SideBar = lazy(() => import("../Components/HomePage/SideBar"));
 import { useDispatch } from "react-redux";
 import { isAuth } from "../redux/reducers/auth/authSlice";
+import Loading from "../Components/Loading";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -43,7 +45,9 @@ const HomePage = () => {
       >
         <LeftBar />
         <Feed />
-        <SideBar />
+        <Suspense fallback={<Loading />}>
+          <SideBar />
+        </Suspense>
       </Stack>
     </Box>
   );
