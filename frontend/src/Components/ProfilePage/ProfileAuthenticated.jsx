@@ -22,9 +22,10 @@ import LeftBarXS from "../HomePage/LeftBarXS";
 import ChangeProfilePic from "./helperComponents/ChangeProfilePic";
 import EditProfile from "./helperComponents/EditProfile";
 import BASE_URL from "../../utils";
-import FeedBoilerPlate from "../HomePage/helperComponents/FeedBoilerPlate";
 import Cookies from "js-cookie";
 import { RotateLoader } from "react-spinners";
+import FeedBoilerPlateForProfile from "./FeedBoilerPlateForProfile";
+import PostComment from "../HomePage/helperComponents/PostComment";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -39,6 +40,9 @@ const ProfileAuthenticated = () => {
   const [editPage, setEditPage] = useState(false);
   const [posts, setPosts] = useState([]);
   const [loadingState, setLoadingstate] = useState(true);
+  const [commentState, setCommentState] = useState(false);
+  const [commentIndex, setCommentIndex] = useState();
+  const [postId, setPostId] = useState("");
   useEffect(() => {
     const userId = JSON.parse(Cookies.get("weeebsuser"))._id;
     fetch(`${BASE_URL}/post/getmyposts?userId=${userId}`)
@@ -172,10 +176,13 @@ const ProfileAuthenticated = () => {
         .slice()
         .reverse()
         .map((post, index) => (
-          <FeedBoilerPlate
+          <FeedBoilerPlateForProfile
             setPosts={setPosts}
             index={posts.length - 1 - index}
             setLoadingstate={setLoadingstate}
+            setCommentState={setCommentState}
+            setCommentIndex={setCommentIndex}
+            setPostId={setPostId}
             key={post._id}
             postId={post._id}
             username={post.userId.username}
@@ -203,6 +210,14 @@ const ProfileAuthenticated = () => {
       {changePP && <ChangeProfilePic setChangePP={setChangePP} />}
       {editPage && (
         <EditProfile setEditPage={setEditPage} setChangePP={setChangePP} />
+      )}
+      {commentState && (
+        <PostComment
+          setCommentState={setCommentState}
+          postId={postId}
+          commentIndex={commentIndex}
+          setPosts={setPosts}
+        />
       )}
     </Box>
   );
