@@ -1,4 +1,4 @@
-import { LockOutlined, Visibility } from "@mui/icons-material";
+import { LockOutlined } from "@mui/icons-material";
 import {
   Alert,
   AlertTitle,
@@ -160,7 +160,7 @@ const Signin = () => {
                     textDecoration: "none",
                   }}
                 >
-                  Don't have an account? Sign up
+                  Don&apos;t have an account? Sign up
                 </Link>
               </Grid>
             </Grid>
