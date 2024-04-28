@@ -112,6 +112,7 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
             setError(false);
             setContent(e.target.value);
           }}
+          autoComplete=""
         />
         {error && (
           <Typography color="error">
