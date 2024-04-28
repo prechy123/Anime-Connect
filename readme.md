@@ -34,6 +34,7 @@ mern-food-website/
 
 
 ### Express.js Configuration
+Ensure you are using the latest node version 
 1. Navigate to the `backend` directory: `cd backend`.
 2. Install dependencies: Run `npm install`.
 3. Create a `.env` file in the `backend` directory and add the following environment variables:
@@ -45,7 +46,7 @@ REFRESH_SECRET = Your_jwt_refresh_secret_phrase
 
 Replace `your_mongodb_connection_string` with your MongoDB connection string, and `Your_jwt_secret_phrase` with a secret key for JWT authentication.
 
-4. Start the Express.js server: Run `npm start or nodemon server.js or node server.js`.
+4. Start the Express.js server: Run `npm start` or `nodemon server.mjs` or `node server.mjs`.
 
 ## 4. Setting up the Frontend
 
