@@ -28,7 +28,7 @@ import {
 } from "@mui/icons-material";
 
 import { formatDistanceToNow } from "date-fns";
-import { memo, useEffect, useState } from "react";
+import { forwardRef, memo, useEffect, useState } from "react";
 import BASE_URL from "../../../utils";
 import Cookies from "js-cookie";
 import expirationTime from "../../../../calculate/expirationTime";
