@@ -22,6 +22,7 @@ import {
   AccessTime,
   Comment,
   DeleteForever,
+  Edit,
   Favorite,
   FavoriteBorder,
   Share,
@@ -68,7 +69,7 @@ export default memo(function FeedBoilerPlate({
     if (content.length > 150) {
       setShowFullContent(false);
     }
-  }, []);
+  }, [content.length]);
   if (index === 0) {
     setLoadingstate(false);
   }
@@ -175,7 +176,7 @@ export default memo(function FeedBoilerPlate({
         >
           <CardHeader
             avatar={<Avatar alt={username} src={profilepictureurl} />}
-            title={fullname}
+            title={fullname.length > 30 ? fullname.split(" ")[0] : fullname}
             subheader={"@" + username}
             onClick={() => setSearchedProfileId(userPageId)}
             sx={{
@@ -185,10 +186,13 @@ export default memo(function FeedBoilerPlate({
             }}
           />
           {userId === postUserId && (
-            <DeleteForever
-              sx={{ mr: "10px", cursor: "pointer" }}
-              onClick={() => setOpen(true)}
-            />
+            <Box sx={{ display: "flex", gap: "15px" }}>
+              <Edit />
+              <DeleteForever
+                sx={{ mr: "10px", cursor: "pointer" }}
+                onClick={() => setOpen(true)}
+              />
+            </Box>
           )}
         </Box>
 

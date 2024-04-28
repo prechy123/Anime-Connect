@@ -34,6 +34,7 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
               ...prevItems,
               {
                 userId: {
+                  _id: user._id,
                   username: user.username,
                   fullname: user.fullname,
                   profilepictureurl: user.profilepictureurl,

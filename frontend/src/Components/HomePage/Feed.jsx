@@ -1,4 +1,4 @@
-import { Alert, Box, Stack, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import SearchBar from "./helperComponents/SearchBar";
 import FeedBoilerPlate from "./helperComponents/FeedBoilerPlate";
 import ThemeMode from "./helperComponents/ThemeMode";

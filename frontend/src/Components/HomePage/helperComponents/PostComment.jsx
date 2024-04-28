@@ -56,7 +56,6 @@ const PostComment = ({ setCommentState, postId, commentIndex, setPosts }) => {
           _id: userDet._id,
           content: comment,
           user: {
-            // _id: userDet.user._id,
             username: userDet.username,
             profilepictureurl: userDet.profilepictureurl,
           },
@@ -170,7 +169,8 @@ const PostComment = ({ setCommentState, postId, commentIndex, setPosts }) => {
             placeholder="Write new post here"
             onChange={(e) => setComment(e.target.value)}
             value={comment}
-          />
+            autoFocus
+         />
         </Box>
         <Box>
           <Button
