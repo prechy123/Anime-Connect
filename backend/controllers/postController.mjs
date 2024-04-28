@@ -33,6 +33,21 @@ export const getPost = async (req, res) => {
   }
 };
 
+export const deletePost = async (req, res) => {
+  const { postId } = req.query;
+
+  try {
+    const result = await Post.deleteOne({ _id: postId });
+    if (result.deletedCount === 1) {
+      res.status(200).json({ message: "Message deleted successfully" });
+    } else {
+      res.status(400).json({ message: "Message was not deleted" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 export const getMyPost = async (req, res) => {
   const { userId } = req.query;
   try {

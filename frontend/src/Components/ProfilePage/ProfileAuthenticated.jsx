@@ -178,6 +178,7 @@ const ProfileAuthenticated = () => {
         .map((post, index) => (
           <FeedBoilerPlateForProfile
             setPosts={setPosts}
+            postsLen={posts.length}
             index={posts.length - 1 - index}
             setLoadingstate={setLoadingstate}
             setCommentState={setCommentState}

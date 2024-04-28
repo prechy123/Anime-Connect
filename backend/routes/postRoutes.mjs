@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createPost,
+  deletePost,
   getComments,
   getMyPost,
   getPost,
@@ -17,6 +18,9 @@ router.post("/newpost", createPost);
 // get posts
 router.get("/getposts", getPost);
 router.get("/getmyposts", getMyPost);
+
+// delete post
+router.delete("/deletepost", deletePost)
 
 //like and unlike posts
 router.patch("/likepost", likePost);

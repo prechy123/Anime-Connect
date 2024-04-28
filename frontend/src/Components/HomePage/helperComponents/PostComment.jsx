@@ -56,6 +56,7 @@ const PostComment = ({ setCommentState, postId, commentIndex, setPosts }) => {
           _id: userDet._id,
           content: comment,
           user: {
+            // _id: userDet.user._id,
             username: userDet.username,
             profilepictureurl: userDet.profilepictureurl,
           },

@@ -126,6 +126,7 @@ const Feed = () => {
               setCommentIndex={setCommentIndex}
               setPostId={setPostId}
               key={post._id}
+              postUserId={post.userId._id}
               postId={post._id}
               username={post.userId.username}
               fullname={post.userId.fullname}
