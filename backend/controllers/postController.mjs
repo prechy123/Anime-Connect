@@ -22,6 +22,22 @@ export const createPost = async (req, res) => {
   }
 };
 
+export const editPost = async (req, res) => {
+  const { postId } = req.query;
+  const { editedMessage } = req.body;
+  const existingPost = await Post.findOne({ _id: postId });
+  if (!existingPost) {
+    return res.status(400).json({ message: "Post not found" });
+  }
+  existingPost.content = editedMessage;
+  try {
+    const updatedPost = await existingPost.save();
+    res.status(200).json({ message: "Updated successfully", updatedPost });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const getPost = async (req, res) => {
   try {
     const posts = await Post.find({})

@@ -2,6 +2,7 @@ import express from "express";
 import {
   createPost,
   deletePost,
+  editPost,
   getComments,
   getMyPost,
   getPost,
@@ -14,6 +15,9 @@ const router = express.Router();
 
 // create post
 router.post("/newpost", createPost);
+
+//edit post
+router.patch('/editpost', editPost)
 
 // get posts
 router.get("/getposts", getPost);

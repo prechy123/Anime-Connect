@@ -7,6 +7,7 @@ import Comment from "./Comments";
 import { RotateLoader } from "react-spinners";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import emojis from "./emojis";
 
 const PostComment = ({ setCommentState, postId, commentIndex, setPosts }) => {
   const Navigate = useNavigate();
@@ -147,9 +148,7 @@ const PostComment = ({ setCommentState, postId, commentIndex, setPosts }) => {
         </List>
       </Box>
       {error && (
-        <Typography color="error">
-          Signup or Signin, then try again
-        </Typography>
+        <Typography color="error">Signup or Signin, then try again</Typography>
       )}
       <Box
         sx={{
@@ -170,7 +169,7 @@ const PostComment = ({ setCommentState, postId, commentIndex, setPosts }) => {
             onChange={(e) => setComment(e.target.value)}
             value={comment}
             autoFocus
-         />
+          />
         </Box>
         <Box>
           <Button
@@ -182,6 +181,17 @@ const PostComment = ({ setCommentState, postId, commentIndex, setPosts }) => {
           </Button>
         </Box>
       </Box>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }} mt={1}>
+            {emojis.map((emoji, index) => (
+              <span
+                key={index}
+                onClick={() => setComment((prev) => prev + emoji)}
+                style={{ cursor: "pointer" }}
+              >
+                {emoji}
+              </span>
+            ))}
+          </Box>
     </Box>
   );
 };

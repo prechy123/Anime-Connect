@@ -15,6 +15,7 @@ import {
   DialogTitle,
   IconButton,
   Slide,
+  TextField,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -33,6 +34,7 @@ import { forwardRef, memo, useEffect, useState } from "react";
 import BASE_URL from "../../../utils";
 import Cookies from "js-cookie";
 import expirationTime from "../../../../calculate/expirationTime";
+import emojis from "./emojis";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -60,11 +62,15 @@ export default memo(function FeedBoilerPlate({
   userPageId,
 }) {
   const theme = useTheme();
+  const [message, setMessage] = useState(content);
   const [checked, setChecked] = useState(false);
   const [showFullContent, setShowFullContent] = useState(true);
   const [contentLength, setContentLength] = useState(120);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [editor, setEditor] = useState(false);
+  const [editedContent, setEditedContent] = useState(content);
+  const [editorError, setEditorError] = useState(false);
   useEffect(() => {
     if (content.length > 150) {
       setShowFullContent(false);
@@ -163,6 +169,30 @@ export default memo(function FeedBoilerPlate({
       setLoading(false);
     }
   };
+  const handleEditPost = async () => {
+    if (editedContent.length < 5 || editedContent === message) {
+      setEditorError(true);
+      return;
+    }
+    setLoading(true);
+    const response = await fetch(`${BASE_URL}/post/editpost?postId=${postId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        editedMessage: editedContent,
+      }),
+    });
+    const responseData = await response.json();
+    if (response.ok && responseData.message === "Updated successfully") {
+      setEditor(false);
+      setMessage(editedContent);
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  };
   return (
     <>
       <Card sx={{ margin: 2, backgroundColor: theme.palette.primary.other }}>
@@ -186,8 +216,11 @@ export default memo(function FeedBoilerPlate({
             }}
           />
           {userId === postUserId && (
-            <Box sx={{ display: "flex", gap: "15px" }}>
-              <Edit />
+            <Box>
+              <Edit
+                onClick={() => setEditor(true)}
+                sx={{ mr: "15px", cursor: "pointer" }}
+              />
               <DeleteForever
                 sx={{ mr: "10px", cursor: "pointer" }}
                 onClick={() => setOpen(true)}
@@ -199,17 +232,17 @@ export default memo(function FeedBoilerPlate({
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             {showFullContent ? (
-              content
+              message
             ) : (
               <>
-                {content.substring(0, contentLength)}{" "}
+                {message.substring(0, contentLength)}{" "}
                 <Typography
                   variant="p"
                   sx={{ cursor: "pointer", display: "inline-block" }}
                   color="secondary"
                   onClick={() => {
                     if (contentLength === 120) {
-                      setContentLength(content.length);
+                      setContentLength(message.length);
                     } else {
                       setContentLength(120);
                     }
@@ -297,6 +330,66 @@ export default memo(function FeedBoilerPlate({
             color="secondary"
           >
             {loading ? "loading..." : "Yes"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={editor}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => setEditor(false)}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>Enter edited Post</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            <TextField
+              id="outlined-multiline-static"
+              multiline
+              rows={6}
+              fullWidth
+              color="secondary"
+              placeholder="Edit post here"
+              onChange={(e) => {
+                setEditedContent(e.target.value);
+                setEditorError(false);
+              }}
+              value={editedContent}
+              autoFocus
+            />
+            <Box sx={{ display: "flex", justifyContent: "space-between" }} mt={1}>
+              {emojis.map((emoji, index) => (
+                <span
+                  key={index}
+                  onClick={() => setEditedContent((prev) => prev + emoji)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {emoji}
+                </span>
+              ))}
+            </Box>
+            {editorError && (
+              <Typography color="error">
+                Ensure new message and <br />
+                mesage length greater than 5
+              </Typography>
+            )}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setEditor(false);
+              setEditorError(false);
+              setLoading(false);
+            }}
+            variant="contained"
+            color="secondary"
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleEditPost} variant="outlined" color="secondary">
+            {loading ? "loading..." : "Edit"}
           </Button>
         </DialogActions>
       </Dialog>

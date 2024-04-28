@@ -6,6 +6,7 @@ import { useState } from "react";
 import BASE_URL from "../../../utils";
 import expirationTime from "../../../../calculate/expirationTime";
 import { useNavigate } from "react-router-dom";
+import emojis from "./emojis";
 
 const CreatePost = ({ setPosts, setCreatePost }) => {
   const Theme = useTheme();
@@ -57,17 +58,17 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
             });
           } else {
             setError(true);
-            setTimeout(()=> {
-              Navigate('/signup')
-            }, 1500)
+            setTimeout(() => {
+              Navigate("/signup");
+            }, 1500);
           }
         })
         .catch(() => setError(true));
     } else {
       setError(true);
-      setTimeout(()=> {
-        Navigate('/signup')
-      }, 1500)
+      setTimeout(() => {
+        Navigate("/signup");
+      }, 1500);
     }
   };
   return (
@@ -113,8 +114,20 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
             setError(false);
             setContent(e.target.value);
           }}
+          value={content}
           autoFocus
         />
+        <Box sx={{ display: "flex", justifyContent: "space-between" }} mt={1}>
+          {emojis.map((emoji, index) => (
+            <span
+              key={index}
+              onClick={() => setContent((prev) => prev + emoji)}
+              style={{ cursor: "pointer" }}
+            >
+              {emoji}
+            </span>
+          ))}
+        </Box>
         {error && (
           <Typography color="error">
             Ensure textfield is filled or signin then try again
