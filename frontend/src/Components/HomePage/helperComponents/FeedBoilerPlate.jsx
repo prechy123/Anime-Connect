@@ -28,7 +28,7 @@ import {
 } from "@mui/icons-material";
 
 import { formatDistanceToNow } from "date-fns";
-import { forwardRef, memo, useCallback, useEffect, useState } from "react";
+import { forwardRef, memo, useEffect, useState } from "react";
 import BASE_URL from "../../../utils";
 import Cookies from "js-cookie";
 import expirationTime from "../../../../calculate/expirationTime";
@@ -50,7 +50,6 @@ export default memo(function FeedBoilerPlate({
   content,
   likes,
   likeCount,
-  comments,
   commentsCount,
   setCommentIndex,
   shareCount,
