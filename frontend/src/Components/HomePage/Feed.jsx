@@ -109,8 +109,7 @@ const Feed = () => {
           >
             <RotateLoader color={theme.palette.primary.text} />
             <Typography>
-              Please be patient while backend gets started. Patience this may
-              take a minute
+              Please be patient while backend gets started.
             </Typography>
           </Box>
         )}
