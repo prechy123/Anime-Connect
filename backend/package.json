@@ -11,6 +11,7 @@
     "geoip-lite": "^1.4.7",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.11",
+    "node-cron": "^3.0.3",
     "request-ip": "^3.3.0"
   }
 }

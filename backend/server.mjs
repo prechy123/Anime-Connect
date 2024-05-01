@@ -6,6 +6,12 @@ import userRouter from "./routes/userRoutes.mjs";
 import postRouter from "./routes/postRoutes.mjs";
 import profileRouter from "./routes/profileRoutes.mjs";
 
+// Added cron job to make sure render server does not sleep
+import cron from "node-cron"
+cron.schedule('*/10 * * * *', () => {
+  console.log('running a task every minute');
+});
+
 const app = express();
 
 app.use(
