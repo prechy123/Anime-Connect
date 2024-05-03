@@ -10,6 +10,10 @@ const communitySchema = new Schema({
     unique: true,
     trim: true,
   },
+  communitydetail: {
+    type: String,
+    default: "This is a new community"
+  },
   members: [
     {
       userId: {
@@ -30,4 +34,4 @@ const communitySchema = new Schema({
 
 const Community = mongoose.model("community", communitySchema);
 
-export default User;
+export default Community;
