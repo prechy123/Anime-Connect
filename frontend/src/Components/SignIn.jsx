@@ -1,3 +1,10 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useTheme } from "@emotion/react";
+import { ClipLoader } from "react-spinners";
+import { PulseLoader } from "react-spinners";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LockOutlined } from "@mui/icons-material";
 import {
   Alert,
@@ -10,21 +17,18 @@ import {
   Stack,
   TextField,
   Typography,
+  InputAdornment,
+  IconButton
 } from "@mui/material";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
-import { ClipLoader } from "react-spinners";
-import Cookies from "js-cookie";
 import expirationTime from "../../calculate/expirationTime";
-import { PulseLoader } from "react-spinners";
-import { useTheme } from "@emotion/react";
+import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
 
 import BASE_URL from "../utils";
 
 const Signin = () => {
   const Navigate = useNavigate();
   const theme = useTheme();
+
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState();
   const [success, setSuccess] = useState(false);
@@ -33,6 +37,10 @@ const Signin = () => {
   const closeAlert = (err) => {
     setErrors(errors.filter((error) => error !== err));
   };
+
+  const toggleShowPassowrd = () => {
+    setShowPassword(!showPassword);
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -127,21 +135,20 @@ const Signin = () => {
                   fullWidth
                   name="password"
                   label="Password"
-                  // type="password"
                   type={showPassword ? "text" : "password"}
                   id="password"
                   autoComplete="new-password"
                   color="secondary"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={toggleShowPassowrd} edge="end">
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <Checkbox
-                  color="secondary"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-                <Typography variant="p">
-                  {showPassword ? "hide" : "view"} password
-                </Typography>
               </Grid>
             </Grid>
             <Button

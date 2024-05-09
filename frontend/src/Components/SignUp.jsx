@@ -1,4 +1,8 @@
-import { LockOutlined, ThumbDownAlt, ThumbUpAlt } from "@mui/icons-material";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useTheme } from "@emotion/react";
+import { ClipLoader, PulseLoader } from "react-spinners";
 import {
   Alert,
   AlertTitle,
@@ -10,26 +14,29 @@ import {
   Stack,
   TextField,
   Typography,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
-import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
-import { ClipLoader, PulseLoader } from "react-spinners";
-import { useTheme } from "@emotion/react";
+import { LockOutlined, ThumbDownAlt, ThumbUpAlt } from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import BASE_URL from "../utils";
+import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
 import expirationTime from "../../calculate/expirationTime";
 // signup
 const SignUp = () => {
   const theme = useTheme();
   const Navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const [userNameStatus, setUserNameStatus] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState();
   const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassowrd = () => {
+    setShowPassword(!showPassword);
+  }
 
   const closeAlert = (err) => {
     setErrors(errors.filter((error) => error !== err));
@@ -210,26 +217,26 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid item xs={12}>
+
                 <TextField
                   required
                   fullWidth
                   name="password"
                   label="Password"
-                  // type="password"
                   type={showPassword ? "text" : "password"}
                   id="password"
                   autoComplete="new-password"
                   color="secondary"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={toggleShowPassowrd} edge="end">
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <Checkbox
-                  color="secondary"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-                <Typography variant="p">
-                  {showPassword ? "hide" : "view"} password
-                </Typography>
               </Grid>
             </Grid>
             <Button
