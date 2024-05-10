@@ -24,6 +24,9 @@ import expirationTime from "../../calculate/expirationTime";
 import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
 
 import BASE_URL from "../utils";
+import {  showErrorToast, showLoadingToast, showSuccessToast } from "../utils/toast";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Signin = () => {
   const Navigate = useNavigate();
@@ -33,6 +36,7 @@ const Signin = () => {
   const [errors, setErrors] = useState();
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const mode = useSelector((state) => state.theme.theme);
 
   const closeAlert = (err) => {
     setErrors(errors.filter((error) => error !== err));
@@ -45,6 +49,7 @@ const Signin = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+    const toastId = showLoadingToast("loading...", mode)
     const data = new FormData(event.currentTarget);
     const formData = {
       email: data.get("email"),
@@ -58,9 +63,11 @@ const Signin = () => {
       body: JSON.stringify(formData),
     });
     const response = await api.json();
+    toast.dismiss(toastId)
     setLoading(false);
     if (response.message === "logged in successfully") {
-      setSuccess(true);
+      // setSuccess(true);
+      showSuccessToast("Log in Successfully - redirecting to home page", mode)
       setTimeout(() => {
         Navigate("/");
       }, 2000);
@@ -72,9 +79,14 @@ const Signin = () => {
       });
     } else {
       if (response.message) {
-        setErrors([response.message]);
+        // setErrors([response.message]);
+        // console.log(response.message)
+        [response.message].forEach(error => {
+          showErrorToast(error, mode)
+        });
       } else {
-        setErrors(response.error);
+        // setErrors(response.error);
+        showErrorToast(response.error, mode)
       }
     }
   };

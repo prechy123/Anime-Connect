@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { forwardRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { showSuccessToast } from "../../../utils/toast";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -26,6 +27,7 @@ const StyledLink = styled(Link)(({ theme }) => ({
 const NavListItems = () => {
   const [open, setOpen] = useState(false);
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const mode = useSelector((state) => state.theme.theme);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -35,8 +37,11 @@ const NavListItems = () => {
   };
   const handleLogout = () => {
     Cookies.remove("weeebsuser");
+    showSuccessToast("User Logout Successfully", mode);
     setOpen(false);
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   };
 
   return (

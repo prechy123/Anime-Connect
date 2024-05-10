@@ -28,6 +28,7 @@ import {
   FavoriteBorder,
   Share,
 } from "@mui/icons-material";
+import playSound from "../../../utils/likeSound"
 
 import { formatDistanceToNow } from "date-fns";
 import { forwardRef, memo, useEffect, useState } from "react";
@@ -35,6 +36,8 @@ import BASE_URL from "../../../utils";
 import Cookies from "js-cookie";
 import expirationTime from "../../../../calculate/expirationTime";
 import emojis from "./emojis";
+import { useSelector } from "react-redux";
+import { showSuccessToast } from "../../../utils/toast";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -71,6 +74,7 @@ export default memo(function FeedBoilerPlate({
   const [editor, setEditor] = useState(false);
   const [editedContent, setEditedContent] = useState(content);
   const [editorError, setEditorError] = useState(false);
+  const mode = useSelector(state => state.theme.theme)
   useEffect(() => {
     if (content.length > 150) {
       setShowFullContent(false);
@@ -89,6 +93,7 @@ export default memo(function FeedBoilerPlate({
     }
   }, [likes, userId]);
   const handleLikeSystem = async () => {
+    playSound()
     if (checked === false) {
       setChecked(true);
       setPosts((prevVal) => {
@@ -153,6 +158,7 @@ export default memo(function FeedBoilerPlate({
       response.ok &&
       responseData.message === "Message deleted successfully"
     ) {
+      showSuccessToast("Post Delete Successfully", mode)
       setOpen(false);
       setPosts((prevVals) =>
         prevVals.filter((prevVal) => prevVal._id !== postId)
@@ -186,6 +192,7 @@ export default memo(function FeedBoilerPlate({
     });
     const responseData = await response.json();
     if (response.ok && responseData.message === "Updated successfully") {
+      showSuccessToast("Post Edited Successfully", mode)
       setEditor(false);
       setMessage(editedContent);
       setLoading(false);

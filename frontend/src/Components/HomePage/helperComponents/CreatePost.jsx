@@ -7,12 +7,15 @@ import BASE_URL from "../../../utils";
 import expirationTime from "../../../../calculate/expirationTime";
 import { useNavigate } from "react-router-dom";
 import emojis from "./emojis";
+import { showSuccessToast } from "../../../utils/toast";
+import { useSelector } from "react-redux";
 
 const CreatePost = ({ setPosts, setCreatePost }) => {
   const Theme = useTheme();
   const Navigate = useNavigate();
   const [content, setContent] = useState("");
   const [error, setError] = useState(false);
+  const mode = useSelector(state => state.theme.theme)
   const handlePostMessage = async () => {
     let user;
     if (Cookies.get("weeebsuser")) {
@@ -31,6 +34,7 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
         .then((response) => response.json())
         .then((data) => {
           if (data.message === "message posted successfully") {
+            showSuccessToast("Post created successfully", mode)
             setPosts((prevItems) => [
               ...prevItems,
               {

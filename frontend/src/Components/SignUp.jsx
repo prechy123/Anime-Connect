@@ -23,6 +23,13 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import BASE_URL from "../utils";
 import ThemeModeSigninSignUp from "./HelperComponents/ThemeModeSigninSignUp";
 import expirationTime from "../../calculate/expirationTime";
+import {
+  showErrorToast,
+  showLoadingToast,
+  showSuccessToast,
+} from "../utils/toast";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 // signup
 const SignUp = () => {
   const theme = useTheme();
@@ -33,10 +40,11 @@ const SignUp = () => {
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState();
   const [showPassword, setShowPassword] = useState(false);
+  const mode = useSelector((state) => state.theme.theme);
 
   const toggleShowPassowrd = () => {
     setShowPassword(!showPassword);
-  }
+  };
 
   const closeAlert = (err) => {
     setErrors(errors.filter((error) => error !== err));
@@ -62,10 +70,11 @@ const SignUp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+    const toastId = showLoadingToast("loading...", mode);
     const data = new FormData(event.currentTarget);
     if (userNameStatus) {
       setErrors(["Username already exist, try another"]);
-      setLoading(false)
+      setLoading(false);
     }
     const formData = {
       username: data.get("userName"),
@@ -81,7 +90,9 @@ const SignUp = () => {
       body: JSON.stringify(formData),
     });
     const response = await api.json();
+    toast.dismiss(toastId);
     if (response.message === "Account created successfully") {
+      showSuccessToast("Account created successfully", mode);
       const loginApi = await fetch(`${BASE_URL}/users/signin`, {
         method: "POST",
         headers: {
@@ -95,7 +106,11 @@ const SignUp = () => {
       const loginResponse = await loginApi.json();
       setLoading(false);
       if (loginResponse.message === "logged in successfully") {
-        setSuccess(true);
+        showSuccessToast(
+          "Logged in Successfully - redirecting to home page",
+          mode
+        );
+        // setSuccess(true);
         setTimeout(() => {
           Navigate("/");
         }, 2000);
@@ -116,9 +131,16 @@ const SignUp = () => {
     } else {
       setLoading(false);
       if (response.message) {
-        setErrors([response.message]);
+        // setErrors([response.message]);
+        [response.message].forEach((error) => {
+          showErrorToast(error, mode);
+        });
+        console.log([response.message]);
       } else {
-        setErrors(response.error);
+        // console.log(response.error)
+        response.error.forEach((error) => {
+          showErrorToast(error, mode);
+        });
       }
     }
   };
@@ -217,7 +239,6 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-
                 <TextField
                   required
                   fullWidth

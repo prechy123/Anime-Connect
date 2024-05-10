@@ -3,6 +3,7 @@ import router from "./Routes";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setTheme } from "./redux/reducers/theme/themeSlice";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ const App = () => {
   });
   return (
     <ThemeProvider theme={theme}>
+      <ToastContainer />
       <RouterProvider router={router} />
     </ThemeProvider>
   );
