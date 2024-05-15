@@ -210,6 +210,7 @@ export const UserDetails = ({ searchedProfileId, setSearchedProfileId }) => {
                   setLoadingstate={setLoadingstate}
                   key={post._id}
                   postId={post._id}
+                  postUserId={post.userId._id}
                   username={post.userId.username}
                   fullname={post.userId.fullname}
                   content={post.content}
