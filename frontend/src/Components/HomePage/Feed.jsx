@@ -79,7 +79,7 @@ const Feed = () => {
             mt={7}
             mb={-2}
           >
-            Feeds
+            Feed
           </Typography>
           <Typography
             variant="h6"
