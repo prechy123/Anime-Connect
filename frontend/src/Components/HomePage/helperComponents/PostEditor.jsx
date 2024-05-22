@@ -1,8 +1,10 @@
 import { useTheme } from "@emotion/react";
 import { ArrowForward, Close } from "@mui/icons-material";
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import emojis from "./emojis";
+import { useSelector } from "react-redux";
+import { showErrorToast } from "../../../utils/toast";
 
 const PostEditor = ({
   setEditor,
@@ -10,9 +12,11 @@ const PostEditor = ({
   editedContent,
   handleEditPost,
   postImageUrl,
-  setEditedImageUrl
+  setEditedImageUrl,
 }) => {
   const Theme = useTheme();
+  const fileInputRef = useRef(null)
+  const mode = useSelector((state) => state.theme.theme);
 
   const [image, setImage] = useState(postImageUrl);
   function previewFiles(file) {
@@ -21,13 +25,23 @@ const PostEditor = ({
 
     reader.onloadend = () => {
       setImage(reader.result);
-      setEditedImageUrl(reader.result)
+      setEditedImageUrl(reader.result);
     };
   }
   const handleChange = (e) => {
     const file = e.target.files[0];
     previewFiles(file);
   };
+
+  const handleRemoveImage = () => {
+    setImage(null);
+    setEditedImageUrl(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+    showErrorToast("Feature not added yet", mode)
+  };
+
   return (
     <Box
       sx={{
@@ -80,14 +94,27 @@ const PostEditor = ({
             alignItems: "center",
           }}
         >
-          <input type="file" onChange={handleChange} />
+          <input type="file" onChange={handleChange} ref={fileInputRef}/>
           {image && (
-            <img
-              src={image}
-              width="100px"
-              height="100px"
-              style={{ borderRadius: "10px" }}
-            />
+            <div style={{ position: "relative" }}>
+              <img
+                src={image}
+                width="100px"
+                height="100px"
+                style={{ borderRadius: "10px" }}
+              />
+              <span
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  cursor: "pointer",
+                }}
+                onClick={handleRemoveImage}
+              >
+                <Close />
+              </span>
+            </div>
           )}
         </div>
         <Box sx={{ display: "flex", justifyContent: "space-between" }} mt={1}>

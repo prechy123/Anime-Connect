@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import {
   AccessTime,
+  Close,
   Comment,
   DeleteForever,
   Edit,
@@ -36,7 +37,11 @@ import Cookies from "js-cookie";
 import expirationTime from "../../../../calculate/expirationTime";
 import emojis from "./emojis";
 import { useSelector } from "react-redux";
-import { showErrorToast, showLoadingToast, showSuccessToast } from "../../../utils/toast";
+import {
+  showErrorToast,
+  showLoadingToast,
+  showSuccessToast,
+} from "../../../utils/toast";
 import PostEditor from "./PostEditor.jsx";
 import { toast } from "react-toastify";
 
@@ -75,8 +80,8 @@ export default memo(function FeedBoilerPlate({
   const [loading, setLoading] = useState(false);
   const [editor, setEditor] = useState(false);
   const [editedContent, setEditedContent] = useState(content);
-  const [editedImageUrl, setEditedImageUrl] = useState("")
-  const [editedPostImageUrl, setEditedPostImageUrl] = useState(postImageUrl)
+  const [editedImageUrl, setEditedImageUrl] = useState("");
+  const [editedPostImageUrl, setEditedPostImageUrl] = useState(postImageUrl);
   const mode = useSelector((state) => state.theme.theme);
   useEffect(() => {
     if (content.length > 150) {
@@ -182,15 +187,15 @@ export default memo(function FeedBoilerPlate({
     }
   };
   const handleEditPost = async () => {
-    if (editedContent.length < 2 || editedContent === message) {
-      showErrorToast("Ensure text is not empty and text has been edited")
+    if (editedContent.length < 2) {
+      showErrorToast("Ensure text is not empty");
       return;
     }
     if (!postId) {
       showErrorToast("Refresh page and try again", mode);
       return;
     }
-    const toastId = showLoadingToast()
+    const toastId = showLoadingToast();
     const response = await fetch(`${BASE_URL}/post/editpost?postId=${postId}`, {
       method: "PATCH",
       headers: {
@@ -198,7 +203,7 @@ export default memo(function FeedBoilerPlate({
       },
       body: JSON.stringify({
         editedMessage: editedContent,
-        imageUrl: editedImageUrl
+        imageUrl: editedImageUrl,
       }),
     });
     const responseData = await response.json();
@@ -206,13 +211,13 @@ export default memo(function FeedBoilerPlate({
       showSuccessToast("Post Edited Successfully", mode);
       setEditor(false);
       setMessage(editedContent);
-      setEditedPostImageUrl(editedImageUrl)
-      setLoading(false); 
-      toast.dismiss(toastId)
+      setEditedPostImageUrl(editedImageUrl);
+      setLoading(false);
+      toast.dismiss(toastId);
     } else {
       setLoading(false);
-      toast.dismiss(toastId)
-      showErrorToast("Error Occured, try again later", mode)
+      toast.dismiss(toastId);
+      showErrorToast("Error Occured, try again later", mode);
     }
   };
   return (
