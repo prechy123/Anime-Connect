@@ -28,7 +28,6 @@ import {
   FavoriteBorder,
   Share,
 } from "@mui/icons-material";
-import playSound from "../../../utils/likeSound"
 
 import { formatDistanceToNow } from "date-fns";
 import { forwardRef, memo, useEffect, useState } from "react";
@@ -93,7 +92,6 @@ export default memo(function FeedBoilerPlate({
     }
   }, [likes, userId]);
   const handleLikeSystem = async () => {
-    playSound()
     if (checked === false) {
       setChecked(true);
       setPosts((prevVal) => {
