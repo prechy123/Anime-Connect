@@ -36,7 +36,9 @@ import Cookies from "js-cookie";
 import expirationTime from "../../../../calculate/expirationTime";
 import emojis from "./emojis";
 import { useSelector } from "react-redux";
-import { showSuccessToast } from "../../../utils/toast";
+import { showErrorToast, showLoadingToast, showSuccessToast } from "../../../utils/toast";
+import PostEditor from "./PostEditor.jsx";
+import { toast } from "react-toastify";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -73,7 +75,8 @@ export default memo(function FeedBoilerPlate({
   const [loading, setLoading] = useState(false);
   const [editor, setEditor] = useState(false);
   const [editedContent, setEditedContent] = useState(content);
-  const [editorError, setEditorError] = useState(false);
+  const [editedImageUrl, setEditedImageUrl] = useState("")
+  const [editedPostImageUrl, setEditedPostImageUrl] = useState(postImageUrl)
   const mode = useSelector((state) => state.theme.theme);
   useEffect(() => {
     if (content.length > 150) {
@@ -142,6 +145,10 @@ export default memo(function FeedBoilerPlate({
     }
   };
   const handleDeletePost = async () => {
+    if (!postId) {
+      showErrorToast("Refresh page and try again", mode);
+      return;
+    }
     setLoading(true);
     const response = await fetch(
       `${BASE_URL}/post/deletepost?postId=${postId}`,
@@ -175,11 +182,15 @@ export default memo(function FeedBoilerPlate({
     }
   };
   const handleEditPost = async () => {
-    if (editedContent.length < 5 || editedContent === message) {
-      setEditorError(true);
+    if (editedContent.length < 2 || editedContent === message) {
+      showErrorToast("Ensure text is not empty and text has been edited")
       return;
     }
-    setLoading(true);
+    if (!postId) {
+      showErrorToast("Refresh page and try again", mode);
+      return;
+    }
+    const toastId = showLoadingToast()
     const response = await fetch(`${BASE_URL}/post/editpost?postId=${postId}`, {
       method: "PATCH",
       headers: {
@@ -187,6 +198,7 @@ export default memo(function FeedBoilerPlate({
       },
       body: JSON.stringify({
         editedMessage: editedContent,
+        imageUrl: editedImageUrl
       }),
     });
     const responseData = await response.json();
@@ -194,9 +206,13 @@ export default memo(function FeedBoilerPlate({
       showSuccessToast("Post Edited Successfully", mode);
       setEditor(false);
       setMessage(editedContent);
-      setLoading(false);
+      setEditedPostImageUrl(editedImageUrl)
+      setLoading(false); 
+      toast.dismiss(toastId)
     } else {
       setLoading(false);
+      toast.dismiss(toastId)
+      showErrorToast("Error Occured, try again later", mode)
     }
   };
   return (
@@ -260,10 +276,10 @@ export default memo(function FeedBoilerPlate({
             )}
           </Typography>
         </CardContent>
-        {postImageUrl && (
+        {editedPostImageUrl && (
           <div style={{ padding: "0 20px" }}>
             <img
-              src={postImageUrl}
+              src={editedPostImageUrl}
               width="100%"
               style={{ borderRadius: "10px" }}
             />
@@ -348,69 +364,17 @@ export default memo(function FeedBoilerPlate({
           </Button>
         </DialogActions>
       </Dialog>
-      <Dialog
-        open={editor}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={() => setEditor(false)}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>Enter edited Post</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            <TextField
-              id="outlined-multiline-static"
-              multiline
-              rows={6}
-              fullWidth
-              color="secondary"
-              placeholder="Edit post here"
-              onChange={(e) => {
-                setEditedContent(e.target.value);
-                setEditorError(false);
-              }}
-              value={editedContent}
-              autoFocus
-            />
-            <Box
-              sx={{ display: "flex", justifyContent: "space-between" }}
-              mt={1}
-            >
-              {emojis.map((emoji, index) => (
-                <span
-                  key={index}
-                  onClick={() => setEditedContent((prev) => prev + emoji)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {emoji}
-                </span>
-              ))}
-            </Box>
-            {editorError && (
-              <Typography color="error">
-                Ensure new message and <br />
-                mesage length greater than 5
-              </Typography>
-            )}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setEditor(false);
-              setEditorError(false);
-              setLoading(false);
-            }}
-            variant="contained"
-            color="secondary"
-          >
-            Cancel
-          </Button>
-          <Button onClick={handleEditPost} variant="outlined" color="secondary">
-            {loading ? "loading..." : "Edit"}
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {editor && (
+        <PostEditor
+          setPosts={setPosts}
+          setEditor={setEditor}
+          setEditedContent={setEditedContent}
+          editedContent={editedContent}
+          handleEditPost={handleEditPost}
+          postImageUrl={postImageUrl}
+          setEditedImageUrl={setEditedImageUrl}
+        />
+      )}
     </>
   );
 });

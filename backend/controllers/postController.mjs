@@ -26,7 +26,7 @@ export const createPost = async (req, res) => {
   const { userId, content, imageUrl } = req.body;
   try {
     let PostImgDetails;
-    if (!imageUrl) {
+    if (imageUrl) {
       PostImgDetails = await uploadImageToCloudinary(imageUrl);
     }
     const newPost = new Post({
@@ -55,12 +55,23 @@ export const createPost = async (req, res) => {
 
 export const editPost = async (req, res) => {
   const { postId } = req.query;
-  const { editedMessage } = req.body;
+  const { editedMessage, imageUrl } = req.body;
   const existingPost = await Post.findOne({ _id: postId });
   if (!existingPost) {
     return res.status(400).json({ message: "Post not found" });
   }
+
   existingPost.content = editedMessage;
+  if (imageUrl) {
+    if (existingPost?.postImage?.public_id) {
+      await cloudinary.uploader.destroy(existingPost.postImage.public_id);
+      const PostImgDetails = await uploadImageToCloudinary(imageUrl);
+      existingPost.postImage = {
+        public_id: PostImgDetails ? PostImgDetails.public_url : "",
+        url: PostImgDetails ? PostImgDetails.url : "",
+      };
+    }
+  }
   try {
     const updatedPost = await existingPost.save();
     res.status(200).json({ message: "Updated successfully", updatedPost });
@@ -84,6 +95,10 @@ export const deletePost = async (req, res) => {
   const { postId } = req.query;
 
   try {
+    const post = await Post.findById(postId);
+    if (post?.postImage?.public_id) {
+      await cloudinary.uploader.destroy(post.postImage.public_id);
+    }
     const result = await Post.deleteOne({ _id: postId });
     if (result.deletedCount === 1) {
       res.status(200).json({ message: "Message deleted successfully" });

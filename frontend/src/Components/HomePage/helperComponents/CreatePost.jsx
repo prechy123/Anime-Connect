@@ -7,19 +7,39 @@ import BASE_URL from "../../../utils";
 import expirationTime from "../../../../calculate/expirationTime";
 import { useNavigate } from "react-router-dom";
 import emojis from "./emojis";
-import { showSuccessToast } from "../../../utils/toast";
+import { showErrorToast, showLoadingToast, showSuccessToast } from "../../../utils/toast";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const CreatePost = ({ setPosts, setCreatePost }) => {
   const Theme = useTheme();
   const Navigate = useNavigate();
   const [content, setContent] = useState("");
   const [error, setError] = useState(false);
-  const mode = useSelector(state => state.theme.theme)
+  const mode = useSelector((state) => state.theme.theme);
+
+  const [image, setImage] = useState("");
+  function previewFiles(file) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+  }
+  const handleChange = (e) => {
+    const file = e.target.files[0];
+    previewFiles(file);
+  };
+
   const handlePostMessage = async () => {
     let user;
+    if (content.length < 5) {
+      showErrorToast("Ensure post is not empty", mode)
+      return
+    }
     if (Cookies.get("weeebsuser")) {
-      setCreatePost(false);
+      const toastId = showLoadingToast("Uploading Post")
       user = JSON.parse(Cookies.get("weeebsuser"));
       await fetch(`${BASE_URL}/post/newpost`, {
         method: "POST",
@@ -29,12 +49,14 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
         body: JSON.stringify({
           userId: user._id,
           content,
+          imageUrl: image
         }),
       })
         .then((response) => response.json())
         .then((data) => {
           if (data.message === "message posted successfully") {
-            showSuccessToast("Post created successfully", mode)
+            toast.dismiss(toastId)
+            showSuccessToast("Post created successfully", mode);
             setPosts((prevItems) => [
               ...prevItems,
               {
@@ -45,6 +67,9 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
                   profilepictureurl: user.profilepictureurl,
                 },
                 content,
+                postImage: {
+                  url: image
+                },
                 likes: [],
                 likesCount: 0,
                 comments: [],
@@ -60,7 +85,10 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
               sameSite: "None",
               secure: true,
             });
+            setCreatePost(false);
           } else {
+            toast.dismiss(toastId)
+            showErrorToast("Ensure you are signed in then try again")
             setError(true);
             setTimeout(() => {
               Navigate("/signup");
@@ -91,6 +119,7 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
         borderRadius: "20px",
         padding: "20px",
         boxShadow: "10px 10px 10px " + Theme.palette.primary.other,
+        overflowY: "scroll",
       }}
     >
       <Box
@@ -110,7 +139,7 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
         <TextField
           id="outlined-multiline-static"
           multiline
-          rows={6}
+          rows={3}
           fullWidth
           color="secondary"
           placeholder="Write new post here"
@@ -121,6 +150,10 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
           value={content}
           autoFocus
         />
+        <div style={{display: "flex", flexDirection: "column-reverse", padding: '20px 20px 0 20px', gap: '10px', alignItems: 'center'}}>
+          <input type="file" onChange={handleChange} />
+          {image && <img src={image} width="100px" height="100px" style={{borderRadius: "10px"}}/>}
+        </div>
         <Box sx={{ display: "flex", justifyContent: "space-between" }} mt={1}>
           {emojis.map((emoji, index) => (
             <span
