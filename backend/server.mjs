@@ -6,6 +6,7 @@ import userRouter from "./routes/userRoutes.mjs";
 import postRouter from "./routes/postRoutes.mjs";
 import profileRouter from "./routes/profileRoutes.mjs";
 import communityRouter from "./routes/communityRoutes.mjs"
+import cloudinary from "./cloudinary/cloudinary.mjs";
 
 const app = express();
 
@@ -15,7 +16,8 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
 app.use("/users", userRouter);
 app.use("/post", postRouter);

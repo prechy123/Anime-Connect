@@ -1,19 +1,50 @@
 import Post from "../models/postModel.mjs";
 import User from "../models/userModel.mjs";
 import Comment from "../models/commentModel.mjs";
+import { v2 as cloudinary } from "cloudinary";
+
+const uploadImageToCloudinary = async (image) => {
+  const uploadImage = await cloudinary.uploader.upload(
+    image,
+    {
+      folder: "User posts",
+      allowed_formats: ["png", "jpg", "jpeg", "svg", "ico", "jfif", "webp"],
+    },
+    function (error, result) {
+      if (error) {
+        console.log(error);
+      }
+    }
+  );
+  return {
+    public_url: uploadImage.public_id,
+    url: uploadImage.url,
+  };
+};
 
 export const createPost = async (req, res) => {
-  const { userId, content } = req.body;
-  const newPost = new Post({
-    userId,
-    content,
-  });
+  const { userId, content, imageUrl } = req.body;
   try {
+    let PostImgDetails;
+    if (!imageUrl) {
+      PostImgDetails = await uploadImageToCloudinary(imageUrl);
+    }
+    const newPost = new Post({
+      userId,
+      content,
+      postImage: {
+        public_id: PostImgDetails ? PostImgDetails.public_url : "",
+        url: PostImgDetails ? PostImgDetails.url : "",
+      },
+    });
     await newPost.save();
     if (newPost.isNew) {
       return res.status(400).json({ message: "failed to post message" });
     }
     const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).json({ message: "User does not exist" });
+    }
     user.post.push(userId);
     await user.save();
     res.status(200).json({ message: "message posted successfully" });

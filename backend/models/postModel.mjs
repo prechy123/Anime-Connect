@@ -36,6 +36,16 @@ const postSchema = new Schema(
     shareCount: {
       type: Number,
       default: 0
+    },
+    postImage: {
+      public_id: {
+        type: String,
+        default: ""
+      },
+      url: {
+        type: String,
+        default: ""
+      }
     }
   },
   {

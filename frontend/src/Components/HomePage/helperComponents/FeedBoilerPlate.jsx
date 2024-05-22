@@ -62,6 +62,7 @@ export default memo(function FeedBoilerPlate({
   createdAt,
   setSearchedProfileId,
   userPageId,
+  postImageUrl,
 }) {
   const theme = useTheme();
   const [message, setMessage] = useState(content);
@@ -73,7 +74,7 @@ export default memo(function FeedBoilerPlate({
   const [editor, setEditor] = useState(false);
   const [editedContent, setEditedContent] = useState(content);
   const [editorError, setEditorError] = useState(false);
-  const mode = useSelector(state => state.theme.theme)
+  const mode = useSelector((state) => state.theme.theme);
   useEffect(() => {
     if (content.length > 150) {
       setShowFullContent(false);
@@ -156,7 +157,7 @@ export default memo(function FeedBoilerPlate({
       response.ok &&
       responseData.message === "Message deleted successfully"
     ) {
-      showSuccessToast("Post Delete Successfully", mode)
+      showSuccessToast("Post Delete Successfully", mode);
       setOpen(false);
       setPosts((prevVals) =>
         prevVals.filter((prevVal) => prevVal._id !== postId)
@@ -190,7 +191,7 @@ export default memo(function FeedBoilerPlate({
     });
     const responseData = await response.json();
     if (response.ok && responseData.message === "Updated successfully") {
-      showSuccessToast("Post Edited Successfully", mode)
+      showSuccessToast("Post Edited Successfully", mode);
       setEditor(false);
       setMessage(editedContent);
       setLoading(false);
@@ -259,6 +260,15 @@ export default memo(function FeedBoilerPlate({
             )}
           </Typography>
         </CardContent>
+        {postImageUrl && (
+          <div style={{ padding: "0 20px" }}>
+            <img
+              src={postImageUrl}
+              width="100%"
+              style={{ borderRadius: "10px" }}
+            />
+          </div>
+        )}
         <CardActions
           sx={{
             display: "flex",
@@ -362,7 +372,10 @@ export default memo(function FeedBoilerPlate({
               value={editedContent}
               autoFocus
             />
-            <Box sx={{ display: "flex", justifyContent: "space-between" }} mt={1}>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between" }}
+              mt={1}
+            >
               {emojis.map((emoji, index) => (
                 <span
                   key={index}
