@@ -1,6 +1,6 @@
 # Anime-Connect
 
-Welcome to Anime-Connect, a full-stack social media platform dedicated to anime enthusiasts around the world. Connect with fellow fans, share your favorite anime moments, and discover new series to binge-watch!
+Welcome to Anime-Connect, a full-stack social media platform dedicated to anime enthusiasts around the world. Connect with fellow fans, share your favorite anime moments, and discover new series to binge-watch!!!
 
 ## Features
 
