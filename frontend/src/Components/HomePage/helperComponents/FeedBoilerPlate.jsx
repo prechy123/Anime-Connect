@@ -223,6 +223,19 @@ export default memo(function FeedBoilerPlate({
       setMessage(editedContent);
       if (editedImageUrl !== "empty") {
         setEditedPostImageUrl(editedImageUrl);
+        setPosts((prevVal) => {
+          const newPosts = [...prevVal];
+
+          if (newPosts[index]) {
+            newPosts[index] = {
+              ...newPosts[index],
+              postImage: {
+                url: editedImageUrl,
+              }
+            };
+          }
+          return newPosts;
+        });
       }
       setLoading(false);
       toast.dismiss(toastId);
