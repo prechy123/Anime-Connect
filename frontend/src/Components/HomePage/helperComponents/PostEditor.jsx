@@ -3,8 +3,6 @@ import { ArrowForward, Close } from "@mui/icons-material";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useRef, useState } from "react";
 import emojis from "./emojis";
-import { useSelector } from "react-redux";
-import { showErrorToast } from "../../../utils/toast";
 
 const PostEditor = ({
   setEditor,
@@ -15,8 +13,7 @@ const PostEditor = ({
   setEditedImageUrl,
 }) => {
   const Theme = useTheme();
-  const fileInputRef = useRef(null)
-  const mode = useSelector((state) => state.theme.theme);
+  const fileInputRef = useRef(null);
 
   const [image, setImage] = useState(postImageUrl);
   function previewFiles(file) {
@@ -37,9 +34,8 @@ const PostEditor = ({
     setImage(null);
     setEditedImageUrl(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
-    showErrorToast("Feature not added yet", mode)
   };
 
   return (
@@ -94,7 +90,23 @@ const PostEditor = ({
             alignItems: "center",
           }}
         >
-          <input type="file" onChange={handleChange} ref={fileInputRef}/>
+          <label
+            style={{
+              border: "1px solid #ccc",
+              display: "inline-block",
+              padding: "6px 12px",
+              cursor: "pointer",
+            }}
+          >
+            {fileInputRef?.current?.value || image ? "Change " : "Upload "}
+            Image
+            <input
+              type="file"
+              onChange={handleChange}
+              ref={fileInputRef}
+              style={{ display: "none" }}
+            />
+          </label>
           {image && (
             <div style={{ position: "relative" }}>
               <img
@@ -107,7 +119,7 @@ const PostEditor = ({
                 style={{
                   position: "absolute",
                   top: 0,
-                  right: 0,
+                  right: -25,
                   cursor: "pointer",
                 }}
                 onClick={handleRemoveImage}

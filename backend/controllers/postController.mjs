@@ -65,10 +65,18 @@ export const editPost = async (req, res) => {
   if (imageUrl) {
     if (existingPost?.postImage?.public_id) {
       await cloudinary.uploader.destroy(existingPost.postImage.public_id);
-      const PostImgDetails = await uploadImageToCloudinary(imageUrl);
+    }
+    const PostImgDetails = await uploadImageToCloudinary(imageUrl);
+    existingPost.postImage = {
+      public_id: PostImgDetails ? PostImgDetails.public_url : "",
+      url: PostImgDetails ? PostImgDetails.url : "",
+    };
+  } else {
+    if (existingPost?.postImage?.public_id) {
+      await cloudinary.uploader.destroy(existingPost.postImage.public_id);
       existingPost.postImage = {
-        public_id: PostImgDetails ? PostImgDetails.public_url : "",
-        url: PostImgDetails ? PostImgDetails.url : "",
+        public_id: "",
+        url: "",
       };
     }
   }

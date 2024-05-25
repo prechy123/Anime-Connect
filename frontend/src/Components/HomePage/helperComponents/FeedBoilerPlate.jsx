@@ -35,7 +35,6 @@ import { forwardRef, memo, useEffect, useState } from "react";
 import BASE_URL from "../../../utils";
 import Cookies from "js-cookie";
 import expirationTime from "../../../../calculate/expirationTime";
-import emojis from "./emojis";
 import { useSelector } from "react-redux";
 import {
   showErrorToast,
@@ -81,6 +80,10 @@ export default memo(function FeedBoilerPlate({
   const [editor, setEditor] = useState(false);
   const [editedContent, setEditedContent] = useState(content);
   const [editedImageUrl, setEditedImageUrl] = useState("");
+  const [copyOfEdited, setCopyOfEdited] = useState({
+    content: editedContent,
+    url: editedImageUrl
+  })
   const [editedPostImageUrl, setEditedPostImageUrl] = useState(postImageUrl);
   const mode = useSelector((state) => state.theme.theme);
   useEffect(() => {
@@ -187,15 +190,19 @@ export default memo(function FeedBoilerPlate({
     }
   };
   const handleEditPost = async () => {
+    if (copyOfEdited.content === editedContent && copyOfEdited.url === editedImageUrl) {
+      showErrorToast("No changes were made", mode)
+      return
+    }
     if (editedContent.length < 2) {
-      showErrorToast("Ensure text is not empty");
+      showErrorToast("Ensure text is not empty", mode);
       return;
     }
     if (!postId) {
       showErrorToast("Refresh page and try again", mode);
       return;
     }
-    const toastId = showLoadingToast();
+    const toastId = showLoadingToast("Loading...", mode);
     const response = await fetch(`${BASE_URL}/post/editpost?postId=${postId}`, {
       method: "PATCH",
       headers: {
@@ -286,7 +293,11 @@ export default memo(function FeedBoilerPlate({
             <img
               src={editedPostImageUrl}
               width="100%"
-              style={{ borderRadius: "10px" }}
+              style={{
+                borderRadius: "10px",
+                aspectRatio: "1.3/1",
+                objectFit: "cover",
+              }}
             />
           </div>
         )}

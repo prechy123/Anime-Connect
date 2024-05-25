@@ -2,12 +2,16 @@ import { useTheme } from "@emotion/react";
 import { ArrowForward, Close } from "@mui/icons-material";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import Cookies from "js-cookie";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import BASE_URL from "../../../utils";
 import expirationTime from "../../../../calculate/expirationTime";
 import { useNavigate } from "react-router-dom";
 import emojis from "./emojis";
-import { showErrorToast, showLoadingToast, showSuccessToast } from "../../../utils/toast";
+import {
+  showErrorToast,
+  showLoadingToast,
+  showSuccessToast,
+} from "../../../utils/toast";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -16,6 +20,7 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
   const Navigate = useNavigate();
   const [content, setContent] = useState("");
   const [error, setError] = useState(false);
+  const fileInputRef = useRef(null);
   const mode = useSelector((state) => state.theme.theme);
 
   const [image, setImage] = useState("");
@@ -35,11 +40,11 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
   const handlePostMessage = async () => {
     let user;
     if (content.length < 5) {
-      showErrorToast("Ensure post is not empty", mode)
-      return
+      showErrorToast("Ensure post is not empty", mode);
+      return;
     }
     if (Cookies.get("weeebsuser")) {
-      const toastId = showLoadingToast("Uploading Post")
+      const toastId = showLoadingToast("Uploading Post", mode);
       user = JSON.parse(Cookies.get("weeebsuser"));
       await fetch(`${BASE_URL}/post/newpost`, {
         method: "POST",
@@ -49,13 +54,13 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
         body: JSON.stringify({
           userId: user._id,
           content,
-          imageUrl: image
+          imageUrl: image,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
           if (data.message === "message posted successfully") {
-            toast.dismiss(toastId)
+            toast.dismiss(toastId);
             showSuccessToast("Post created successfully", mode);
             setPosts((prevItems) => [
               ...prevItems,
@@ -68,7 +73,7 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
                 },
                 content,
                 postImage: {
-                  url: image
+                  url: image,
                 },
                 likes: [],
                 likesCount: 0,
@@ -87,8 +92,8 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
             });
             setCreatePost(false);
           } else {
-            toast.dismiss(toastId)
-            showErrorToast("Ensure you are signed in then try again")
+            toast.dismiss(toastId);
+            showErrorToast("Ensure you are signed in then try again", mode);
             setError(true);
             setTimeout(() => {
               Navigate("/signup");
@@ -101,6 +106,12 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
       setTimeout(() => {
         Navigate("/signup");
       }, 1500);
+    }
+  };
+  const handleRemoveImage = () => {
+    setImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
   return (
@@ -150,9 +161,53 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
           value={content}
           autoFocus
         />
-        <div style={{display: "flex", flexDirection: "column-reverse", padding: '20px 20px 0 20px', gap: '10px', alignItems: 'center'}}>
-          <input type="file" onChange={handleChange} />
-          {image && <img src={image} width="100px" height="100px" style={{borderRadius: "10px"}}/>}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column-reverse",
+            padding: "20px 20px 0 20px",
+            gap: "10px",
+            alignItems: "center",
+          }}
+        >
+          <label
+            style={{
+              border: "1px solid #ccc",
+              display: "inline-block",
+              padding: "6px 12px",
+              cursor: "pointer",
+            }}
+          >
+            {fileInputRef?.current?.value ? "Change " : "Upload "}
+            Image
+            <input
+              type="file"
+              onChange={handleChange}
+              ref={fileInputRef}
+              style={{ display: "none" }}
+            />
+          </label>
+          {image && (
+            <div style={{ position: "relative" }}>
+              <img
+                src={image}
+                width="100px"
+                height="100px"
+                style={{ borderRadius: "10px" }}
+              />
+              <span
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  right: -25,
+                  cursor: "pointer",
+                }}
+                onClick={handleRemoveImage}
+              >
+                <Close />
+              </span>
+            </div>
+          )}
         </div>
         <Box sx={{ display: "flex", justifyContent: "space-between" }} mt={1}>
           {emojis.map((emoji, index) => (
