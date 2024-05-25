@@ -43,10 +43,16 @@ DB_CONECTION = your_mongodb_connection_string
 PORT = 4000  
 SECRET = Your_jwt_secret_phrase  
 REFRESH_SECRET = Your_jwt_refresh_secret_phrase
+CLOUDINARY_URL = Your_cloudinay_url
+CLOUDINARY_NAME = Your_cloudinary_name
+CLOUDINARY_APIKEY = Your_cloudinary_apikey
+CLOUDINARY_APISECRET = Your_cloudinary_apisecret
 
 Replace `your_mongodb_connection_string` with your MongoDB connection string, and `Your_jwt_secret_phrase` with a secret key for JWT authentication.
 
-4. Start the Express.js server: Run `npm start` or `nodemon server.mjs` or `node server.mjs`.
+4. Configure cloudinary account
+
+5. Start the Express.js server: Run `npm start` or `nodemon server.mjs` or `node server.mjs`.
 
 ## 4. Setting up the Frontend
 
