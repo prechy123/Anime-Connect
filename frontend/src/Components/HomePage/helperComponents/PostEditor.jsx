@@ -4,6 +4,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { useRef, useState } from "react";
 import emojis from "./emojis";
 
+
 const PostEditor = ({
   setEditor,
   setEditedContent,
@@ -81,6 +82,17 @@ const PostEditor = ({
           value={editedContent}
           autoFocus
         />
+        <Box sx={{ display: "flex", justifyContent: "space-between" }} mt={1}>
+          {emojis.map((emoji, index) => (
+            <span
+              key={index}
+              onClick={() => setEditedContent((prev) => prev + emoji)}
+              style={{ cursor: "pointer" }}
+            >
+              {emoji}
+            </span>
+          ))}
+        </Box>
         <div
           style={{
             display: "flex",
@@ -129,30 +141,20 @@ const PostEditor = ({
             </div>
           )}
         </div>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }} mt={1}>
-          {emojis.map((emoji, index) => (
-            <span
-              key={index}
-              onClick={() => setEditedContent((prev) => prev + emoji)}
-              style={{ cursor: "pointer" }}
-            >
-              {emoji}
-            </span>
-          ))}
-        </Box>
+        
         <Box
           sx={{
             display: "flex",
             placeItems: "center",
             justifyContent: "space-around",
             flexWrap: "wrap",
-            marginTop: "20px",
+            
           }}
         >
           <Button
             variant="contained"
             color="secondary"
-            sx={{ marginTop: "20px" }}
+            sx={{ marginTop: "10px" }}
             onClick={handleEditPost}
           >
             Post <ArrowForward sx={{ paddingLeft: "7px" }} />

@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "axios": "^1.6.2",
     "date-fns": "^3.6.0",
+    "emoji-picker-react": "^4.9.3",
     "js-cookie": "^3.0.5",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",

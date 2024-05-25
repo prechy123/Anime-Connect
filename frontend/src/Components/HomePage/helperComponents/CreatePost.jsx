@@ -161,6 +161,17 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
           value={content}
           autoFocus
         />
+        <Box sx={{ display: "flex", justifyContent: "space-between" }} mt={1}>
+          {emojis.map((emoji, index) => (
+            <span
+              key={index}
+              onClick={() => setContent((prev) => prev + emoji)}
+              style={{ cursor: "pointer" }}
+            >
+              {emoji}
+            </span>
+          ))}
+        </Box>
         <div
           style={{
             display: "flex",
@@ -209,35 +220,20 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
             </div>
           )}
         </div>
-        <Box sx={{ display: "flex", justifyContent: "space-between" }} mt={1}>
-          {emojis.map((emoji, index) => (
-            <span
-              key={index}
-              onClick={() => setContent((prev) => prev + emoji)}
-              style={{ cursor: "pointer" }}
-            >
-              {emoji}
-            </span>
-          ))}
-        </Box>
-        {error && (
-          <Typography color="error">
-            Ensure textfield is filled or signin then try again
-          </Typography>
-        )}
+        
         <Box
           sx={{
             display: "flex",
             placeItems: "center",
             justifyContent: "space-around",
             flexWrap: "wrap",
-            marginTop: "20px",
+            
           }}
         >
           <Button
             variant="contained"
             color="secondary"
-            sx={{ marginTop: "20px" }}
+            sx={{ marginTop: "10px" }}
             onClick={handlePostMessage}
           >
             Post <ArrowForward sx={{ paddingLeft: "7px" }} />
