@@ -79,11 +79,11 @@ export default memo(function FeedBoilerPlate({
   const [loading, setLoading] = useState(false);
   const [editor, setEditor] = useState(false);
   const [editedContent, setEditedContent] = useState(content);
-  const [editedImageUrl, setEditedImageUrl] = useState("");
+  const [editedImageUrl, setEditedImageUrl] = useState("empty");
   const [copyOfEdited, setCopyOfEdited] = useState({
     content: editedContent,
-    url: editedImageUrl
-  })
+    url: editedImageUrl,
+  });
   const [editedPostImageUrl, setEditedPostImageUrl] = useState(postImageUrl);
   const mode = useSelector((state) => state.theme.theme);
   useEffect(() => {
@@ -190,9 +190,12 @@ export default memo(function FeedBoilerPlate({
     }
   };
   const handleEditPost = async () => {
-    if (copyOfEdited.content === editedContent && copyOfEdited.url === editedImageUrl) {
-      showErrorToast("No changes were made", mode)
-      return
+    if (
+      copyOfEdited.content === editedContent &&
+      copyOfEdited.url === editedImageUrl
+    ) {
+      showErrorToast("No changes were made", mode);
+      return;
     }
     if (editedContent.length < 2) {
       showErrorToast("Ensure text is not empty", mode);
@@ -218,7 +221,9 @@ export default memo(function FeedBoilerPlate({
       showSuccessToast("Post Edited Successfully", mode);
       setEditor(false);
       setMessage(editedContent);
-      setEditedPostImageUrl(editedImageUrl);
+      if (editedImageUrl !== "empty") {
+        setEditedPostImageUrl(editedImageUrl);
+      }
       setLoading(false);
       toast.dismiss(toastId);
     } else {

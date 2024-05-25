@@ -62,7 +62,7 @@ export const editPost = async (req, res) => {
   }
 
   existingPost.content = editedMessage;
-  if (imageUrl) {
+  if (imageUrl && imageUrl !== "empty") {
     if (existingPost?.postImage?.public_id) {
       await cloudinary.uploader.destroy(existingPost.postImage.public_id);
     }
@@ -72,12 +72,14 @@ export const editPost = async (req, res) => {
       url: PostImgDetails ? PostImgDetails.url : "",
     };
   } else {
-    if (existingPost?.postImage?.public_id) {
-      await cloudinary.uploader.destroy(existingPost.postImage.public_id);
-      existingPost.postImage = {
-        public_id: "",
-        url: "",
-      };
+    if (imageUrl !== "empty") {
+      if (existingPost?.postImage?.public_id) {
+        await cloudinary.uploader.destroy(existingPost.postImage.public_id);
+        existingPost.postImage = {
+          public_id: "",
+          url: "",
+        };
+      }
     }
   }
   try {
