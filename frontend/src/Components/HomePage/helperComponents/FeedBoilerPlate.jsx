@@ -15,13 +15,11 @@ import {
   DialogTitle,
   IconButton,
   Slide,
-  TextField,
   Typography,
   useTheme,
 } from "@mui/material";
 import {
   AccessTime,
-  Close,
   Comment,
   DeleteForever,
   Edit,
@@ -85,6 +83,7 @@ export default memo(function FeedBoilerPlate({
     url: editedImageUrl,
   });
   const [editedPostImageUrl, setEditedPostImageUrl] = useState(postImageUrl);
+  // const [imageView, setImageView] = useState(false)
   const mode = useSelector((state) => state.theme.theme);
   useEffect(() => {
     if (content.length > 150) {
@@ -316,6 +315,7 @@ export default memo(function FeedBoilerPlate({
                 aspectRatio: "1.3/1",
                 objectFit: "cover",
               }}
+              onClick={() => setImageView(true)}
             />
           </div>
         )}

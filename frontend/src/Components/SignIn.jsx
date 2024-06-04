@@ -12,7 +12,6 @@ import {
   Avatar,
   Box,
   Button,
-  Checkbox,
   Grid,
   Stack,
   TextField,
