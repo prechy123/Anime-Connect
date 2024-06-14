@@ -41,6 +41,7 @@ import {
 } from "../../../utils/toast";
 import PostEditor from "./PostEditor.jsx";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -69,6 +70,7 @@ export default memo(function FeedBoilerPlate({
   postImageUrl,
 }) {
   const theme = useTheme();
+  const Navigate = useNavigate()
   const [message, setMessage] = useState(content);
   const [checked, setChecked] = useState(false);
   const [showFullContent, setShowFullContent] = useState(true);
@@ -116,7 +118,7 @@ export default memo(function FeedBoilerPlate({
         }
         return newPosts;
       });
-      await fetch(`${BASE_URL}/post/likepost`, {
+      const res = await fetch(`${BASE_URL}/post/likepost`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -126,6 +128,12 @@ export default memo(function FeedBoilerPlate({
           userId,
         }),
       });
+      if (res.status === 400) {
+        showErrorToast("Ensure you are signed in", mode)
+        setTimeout(() => {
+          Navigate("/signin");
+        }, 1500);
+      }
     } else {
       setChecked(false);
       setPosts((prevVal) => {
@@ -139,7 +147,7 @@ export default memo(function FeedBoilerPlate({
         }
         return newPosts;
       });
-      await fetch(`${BASE_URL}/post/unlikepost`, {
+      const res = await fetch(`${BASE_URL}/post/unlikepost`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -149,6 +157,12 @@ export default memo(function FeedBoilerPlate({
           userId,
         }),
       });
+      if (res.status === 400) {
+        showErrorToast("Ensure you are signed in", mode)
+        setTimeout(() => {
+          Navigate("/signin");
+        }, 1500);
+      } 
     }
   };
   const handleDeletePost = async () => {

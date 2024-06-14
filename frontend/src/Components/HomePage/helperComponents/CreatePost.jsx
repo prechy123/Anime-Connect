@@ -40,7 +40,7 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
   const handlePostMessage = async () => {
     let user;
     if (content.length < 5) {
-      showErrorToast("Ensure post is not empty", mode);
+      showErrorToast("Ensure post is not less than 5 letters", mode);
       return;
     }
     if (Cookies.get("weeebsuser")) {
@@ -96,15 +96,16 @@ const CreatePost = ({ setPosts, setCreatePost }) => {
             showErrorToast("Ensure you are signed in then try again", mode);
             setError(true);
             setTimeout(() => {
-              Navigate("/signup");
+              Navigate("/signin");
             }, 1500);
           }
         })
         .catch(() => setError(true));
     } else {
       setError(true);
+      showErrorToast("Ensure you are signed in", mode)
       setTimeout(() => {
-        Navigate("/signup");
+        Navigate("/signin");
       }, 1500);
     }
   };

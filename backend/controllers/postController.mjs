@@ -135,6 +135,10 @@ export const getMyPost = async (req, res) => {
 export const likePost = async (req, res) => {
   const { postId, userId } = req.body;
   try {
+    const user = await User.findById(userId)
+    if (!user) {
+      return res.status(400).json({message: "User does not exist"})
+    }
     const post = await Post.findOne({ _id: postId });
     post.likes.push(userId);
     post.likesCount++;
@@ -148,6 +152,10 @@ export const likePost = async (req, res) => {
 export const unlikePost = async (req, res) => {
   const { postId, userId } = req.body;
   try {
+    const user = await User.findById(userId)
+    if (!user) {
+      return res.status(400).json({message: "User does not exist"})
+    }
     const post = await Post.findOne({ _id: postId });
     const userIndex = post.likes.indexOf(userId);
     if (userIndex !== -1) {
