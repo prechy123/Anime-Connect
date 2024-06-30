@@ -11,6 +11,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState();
   useEffect(() => {
+    window.scroll(0, 0)
     if (Cookies.get("weeebsuser")) {
       setUser(JSON.parse(Cookies.get("weeebsuser")));
     }

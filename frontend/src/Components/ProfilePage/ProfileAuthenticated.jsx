@@ -194,6 +194,7 @@ const ProfileAuthenticated = () => {
             comments={post.comments}
             commentsCount={post.commentsCount}
             shareCount={post.shareCount}
+            views={post.views}
             profilepictureurl={post.userId.profilepictureurl}
             createdAt={post.createdAt}
           />

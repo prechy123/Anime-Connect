@@ -95,6 +95,10 @@ export const getPost = async (req, res) => {
     const posts = await Post.find({})
       .populate("userId", "username fullname profilepictureurl")
       .lean();
+    // await Post.updateMany({}, { $set: { views: 0 } });
+    posts.forEach(async (post) => {
+      await Post.findByIdAndUpdate(post._id, { views: post.views + 1 });
+    });
     res.status(200).json({ messsage: posts });
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -126,6 +130,9 @@ export const getMyPost = async (req, res) => {
     const posts = await Post.find({ userId })
       .populate("userId", "username fullname profilepictureurl")
       .lean();
+    posts.forEach(async (post) => {
+      await Post.findByIdAndUpdate(post._id, { views: post.views + 1 });
+    });
     res.status(200).json({ messsage: posts });
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -135,9 +142,9 @@ export const getMyPost = async (req, res) => {
 export const likePost = async (req, res) => {
   const { postId, userId } = req.body;
   try {
-    const user = await User.findById(userId)
+    const user = await User.findById(userId);
     if (!user) {
-      return res.status(400).json({message: "User does not exist"})
+      return res.status(400).json({ message: "User does not exist" });
     }
     const post = await Post.findOne({ _id: postId });
     post.likes.push(userId);
@@ -152,9 +159,9 @@ export const likePost = async (req, res) => {
 export const unlikePost = async (req, res) => {
   const { postId, userId } = req.body;
   try {
-    const user = await User.findById(userId)
+    const user = await User.findById(userId);
     if (!user) {
-      return res.status(400).json({message: "User does not exist"})
+      return res.status(400).json({ message: "User does not exist" });
     }
     const post = await Post.findOne({ _id: postId });
     const userIndex = post.likes.indexOf(userId);

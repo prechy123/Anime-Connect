@@ -135,6 +135,7 @@ const Feed = () => {
               comments={post.comments}
               commentsCount={post.commentsCount}
               shareCount={post.shareCount}
+              views={post.views}
               postImageUrl={post?.postImage?.url}
               profilepictureurl={post.userId.profilepictureurl}
               createdAt={post.createdAt}

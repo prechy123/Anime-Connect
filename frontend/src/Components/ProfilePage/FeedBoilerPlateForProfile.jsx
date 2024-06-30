@@ -20,21 +20,22 @@ import {
   useTheme,
 } from "@mui/material";
 import {
-  AccessTime,
   Comment,
   DeleteForever,
   Edit,
+  Equalizer,
   Favorite,
   FavoriteBorder,
   Share,
 } from "@mui/icons-material";
 
-import { formatDistanceToNow } from "date-fns";
+import { format } from "date-fns";
 import { forwardRef, memo, useEffect, useState } from "react";
 import BASE_URL from "../../utils";
 import Cookies from "js-cookie";
 import expirationTime from "../../../calculate/expirationTime";
 import emojis from "../HomePage/helperComponents/emojis";
+import numeral from "numeral";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -55,6 +56,7 @@ export default memo(function FeedBoilerPlateForProfile({
   commentsCount,
   setCommentIndex,
   shareCount,
+  views,
   profilepictureurl,
   createdAt,
 }) {
@@ -197,7 +199,7 @@ export default memo(function FeedBoilerPlateForProfile({
           <CardHeader
             avatar={<Avatar alt={username} src={profilepictureurl} />}
             title={fullname}
-            subheader={"@" + username}
+            subheader={"@" + username + " · " + format(createdAt, "d, MMMM")}
           />
           <Box>
             <Edit
@@ -223,7 +225,14 @@ export default memo(function FeedBoilerPlateForProfile({
             padding: "10px",
           }}
         >
-          <Box sx={{ display: "flex" }}>
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "center",
+              gap: "15px",
+            }}
+          >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Checkbox
                 icon={<FavoriteBorder />}
@@ -254,14 +263,12 @@ export default memo(function FeedBoilerPlateForProfile({
               </IconButton>
               <Typography>{shareCount}</Typography>
             </Box>
-          </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconButton aria-label="share">
-              <AccessTime />
+              <Equalizer />
             </IconButton>
-            <Typography>
-              {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
-            </Typography>
+            <Typography>{views > 1000 ? numeral(views).format('0.0a') : views}</Typography>
+          </Box>
           </Box>
         </CardActions>
       </Card>

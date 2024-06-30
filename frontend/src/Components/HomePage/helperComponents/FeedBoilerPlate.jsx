@@ -19,16 +19,16 @@ import {
   useTheme,
 } from "@mui/material";
 import {
-  AccessTime,
   Comment,
   DeleteForever,
   Edit,
   Favorite,
   FavoriteBorder,
   Share,
+  Equalizer,
 } from "@mui/icons-material";
 
-import { formatDistanceToNow } from "date-fns";
+import { format } from "date-fns";
 import { forwardRef, memo, useEffect, useState } from "react";
 import BASE_URL from "../../../utils";
 import Cookies from "js-cookie";
@@ -42,6 +42,7 @@ import {
 import PostEditor from "./PostEditor.jsx";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import numeral from "numeral"
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -68,9 +69,10 @@ export default memo(function FeedBoilerPlate({
   setSearchedProfileId,
   userPageId,
   postImageUrl,
+  views,
 }) {
   const theme = useTheme();
-  const Navigate = useNavigate()
+  const Navigate = useNavigate();
   const [message, setMessage] = useState(content);
   const [checked, setChecked] = useState(false);
   const [showFullContent, setShowFullContent] = useState(true);
@@ -129,7 +131,7 @@ export default memo(function FeedBoilerPlate({
         }),
       });
       if (res.status === 400) {
-        showErrorToast("Ensure you are signed in", mode)
+        showErrorToast("Ensure you are signed in", mode);
         setTimeout(() => {
           Navigate("/signin");
         }, 1500);
@@ -158,11 +160,11 @@ export default memo(function FeedBoilerPlate({
         }),
       });
       if (res.status === 400) {
-        showErrorToast("Ensure you are signed in", mode)
+        showErrorToast("Ensure you are signed in", mode);
         setTimeout(() => {
           Navigate("/signin");
         }, 1500);
-      } 
+      }
     }
   };
   const handleDeletePost = async () => {
@@ -244,7 +246,7 @@ export default memo(function FeedBoilerPlate({
               ...newPosts[index],
               postImage: {
                 url: editedImageUrl,
-              }
+              },
             };
           }
           return newPosts;
@@ -272,7 +274,7 @@ export default memo(function FeedBoilerPlate({
           <CardHeader
             avatar={<Avatar alt={username} src={profilepictureurl} />}
             title={fullname.length > 30 ? fullname.split(" ")[0] : fullname}
-            subheader={"@" + username}
+            subheader={"@" + username + " · " + format(createdAt, "d, MMMM")}
             onClick={() => setSearchedProfileId(userPageId)}
             sx={{
               ":hover": {
@@ -329,7 +331,7 @@ export default memo(function FeedBoilerPlate({
                 aspectRatio: "1.3/1",
                 objectFit: "cover",
               }}
-              onClick={() => setImageView(true)}
+              // onClick={() => setImageView(true)}
             />
           </div>
         )}
@@ -340,7 +342,9 @@ export default memo(function FeedBoilerPlate({
             padding: "10px",
           }}
         >
-          <Box sx={{ display: "flex" }}>
+          <Box
+            sx={{ display: "flex", width: "100%", justifyContent: "center", gap: '15px' }}
+          >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Checkbox
                 icon={<FavoriteBorder />}
@@ -371,14 +375,12 @@ export default memo(function FeedBoilerPlate({
               </IconButton>
               <Typography>{shareCount}</Typography>
             </Box>
-          </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton aria-label="share">
-              <AccessTime />
-            </IconButton>
-            <Typography>
-              {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
-            </Typography>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <IconButton aria-label="share">
+                <Equalizer />
+              </IconButton>
+              <Typography>{views > 1000 ? numeral(views).format('0.0a') : views}</Typography>
+            </Box>
           </Box>
         </CardActions>
       </Card>
