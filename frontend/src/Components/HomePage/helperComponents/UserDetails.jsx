@@ -221,6 +221,7 @@ export const UserDetails = ({ searchedProfileId, setSearchedProfileId }) => {
                   shareCount={post.shareCount}
                   profilepictureurl={post.userId.profilepictureurl}
                   createdAt={post.createdAt}
+                  views={post.views}
                 />
               ))}
           </Box>
