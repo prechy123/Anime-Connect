@@ -198,8 +198,10 @@ export default memo(function FeedBoilerPlateForProfile({
         >
           <CardHeader
             avatar={<Avatar alt={username} src={profilepictureurl} />}
-            title={fullname}
-            subheader={"@" + username + " · " + format(createdAt, "d, MMMM")}
+            // title={fullname}
+            title={fullname + " · " + format(createdAt, "d, MMMM, yyyy")}
+            // subheader={"@" + username + " · " + format(createdAt, "d, MMMM")}
+            subheader={"@" + username}
           />
           <Box>
             <Edit

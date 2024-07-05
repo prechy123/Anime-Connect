@@ -273,8 +273,10 @@ export default memo(function FeedBoilerPlate({
         >
           <CardHeader
             avatar={<Avatar alt={username} src={profilepictureurl} />}
-            title={fullname.length > 30 ? fullname.split(" ")[0] : fullname}
-            subheader={"@" + username + " · " + format(createdAt, "d, MMMM")}
+            // title={fullname.length > 30 ? fullname.split(" ")[0] : fullname}
+            title={fullname.length > 30 ? fullname.split(" ")[0] : fullname + " · " + format(createdAt, "d, MMMM")}
+            // subheader={"@" + username + " · " + format(createdAt, "d, MMMM")}
+            subheader={"@" + username}
             onClick={() => setSearchedProfileId(userPageId)}
             sx={{
               ":hover": {
@@ -385,7 +387,7 @@ export default memo(function FeedBoilerPlate({
         </CardActions>
       </Card>
       <Dialog
-        open={open}
+        open={open} 
         TransitionComponent={Transition}
         keepMounted
         onClose={() => setOpen(false)}
