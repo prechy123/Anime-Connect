@@ -39,14 +39,16 @@ Ensure you are using the latest node version
 2. Install dependencies: Run `npm install`.
 3. Create a `.env` file in the `backend` directory and add the following environment variables:
 
+```
 DB_CONECTION = your_mongodb_connection_string  
 PORT = 4000  
 SECRET = Your_jwt_secret_phrase  
-REFRESH_SECRET = Your_jwt_refresh_secret_phrase
-CLOUDINARY_URL = Your_cloudinay_url
-CLOUDINARY_NAME = Your_cloudinary_name
-CLOUDINARY_APIKEY = Your_cloudinary_apikey
-CLOUDINARY_APISECRET = Your_cloudinary_apisecret
+REFRESH_SECRET = Your_jwt_refresh_secret_phrase  
+CLOUDINARY_URL = Your_cloudinay_url  
+CLOUDINARY_NAME = Your_cloudinary_name  
+CLOUDINARY_APIKEY = Your_cloudinary_apikey  
+CLOUDINARY_APISECRET = Your_cloudinary_apisecret  
+```
 
 Replace `your_mongodb_connection_string` with your MongoDB connection string, and `Your_jwt_secret_phrase` with a secret key for JWT authentication.
 
