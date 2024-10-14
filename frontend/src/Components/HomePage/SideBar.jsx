@@ -102,7 +102,7 @@ const SideBar = () => {
                     />
                     <ImageListItemBar
                       position="below"
-                      title={`${item.title.substring(0, 15)}...`}
+                      title={item.title ? `${item.title.substring(0, 15)}...` : "No Name"}
                     />
                   </ImageListItem>
                 </a>
